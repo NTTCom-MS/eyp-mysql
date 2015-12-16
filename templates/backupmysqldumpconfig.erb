@@ -1,0 +1,16 @@
+<% if defined?(@mailto) -%>
+MAILTO="<%= @mailto %>"
+<% end -%>
+DESTINATION="<%= @destination %>"
+<% if defined?(@retention) -%>
+RETENTION="<%= @retention %>"
+<% end -%>
+<% if defined?(@logdir) -%>
+LOGDIR="<%= @logdir %>"
+<% end -%>
+<% if defined?(@idhost) -%>
+IDHOST="<%= @idhost %>"
+<% end -%>
+<% if(@compress) -%>
+COMPRESS="<%= @compress %>"
+<% end -%>
