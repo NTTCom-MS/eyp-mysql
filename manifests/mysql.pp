@@ -15,7 +15,7 @@ class mysql::mysql  (
         $ignoreclientcharset=false,
         $expirelogsdays='5',
         $serverid='1'
-      ) inherits params {
+      ) inherits mysql::params {
 
   validate_re($version, [ '^5.7$' ], "Not a supported version: ${version}")
   validate_re($ensure, [ '^installed$', '^latest$' ], "ensure: installed/latest (${ensure} is not supported)")

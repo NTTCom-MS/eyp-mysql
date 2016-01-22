@@ -1,6 +1,6 @@
 class mysql::innochecksum (
                             $binpath='/usr/local/bin/innochecksum'
-                          ) inherits params {
+                          ) inherits mysql::params {
 
   validate_absolute_path($binpath)
 
