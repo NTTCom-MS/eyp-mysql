@@ -21,8 +21,8 @@ define mysql::backupmysqldump (
     netbackupclient::includedir{ $destination: }
   }
 
-  exec { "backupmysqldump mkdir_p_$destination":
-    command => "/bin/mkdir -p $destination",
+  exec { "backupmysqldump mkdir_p_${destination}":
+    command => "/bin/mkdir -p ${destination}",
     creates => $destination,
   }
 
@@ -31,7 +31,7 @@ define mysql::backupmysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    require => Exec["backupmysqldump mkdir_p_$destination"]
+    require => Exec["backupmysqldump mkdir_p_${destination}"]
   }
 
   file { $backupscript:
