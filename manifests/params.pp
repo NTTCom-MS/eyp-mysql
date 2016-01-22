@@ -26,7 +26,7 @@ class mysql::params {
 
           $mysql_community_packages= [ 'mysql-community-client', 'mysql-community-server' ]
         }
-        default: { fail("Unsupported RHEL/CentOS version! - $::operatingsystemrelease")  }
+        default: { fail("Unsupported RHEL/CentOS version! - ${::operatingsystemrelease}")  }
       }
     }
     'Debian':
@@ -42,7 +42,7 @@ class mysql::params {
             /^14.*$/:
             {
             }
-            default: { fail("Unsupported Ubuntu version! - $::operatingsystemrelease")  }
+            default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
         }
         'Debian': { fail('Unsupported')  }

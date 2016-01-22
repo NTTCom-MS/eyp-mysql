@@ -23,3 +23,8 @@ matrix:
     dist: trusty
     bundler_args:
     script: bundle exec rake spec
+  - rvm: default
+    env: LINT=puppetcode
+    dist: trusty
+    bundler_args:
+    script: bundle exec rake lint
