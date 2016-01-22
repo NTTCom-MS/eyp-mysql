@@ -52,7 +52,7 @@ class mysql::mysql  (
   ###########
 
   package { $mysql::params::mysql_community_packages:
-    ensure => 'installed',
+    ensure  => 'installed',
     require => Package[$mysql::params::mysql_comunity_repo_package[$version]],
   }
 

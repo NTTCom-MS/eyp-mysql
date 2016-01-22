@@ -43,7 +43,7 @@ class mysql::mariadb  (
     ensure  => 'directory',
     owner   => 'mysql',
     group   => 'root',
-    mode    => '775',
+    mode    => '0775',
     require => Exec[ [ "mkdir p datadir ${datadir}", "mkdir p binlogdir ${binlogdir}", "mkdir p logdir ${logdir}" ] ],
   }
 
@@ -57,20 +57,20 @@ class mysql::mariadb  (
 
   exec { "mkdir p datadir ${datadir}":
     command => "mkdir -p ${datadir} ",
-    creates => "${datadir}",
-    require => Package[$mariadb_packages],
+    creates => $datadir,
+    require => Package[$mysql::params::mariadb_packages],
   }
 
   exec { "mkdir p binlogdir ${binlogdir}":
     command => "mkdir -p ${binlogdir} ",
-    creates => "${binlogdir}",
-    require => Package[$mariadb_packages],
+    creates => $binlogdir,
+    require => Package[$mysql::params::mariadb_packages],
   }
 
   exec { "mkdir p logdir ${logdir}":
     command => "mkdir -p ${logdir} ",
-    creates => "${logdir}",
-    require => Package[$mariadb_packages],
+    creates => $logdir,
+    require => Package[$mysql::params::mariadb_packages],
   }
 
   exec { 'stop mysqld':
@@ -79,29 +79,29 @@ class mysql::mariadb  (
     require     => File[ [$datadir, $binlogdir, $logdir] ],
   }
 
-  package { $mariadb_packages:
+  package { $mysql::params::mariadb_packages:
     ensure => $ensure,
     notify => Exec['stop mysqld'],
   }
 
   file { '/etc/mysql/my.cnf':
     ensure  => present,
-    owner   => "root",
-    group   => "root",
-    mode    => 0644,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     require => Exec['stop mysqld'],
     notify  => Service['mysql'],
-    content => template("mysql/mycnf.erb"),
+    content => template("${module_name}/mycnf.erb"),
     backup  => '.puppet-mycnf-back',
   }
 
   file { '/etc/mysql/debian.cnf':
     ensure    => present,
-    owner     => "root",
-    group     => "root",
-    mode      => 0640,
-    require   => Package[$mariadb_packages],
-    content   => template("mysql/debiancnf.erb"),
+    owner     => 'root',
+    group     => 'root',
+    mode      => '0640',
+    require   => Package[$mysql::params::mariadb_packages],
+    content   => template("${module_name}/debiancnf.erb"),
     backup    => '.puppet-debiancnf-back',
     show_diff => false,
   }
