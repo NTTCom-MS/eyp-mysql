@@ -11,17 +11,17 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class mysql (
-							$rootpw,
-							$debianpw,
-						) inherits params{
+              $rootpw,
+              $debianpw,
+            ) inherits mysql::params{
 
-	if defined(Class['ntteam'])
-	{
-		ntteam::tag{ 'mysql': }
-	}
+  if defined(Class['ntteam'])
+  {
+    ntteam::tag{ 'mysql': }
+  }
 
-	class { 'mysql::mariadb':
-		rootpw => $rootpw,
-		debianpw => $debianpw,
-	}
+  class { 'mysql::mariadb':
+    rootpw   => $rootpw,
+    debianpw => $debianpw,
+  }
 }

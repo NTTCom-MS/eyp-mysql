@@ -1,0 +1,14 @@
+HOSTS:
+  ubuntu-14-04:
+    default_apply_opts:
+      order: random
+      strict_variables:
+    platform: ubuntu-14.04-x64
+    hypervisor : docker
+    image: ubuntu:14.04
+    docker_preserve_image: true
+    docker_image_commands:
+      - 'apt-get install gcc make tar wget openjdk-7-jdk openjdk-7-jre -y'
+CONFIG:
+  type: foss
+  log_level: debug
