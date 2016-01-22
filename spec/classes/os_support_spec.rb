@@ -1,13 +1,15 @@
 require 'spec_helper'
-describe 'mysql' do
+describe 'mysql', :type => :class do
 
   context 'default class' do
-    let(:params) { {:rootpw => '1234', :debianpw => '4321'} }
+
+    let (:params) { { 'rootpw' => '1234', 'debianpw' => '4321' } }
+
     let :facts do
     {
-            :osfamily => 'Debian',
-            :operatingsystem => 'Ubuntu',
-            :operatingsystemrelease => '14.0',
+      :osfamily => 'Debian',
+      :operatingsystem => 'Ubuntu',
+      :operatingsystemrelease => '14.0',
     }
     end
 
@@ -15,7 +17,7 @@ describe 'mysql' do
   end
 
   context 'unsupported OS' do
-    let(:params) { {:rootpw => '1234', :debianpw => '4321'} }
+    let (:params) { { 'rootpw' => '1234', 'debianpw' => '4321'} }
     let :facts do
     {
             :osfamily => 'SOFriki',
