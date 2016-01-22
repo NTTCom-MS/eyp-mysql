@@ -32,11 +32,11 @@ class mysql::innochecksum (
 
 
   file { $binpath:
-    ensure   => 'present',
-    owner    => 'root',
-    group    => 'root',
-    mode     => '0755',
-    source 	 => "puppet:///modules/${module_name}/innochecksum",
+    ensure => 'present',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => "puppet:///modules/${module_name}/innochecksum",
   }
 
 }
