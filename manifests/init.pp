@@ -21,7 +21,7 @@ class mysql (
   }
 
   class { 'mysql::mariadb':
-    rootpw => $rootpw,
+    rootpw   => $rootpw,
     debianpw => $debianpw,
   }
 }
