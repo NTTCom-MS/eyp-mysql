@@ -2,6 +2,26 @@ class mysql::params {
 
   $mariadb_packages= [ 'mariadb-server-5.5', 'mariadb-client-5.5' ]
   $community_packages= [ 'mysql-server-5.6', 'mysql-client-5.6' ]
+
+  #MySQL config
+  $binlog_format_default='STATEMENT'
+  $innodb_buffer_pool_size_default='2G'
+  $innodb_log_file_size_default='128M'
+  $join_buffer_size_default='131072'
+  $key_buffer_size_default='32M'
+  $max_binlog_size_default='1073741824'
+  $max_connections_default='500'
+  $max_heap_table_size_default='32M'
+  $max_relay_log_size_default='0'
+  $max_user_connections_default='0'
+  $open_files_limit_default='65535'
+  $query_cache_limit_default='1048576'
+  $query_cache_size_default='0'
+  $sort_buffer_size_default='2097144'
+  $table_open_cache_default='100'
+  $thread_cache_size_default='50'
+  $thread_stack_default='262144'
+
   case $::osfamily
   {
     'redhat':
