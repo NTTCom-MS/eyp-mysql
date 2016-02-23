@@ -106,9 +106,18 @@ class mysql::community  (
     show_diff => false,
   }
 
+  file { '/usr/share/mysql/my-default.cnf':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => File['/etc/mysql/my.cnf'],
+    content => Exec['cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf'],
+  }
+
   exec {'install db community':
     command => "/usr/bin/mysql_install_db --user=mysql --datadir=${datadir}",
-    require => File[ [ '/etc/mysql/my.cnf','/etc/mysql/debian.cnf' ] ],
+    require => File[ [ '/etc/mysql/my.cnf','/etc/mysql/debian.cnf', '/usr/share/mysql/my-default.cnf' ] ],
     creates => "${datadir}/mysql/user.frm",
   }
 
