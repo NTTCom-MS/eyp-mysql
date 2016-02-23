@@ -13,7 +13,7 @@
 class mysql (
               $rootpw,
               $debianpw,
-              $type='community',
+              $mysql_type='community',
             ) inherits mysql::params{
 
   if defined(Class['ntteam'])
@@ -21,7 +21,7 @@ class mysql (
     ntteam::tag{ 'mysql': }
   }
 
-  if($type=='mariadb')
+  if($mysql_type=='mariadb')
   {
     class { 'mysql::mariadb':
     rootpw   => $rootpw,
@@ -29,7 +29,7 @@ class mysql (
     }
   }
 
-  if($type=='community')
+  if($mysql_type=='community')
   {
     class { 'mysql::community':
     rootpw   => $rootpw,
