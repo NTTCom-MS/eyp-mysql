@@ -23,17 +23,17 @@ class mysql (
 
   if($type=='mariadb')
   {
-  	class { 'mysql::mariadb':
-	    rootpw   => $rootpw,
-	    debianpw => $debianpw,
-	  }
+    class { 'mysql::mariadb':
+    rootpw   => $rootpw,
+    debianpw => $debianpw,
+    }
   }
 
   if($type=='community')
   {
-	class { 'mysql::community':
-	    rootpw   => $rootpw,
-	    debianpw => $debianpw,
-  }
+    class { 'mysql::community':
+    rootpw   => $rootpw,
+    debianpw => $debianpw,
+    }
 }
 }

@@ -1,7 +1,7 @@
 class mysql::params {
 
-  $mariadb_packages= [ 'mariadb-server-5.5', 'mariadb-client-5.5' ],
-  $community_packages= [ 'mysql-server-5.6', 'mysql-client-5.6' ],
+  $mariadb_packages= [ 'mariadb-server-5.5', 'mariadb-client-5.5' ]
+  $community_packages= [ 'mysql-server-5.6', 'mysql-client-5.6' ]
   case $::osfamily
   {
     'redhat':
