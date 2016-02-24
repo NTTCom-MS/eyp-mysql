@@ -39,11 +39,11 @@ class mysql::params {
   $version_default='5.6'
 
   #mysqldump config
-  $mysqldump_quick=false
-  $mysqldump_quote_names=false
+  $mysqldump_quick_default=false
+  $mysqldump_quote_names_default=false
 
   #isamchk config
-  $isamchk_key_buffer=undef
+  $isamchk_key_buffer_default=undef
 
   case $::osfamily
   {
