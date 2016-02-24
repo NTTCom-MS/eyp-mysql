@@ -38,6 +38,13 @@ class mysql::params {
   $tmpdir_default=undef
   $version_default='5.6'
 
+  #mysqldump config
+  $mysqldump_quick=false
+  $mysqldump_quote_names=false
+
+  #isamchk config
+  $isamchk_key_buffer=undef
+
   case $::osfamily
   {
     'redhat':

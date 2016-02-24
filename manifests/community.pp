@@ -35,6 +35,13 @@ class mysql::community  (
         $thread_stack=$mysql::params::thread_stack_default,
         $tmpdir=$mysql::params::tmpdir_default,
         $version=$mysql::params::version_default,
+
+        #mysqldump config
+        $mysqldump_quick=$mysql::params::mysqldump_quick_default,
+        $mysqldump_quote_names=$mysql::params::mysqldump_quote_names_default,
+
+        #isamchk config
+        $isamchk_key_buffer=$mysql::params::isamchk_key_buffer_default,
       ) inherits mysql::params {
 
   validate_re($version, [ '^5.6$' ], "Not a supported version: ${version}")
@@ -82,6 +89,15 @@ class mysql::community  (
     validate_absolute_path($tmpdir)
   }
   validate_string($version)
+
+  validate_bool($mysqldump_quick)
+  validate_bool($mysqldump_quote_names)
+
+  if($isamchk_key_buffer)
+  {
+    validate_string($isamchk_key_buffer)
+  }
+
 
 
   Exec {

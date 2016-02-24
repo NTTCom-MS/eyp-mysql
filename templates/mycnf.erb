@@ -69,11 +69,11 @@ sync-master-info               = 1
 sync-relay-log                 = 1
 sync-relay-log-info            = 1
 max-relay-log-size             = <%= @max_relay_log_size %>
+<% end -%>
 <%- if defined?(@replicate_ignore_db) -%>
 replicate-ignore-db            = <%= @replicate_ignore_db.join(',') %>
 <%- end -%>
 
-<% end -%>
 # CACHES AND LIMITS #
 tmp-table-size                 = 32M
 max-heap-table-size            = <%= @max_heap_table_size %>
@@ -103,3 +103,16 @@ log-error                      = <%= @logdir %>/mysql-error.log
 #log-queries-not-using-indexes  = 1
 slow-query-log                 = 1
 slow-query-log-file            = <%= @logdir %>/mysql-slow.log
+
+[mysqldump]
+<%- if @mysqldump_quick -%>
+quick
+<%- end -%>
+<%- if @mysqldump_quote_names -%>
+quote-names
+<%- end -%>
+
+[isamchk]
+<%- if defined?(@isamchk_key_buffer) -%>
+key-buffer-size                = <%= @isamchk_key_buffer %>
+<%- end -%>
