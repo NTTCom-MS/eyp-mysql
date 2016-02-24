@@ -18,7 +18,7 @@ pid-file                       = <%= @datadir %>/mysql.pid
 <%- if @skip_external_locking -%>
 skip-external-locking
 <%- end -%>
-<%- if @tmpdir -%>
+<%- if defined?(@tmpdir) -%>
 tmpdir                         = <%= @tmpdir %>
 <%- end -%>
 
@@ -69,8 +69,8 @@ sync-master-info               = 1
 sync-relay-log                 = 1
 sync-relay-log-info            = 1
 max-relay-log-size             = <%= @max_relay_log_size %>
-<%- if @replicate_ignore_db -%>
-replicate-ignore-db            = <%= @replicate_ignore_db %>
+<%- if defined?(@replicate_ignore_db) -%>
+replicate-ignore-db            = <%= @replicate_ignore_db.join(',') %>
 <%- end -%>
 
 <% end -%>

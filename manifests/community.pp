@@ -1,18 +1,18 @@
 #
 class mysql::community  (
-        $binlogdir='/var/mysql/binlogs',
+        $binlogdir=$mysql::params::binlogdir_default,
         $binlog_format=$mysql::params::binlog_format_default,
-        $charset='utf8',
-        $datadir='/var/mysql/datadir/',
+        $charset=$mysql::params::charset_default,
+        $datadir=$mysql::params::datadir_default,
         $debianpw,
-        $ensure='installed',
-        $expirelogsdays='5',
-        $ignoreclientcharset=false,
+        $ensure=$mysql::params::ensure_default,
+        $expirelogsdays=$mysql::params::expirelogsdays_default,
+        $ignoreclientcharset=$mysql::params::ignoreclientcharset_default,
         $innodb_buffer_pool_size=$mysql::params::innodb_buffer_pool_size_default,
         $innodb_log_file_size=$mysql::params::innodb_log_file_size_default,
         $join_buffer_size=$mysql::params::join_buffer_size_default,
         $key_buffer_size=$mysql::params::key_buffer_size_default,
-        $logdir='/var/log/mysql/',
+        $logdir=$mysql::params::logdir_default,
         $max_binlog_size=$mysql::params::max_binlog_size_default,
         $max_connections=$mysql::params::max_connections_default,
         $max_heap_table_size=$mysql::params::max_heap_table_size_default,
@@ -21,20 +21,20 @@ class mysql::community  (
         $open_files_limit=$mysql::params::open_files_limit_default,
         $query_cache_limit=$mysql::params::query_cache_limit_default,
         $query_cache_size=$mysql::params::query_cache_size_default,
-        $readonly=false,
-        $relaylogdir='/var/mysql/binlogs',
-        $replicate_ignore_db=undef,
+        $readonly=$mysql::params::readonly_default,
+        $relaylogdir=$mysql::params::relaylogdir_default,
+        $replicate_ignore_db=$mysql::params::replicate_ignore_db_default,
         $rootpw,
-        $serverid='1',
-        $skip_external_locking=false,
-        $slave=false,
+        $serverid=$mysql::params::serverid_default,
+        $skip_external_locking=$mysql::params::skip_external_locking_default,
+        $slave=$mysql::params::slave_default,
         $sort_buffer_size=$mysql::params::sort_buffer_size_default,
-        $srcdir='/usr/local/src',
+        $srcdir=$mysql::params::srcdir_default,
         $table_open_cache=$mysql::params::table_open_cache_default,
         $thread_cache_size=$mysql::params::thread_cache_size_default,
         $thread_stack=$mysql::params::thread_stack_default,
-        $tmpdir=undef,
-        $version='5.6',
+        $tmpdir=$mysql::params::tmpdir_default,
+        $version=$mysql::params::version_default,
       ) inherits mysql::params {
 
   validate_re($version, [ '^5.6$' ], "Not a supported version: ${version}")
@@ -46,6 +46,42 @@ class mysql::community  (
   validate_absolute_path($relaylogdir)
 
   validate_bool($readonly)
+
+  validate_string($binlog_format)
+  validate_string($charset)
+  validate_string($debianpw)
+  validate_string($expirelogsdays)
+  validate_bool($ignoreclientcharset)
+  validate_string($innodb_buffer_pool_size)
+  validate_string($innodb_log_file_size)
+  validate_string($join_buffer_size)
+  validate_string($key_buffer_size)
+  validate_string($max_binlog_size)
+  validate_string($max_connections)
+  validate_string($max_heap_table_size)
+  validate_string($max_relay_log_size)
+  validate_string($max_user_connections)
+  validate_string($open_files_limit)
+  validate_string($query_cache_limit)
+  validate_string($query_cache_size)
+  if($replicate_ignore_db)
+  {
+    validate_array($replicate_ignore_db)
+  }
+  validate_string($rootpw)
+  validate_string($serverid)
+  validate_bool($skip_external_locking)
+  validate_bool($slave)
+  validate_string($sort_buffer_size)
+  validate_absolute_path($srcdir)
+  validate_string($table_open_cache)
+  validate_string($thread_cache_size)
+  validate_string($thread_stack)
+  if($tmpdir)
+  {
+    validate_absolute_path($tmpdir)
+  }
+  validate_string($version)
 
 
   Exec {
