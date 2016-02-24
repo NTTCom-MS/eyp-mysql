@@ -1,20 +1,50 @@
 #
 class mysql::mariadb  (
-        $version='5.5',
-        $datadir='/var/mysql/datadir/',
-        $binlogdir='/var/mysql/binlogs',
-        $relaylogdir='/var/mysql/binlogs',
-        $logdir='/var/log/mysql/',
-        $srcdir='/usr/local/src',
-        $rootpw,
+        #MySQL
+        $binlogdir=$mysql::params::binlogdir_default,
+        $binlog_format=$mysql::params::binlog_format_default,
+        $charset=$mysql::params::charset_default,
+        $datadir=$mysql::params::datadir_default,
         $debianpw,
-        $ensure='installed',
-        $slave=false,
-        $readonly=false,
-        $charset='utf8',
-        $ignoreclientcharset=false,
-        $expirelogsdays='5',
-        $serverid='1'
+        $ensure=$mysql::params::ensure_default,
+        $expirelogsdays=$mysql::params::expirelogsdays_default,
+        $ignoreclientcharset=$mysql::params::ignoreclientcharset_default,
+        $innodb_buffer_pool_size=$mysql::params::innodb_buffer_pool_size_default,
+        $innodb_log_file_size=$mysql::params::innodb_log_file_size_default,
+        $join_buffer_size=$mysql::params::join_buffer_size_default,
+        $key_buffer_size=$mysql::params::key_buffer_size_default,
+        $logdir=$mysql::params::logdir_default,
+        $max_binlog_size=$mysql::params::max_binlog_size_default,
+        $max_connections=$mysql::params::max_connections_default,
+        $max_heap_table_size=$mysql::params::max_heap_table_size_default,
+        $max_relay_log_size=$mysql::params::max_relay_log_size_default,
+        $max_user_connections=$mysql::params::max_user_connections_default,
+        $open_files_limit=$mysql::params::open_files_limit_default,
+        $query_cache_limit=$mysql::params::query_cache_limit_default,
+        $query_cache_size=$mysql::params::query_cache_size_default,
+        $readonly=$mysql::params::readonly_default,
+        $relaylogdir=$mysql::params::relaylogdir_default,
+        $replicate_ignore_db=$mysql::params::replicate_ignore_db_default,
+        $rootpw,
+        $serverid=$mysql::params::serverid_default,
+        $skip_external_locking=$mysql::params::skip_external_locking_default,
+        $slave=$mysql::params::slave_default,
+        $sort_buffer_size=$mysql::params::sort_buffer_size_default,
+        $srcdir=$mysql::params::srcdir_default,
+        $table_open_cache=$mysql::params::table_open_cache_default,
+        $thread_cache_size=$mysql::params::thread_cache_size_default,
+        $thread_stack=$mysql::params::thread_stack_default,
+        $tmpdir=$mysql::params::tmpdir_default,
+
+        #MariaDB specific
+        $version=$mysql::params::mariadb_version_default,
+
+        #mysqldump config
+        $mysqldump_quick=$mysql::params::mysqldump_quick_default,
+        $mysqldump_quote_names=$mysql::params::mysqldump_quote_names_default,
+
+        #isamchk config
+        $isamchk_key_buffer=$mysql::params::isamchk_key_buffer_default,
       ) inherits mysql::params {
 
   validate_re($version, [ '^5.5$' ], "Not a supported version: ${version}")

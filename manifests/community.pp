@@ -1,5 +1,6 @@
 #
 class mysql::community  (
+        #MySQL
         $binlogdir=$mysql::params::binlogdir_default,
         $binlog_format=$mysql::params::binlog_format_default,
         $charset=$mysql::params::charset_default,
@@ -34,7 +35,9 @@ class mysql::community  (
         $thread_cache_size=$mysql::params::thread_cache_size_default,
         $thread_stack=$mysql::params::thread_stack_default,
         $tmpdir=$mysql::params::tmpdir_default,
-        $version=$mysql::params::version_default,
+
+        #community specific
+        $version=$mysql::params::community_version_default,
 
         #mysqldump config
         $mysqldump_quick=$mysql::params::mysqldump_quick_default,
