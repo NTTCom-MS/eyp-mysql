@@ -1,5 +1,5 @@
 #
-class mysql::mariadb  (
+class mysql::community  (
         #MySQL
         $binlogdir=$mysql::params::binlogdir_default,
         $binlog_format=$mysql::params::binlog_format_default,
@@ -36,8 +36,8 @@ class mysql::mariadb  (
         $thread_stack=$mysql::params::thread_stack_default,
         $tmpdir=$mysql::params::tmpdir_default,
 
-        #MariaDB specific
-        $version=$mysql::params::mariadb_version_default,
+        #community specific
+        $version=$mysql::params::community_version_default,
 
         #mysqldump config
         $mysqldump_quick=$mysql::params::mysqldump_quick_default,
@@ -47,7 +47,7 @@ class mysql::mariadb  (
         $isamchk_key_buffer=$mysql::params::isamchk_key_buffer_default,
       ) inherits mysql::params {
 
-  validate_re($version, [ '^5.5$' ], "Not a supported version: ${version}")
+  validate_re($version, [ '^5.6$' ], "Not a supported version: ${version}")
   validate_re($ensure, [ '^installed$', '^latest$' ], "ensure: installed/latest (${ensure} is not supported)")
 
   validate_absolute_path($datadir)
@@ -57,6 +57,51 @@ class mysql::mariadb  (
 
   validate_bool($readonly)
 
+  validate_string($binlog_format)
+  validate_string($charset)
+  validate_string($debianpw)
+  validate_string($expirelogsdays)
+  validate_bool($ignoreclientcharset)
+  validate_string($innodb_buffer_pool_size)
+  validate_string($innodb_log_file_size)
+  validate_string($join_buffer_size)
+  validate_string($key_buffer_size)
+  validate_string($max_binlog_size)
+  validate_string($max_connections)
+  validate_string($max_heap_table_size)
+  validate_string($max_relay_log_size)
+  validate_string($max_user_connections)
+  validate_string($open_files_limit)
+  validate_string($query_cache_limit)
+  validate_string($query_cache_size)
+  if($replicate_ignore_db)
+  {
+    validate_array($replicate_ignore_db)
+  }
+  validate_string($rootpw)
+  validate_string($serverid)
+  validate_bool($skip_external_locking)
+  validate_bool($slave)
+  validate_string($sort_buffer_size)
+  validate_absolute_path($srcdir)
+  validate_string($table_open_cache)
+  validate_string($thread_cache_size)
+  validate_string($thread_stack)
+  if($tmpdir)
+  {
+    validate_absolute_path($tmpdir)
+  }
+  validate_string($version)
+
+  validate_bool($mysqldump_quick)
+  validate_bool($mysqldump_quote_names)
+
+  if($isamchk_key_buffer)
+  {
+    validate_string($isamchk_key_buffer)
+  }
+
+
 
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
@@ -64,7 +109,7 @@ class mysql::mariadb  (
 
   if defined(Class['ntteam'])
   {
-    ntteam::tag{ 'mariadb': }
+    ntteam::tag{ 'community': }
   }
 
 
@@ -88,19 +133,19 @@ class mysql::mariadb  (
   exec { "mkdir p datadir ${datadir}":
     command => "mkdir -p ${datadir} ",
     creates => $datadir,
-    require => Package[$mysql::params::mariadb_packages],
+    require => Package[$mysql::params::community_packages],
   }
 
   exec { "mkdir p binlogdir ${binlogdir}":
     command => "mkdir -p ${binlogdir} ",
     creates => $binlogdir,
-    require => Package[$mysql::params::mariadb_packages],
+    require => Package[$mysql::params::community_packages],
   }
 
   exec { "mkdir p logdir ${logdir}":
     command => "mkdir -p ${logdir} ",
     creates => $logdir,
-    require => Package[$mysql::params::mariadb_packages],
+    require => Package[$mysql::params::community_packages],
   }
 
   exec { 'stop mysqld':
@@ -109,7 +154,7 @@ class mysql::mariadb  (
     require     => File[ [$datadir, $binlogdir, $logdir] ],
   }
 
-  package { $mysql::params::mariadb_packages:
+  package { $mysql::params::community_packages:
     ensure => $ensure,
     notify => Exec['stop mysqld'],
   }
@@ -130,15 +175,24 @@ class mysql::mariadb  (
     owner     => 'root',
     group     => 'root',
     mode      => '0640',
-    require   => Package[$mysql::params::mariadb_packages],
+    require   => Package[$mysql::params::community_packages],
     content   => template("${module_name}/debiancnf.erb"),
     backup    => '.puppet-debiancnf-back',
     show_diff => false,
   }
 
-  exec {'install db mariadb':
+  file { '/usr/share/mysql/my-default.cnf':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => File['/etc/mysql/my.cnf'],
+    content => Exec['cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf'],
+  }
+
+  exec {'install db community':
     command => "/usr/bin/mysql_install_db --user=mysql --datadir=${datadir}",
-    require => File[ [ '/etc/mysql/my.cnf','/etc/mysql/debian.cnf' ] ],
+    require => File[ [ '/etc/mysql/my.cnf','/etc/mysql/debian.cnf', '/usr/share/mysql/my-default.cnf' ] ],
     creates => "${datadir}/mysql/user.frm",
   }
 
@@ -148,7 +202,7 @@ class mysql::mariadb  (
     group     => 'root',
     mode      => '0400',
     content   => "${rootpw}\n",
-    require   => Exec['install db mariadb'],
+    require   => Exec['install db community'],
     notify    => Exec['set root pw'],
     show_diff => false,
   }
@@ -160,7 +214,7 @@ class mysql::mariadb  (
     group     => 'root',
     mode      => '0400',
     content   => "${debianpw}\n",
-    require   => Exec['install db mariadb'],
+    require   => Exec['install db community'],
     show_diff => false,
     notify    => Exec['set debian pw'],
   }

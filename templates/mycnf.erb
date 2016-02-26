@@ -15,6 +15,12 @@ user                           = mysql
 default-storage-engine         = InnoDB
 socket                         = <%= @datadir %>/mysqld.sock
 pid-file                       = <%= @datadir %>/mysql.pid
+<%- if @skip_external_locking -%>
+skip-external-locking
+<%- end -%>
+<%- if defined?(@tmpdir) -%>
+tmpdir                         = <%= @tmpdir %>
+<%- end -%>
 
 # CHARSETS #
 <% if @ignoreclientcharset -%>
@@ -33,7 +39,7 @@ read-only                      = 0
 <% end -%>
 
 # MyISAM #
-key-buffer-size                = 32M
+key-buffer-size                = <%= @key_buffer_size %>
 myisam-recover                 = FORCE,BACKUP
 
 # SAFETY #
@@ -49,8 +55,10 @@ datadir                        = <%= @datadir %>
 # BINARY LOGGING #
 log-bin                        = <%= @binlogdir %>/binlogs
 expire-logs-days               = <%= @expirelogsdays %>
+binlog-format                  = <%= @binlog_format %>
 sync-binlog                    = 1
 server-id                      = <%= @serverid %>
+max-binlog-size                = <%= @max_binlog_size %>
 
 <% if @slave -%>
 # REPLICATION #
@@ -60,29 +68,51 @@ slave-net-timeout              = 60
 sync-master-info               = 1
 sync-relay-log                 = 1
 sync-relay-log-info            = 1
-
+max-relay-log-size             = <%= @max_relay_log_size %>
 <% end -%>
+<%- if defined?(@replicate_ignore_db) -%>
+replicate-ignore-db            = <%= @replicate_ignore_db.join(',') %>
+<%- end -%>
+
 # CACHES AND LIMITS #
 tmp-table-size                 = 32M
-max-heap-table-size            = 32M
+max-heap-table-size            = <%= @max_heap_table_size %>
 query-cache-type               = 0
-query-cache-size               = 0
-max-connections                = 500
-thread-cache-size              = 50
-open-files-limit               = 65535
+query-cache-size               = <%= @query_cache_size %>
+query-cache-limit              = <%= @query_cache_limit %>
+max-connections                = <%= @max_connections %>
+max-user-connections           = <%= @max_user_connections %>
+thread-cache-size              = <%= @thread_cache_size %>
+open-files-limit               = <%= @open_files_limit %>
 table-definition-cache         = 4096
-table-open-cache               = 100
+table-open-cache               = <%= @table_open_cache %>
+sort-buffer-size               = <%= @sort_buffer_size %>
+join-buffer-size               = <%= @join_buffer_size %>
+thread-stack                   = <%= @thread_stack %>
 
 # INNODB #
 innodb-flush-method            = O_DIRECT
 innodb-log-files-in-group      = 2
-innodb-log-file-size           = 128M
+innodb-log-file-size           = <%= @innodb_log_file_size %>
 innodb-flush-log-at-trx-commit = 1
 innodb-file-per-table          = 1
-innodb-buffer-pool-size        = 2G
+innodb-buffer-pool-size        = <%= @innodb_buffer_pool_size %>
 
 # LOGGING #
 log-error                      = <%= @logdir %>/mysql-error.log
 #log-queries-not-using-indexes  = 1
 slow-query-log                 = 1
 slow-query-log-file            = <%= @logdir %>/mysql-slow.log
+
+[mysqldump]
+<%- if @mysqldump_quick -%>
+quick
+<%- end -%>
+<%- if @mysqldump_quote_names -%>
+quote-names
+<%- end -%>
+
+[isamchk]
+<%- if defined?(@isamchk_key_buffer) -%>
+key-buffer-size                = <%= @isamchk_key_buffer %>
+<%- end -%>
