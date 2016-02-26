@@ -55,7 +55,7 @@ class mysql::params {
     {
       #$perconatoolkit_wgetcmd="bash -c 'curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\"'"
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\")\''
-
+      
       case $::operatingsystemrelease
       {
         /^5.*$/:
