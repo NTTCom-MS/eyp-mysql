@@ -1,6 +1,6 @@
 {
   "name": "eyp-mysql",
-  "version": "0.1.34",
+  "version": "0.2.2",
   "author": "eyp",
   "summary": "manages mysql (MariaDB so far) and deploys a backup script",
   "license": "Apache-2.0",
