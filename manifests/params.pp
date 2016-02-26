@@ -1,8 +1,5 @@
 class mysql::params {
 
-  $mariadb_packages= [ 'mariadb-server-5.5', 'mariadb-client-5.5' ]
-  $community_packages= [ 'mysql-server-5.6', 'mysql-client-5.6' ]
-
   #MySQL config
   $binlogdir_default='/var/mysql/binlogs'
   $binlog_format_default='STATEMENT'
@@ -36,7 +33,14 @@ class mysql::params {
   $thread_cache_size_default='50'
   $thread_stack_default='262144'
   $tmpdir_default=undef
-  $version_default='5.6'
+
+  #community specific
+  $community_version_default='5.6'
+  $community_packages= [ 'mysql-server-5.6', 'mysql-client-5.6' ]
+
+  #MariaDB specific
+  $mariadb_version_default='5.5'
+  $mariadb_packages= [ 'mariadb-server-5.5', 'mariadb-client-5.5' ]
 
   #mysqldump config
   $mysqldump_quick_default=false
