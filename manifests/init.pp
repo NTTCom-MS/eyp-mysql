@@ -13,7 +13,7 @@
 class mysql (
               $rootpw,
               $debianpw,
-              $mysql_type='community',
+              $mysql_type = 'community',
             ) inherits mysql::params{
 
   if defined(Class['ntteam'])
