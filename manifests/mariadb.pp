@@ -1,11 +1,13 @@
 #
 class mysql::mariadb  (
+        $debianpw,
+        $rootpw,
+
         #MySQL
         $binlogdir=$mysql::params::binlogdir_default,
         $binlog_format=$mysql::params::binlog_format_default,
         $charset=$mysql::params::charset_default,
         $datadir=$mysql::params::datadir_default,
-        $debianpw,
         $ensure=$mysql::params::ensure_default,
         $expirelogsdays=$mysql::params::expirelogsdays_default,
         $ignoreclientcharset=$mysql::params::ignoreclientcharset_default,
@@ -25,7 +27,6 @@ class mysql::mariadb  (
         $readonly=$mysql::params::readonly_default,
         $relaylogdir=$mysql::params::relaylogdir_default,
         $replicate_ignore_db=$mysql::params::replicate_ignore_db_default,
-        $rootpw,
         $serverid=$mysql::params::serverid_default,
         $skip_external_locking=$mysql::params::skip_external_locking_default,
         $slave=$mysql::params::slave_default,

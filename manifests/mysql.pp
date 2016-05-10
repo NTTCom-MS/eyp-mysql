@@ -1,21 +1,21 @@
 #
-class mysql::mysql  (
-        $version='5.7',
-        $datadir='/var/mysql/datadir/',
-        $binlogdir='/var/mysql/binlogs',
-        $relaylogdir='/var/mysql/binlogs',
-        $logdir='/var/log/mysql/',
-        $srcdir='/usr/local/src',
-        $rootpw,
-        $debianpw=undef,
-        $ensure='installed',
-        $slave=false,
-        $readonly=false,
-        $charset='utf8',
-        $ignoreclientcharset=false,
-        $expirelogsdays='5',
-        $serverid='1'
-      ) inherits mysql::params {
+class mysql::mysql(
+                    $rootpw,
+                    $version             = '5.7',
+                    $datadir             = '/var/mysql/datadir/',
+                    $binlogdir           = '/var/mysql/binlogs',
+                    $relaylogdir         = '/var/mysql/binlogs',
+                    $logdir              = '/var/log/mysql/',
+                    $srcdir              = '/usr/local/src',
+                    $debianpw            = undef,
+                    $ensure              = 'installed',
+                    $slave               = false,
+                    $readonly            = false,
+                    $charset             = 'utf8',
+                    $ignoreclientcharset = false,
+                    $expirelogsdays      = '5',
+                    $serverid            = '1'
+                  ) inherits mysql::params {
 
   validate_re($version, [ '^5.7$' ], "Not a supported version: ${version}")
   validate_re($ensure, [ '^installed$', '^latest$' ], "ensure: installed/latest (${ensure} is not supported)")
