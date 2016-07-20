@@ -1,6 +1,6 @@
 {
   "name": "eyp-mysql",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "eyp",
   "summary": "manages mysql (MariaDB so far) and deploys a backup script",
   "license": "Apache-2.0",
@@ -8,7 +8,8 @@
   "project_page": null,
   "issues_url": null,
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"}
+    {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"},
+    {"name":"eyp/eyplib","version_requirement":">= 0.1.0 < 0.2.0"}
   ],
   "operatingsystem_support": [
     {

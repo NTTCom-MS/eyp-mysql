@@ -59,6 +59,9 @@ binlog-format                  = <%= @binlog_format %>
 sync-binlog                    = 1
 server-id                      = <%= @serverid %>
 max-binlog-size                = <%= @max_binlog_size %>
+<% if defined?(@log_bin_trust_function_creators) -%>
+log_bin_trust_function_creators = <%= scope.function_bool2number([@log_bin_trust_function_creators]) %>
+<% end -%>
 
 <% if @slave -%>
 # REPLICATION #

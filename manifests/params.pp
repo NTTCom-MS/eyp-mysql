@@ -33,6 +33,7 @@ class mysql::params {
   $thread_cache_size_default='50'
   $thread_stack_default='262144'
   $tmpdir_default=undef
+  $log_bin_trust_function_creators_default=undef,
 
   #community specific
   $community_version_default='5.6'
@@ -55,7 +56,7 @@ class mysql::params {
     {
       #$perconatoolkit_wgetcmd="bash -c 'curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\"'"
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\")\''
-      
+
       case $::operatingsystemrelease
       {
         /^5.*$/:

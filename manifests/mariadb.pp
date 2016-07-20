@@ -36,6 +36,7 @@ class mysql::mariadb  (
         $thread_cache_size=$mysql::params::thread_cache_size_default,
         $thread_stack=$mysql::params::thread_stack_default,
         $tmpdir=$mysql::params::tmpdir_default,
+        $log_bin_trust_function_creators = $mysql::params::log_bin_trust_function_creators_default,
 
         #MariaDB specific
         $version=$mysql::params::mariadb_version_default,
