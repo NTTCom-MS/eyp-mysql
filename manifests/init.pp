@@ -1,14 +1,3 @@
-# == Class: mysql
-#
-# Full description of class mysql here.
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2015 Your name here, unless otherwise noted.
 #
 class mysql (
               $rootpw,
@@ -28,8 +17,7 @@ class mysql (
     debianpw => $debianpw,
     }
   }
-
-  if($mysql_type=='community')
+  elsif($mysql_type=='community')
   {
     class { 'mysql::community':
     rootpw   => $rootpw,
