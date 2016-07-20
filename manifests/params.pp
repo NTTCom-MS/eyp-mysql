@@ -33,7 +33,7 @@ class mysql::params {
   $thread_cache_size_default='50'
   $thread_stack_default='262144'
   $tmpdir_default=undef
-  $log_bin_trust_function_creators_default=undef,
+  $log_bin_trust_function_creators_default=undef
 
   #community specific
   $community_version_default='5.6'
