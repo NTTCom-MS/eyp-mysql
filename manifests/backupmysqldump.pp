@@ -18,7 +18,7 @@ define mysql::backupmysqldump (
 
   if defined(Class['netbackupclient'])
   {
-    netbackupclient::includedir{ $destination: }
+    netbackupclient::includedir { $destination: }
   }
 
   exec { "backupmysqldump mkdir_p_${destination}":
