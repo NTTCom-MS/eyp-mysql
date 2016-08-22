@@ -1,18 +1,18 @@
-define mysql::backupmysqldump (
-        $destination,
-        $retention    = undef,
-        $logdir       = undef,
-        $compress     = true,
-        $mailto       = undef,
-        $idhost       = undef,
-        $backupscript = '/usr/local/bin/backupmysqldump',
-        $hour         = '2',
-        $minute       = '0',
-        $month        = undef,
-        $monthday     = undef,
-        $weekday      = undef,
-        $setcron      = true,
-      ) {
+define mysql::backup::mysqldump (
+                                  $destination,
+                                  $retention    = undef,
+                                  $logdir       = undef,
+                                  $compress     = true,
+                                  $mailto       = undef,
+                                  $idhost       = undef,
+                                  $backupscript = '/usr/local/bin/backupmysqldump',
+                                  $hour         = '2',
+                                  $minute       = '0',
+                                  $month        = undef,
+                                  $monthday     = undef,
+                                  $weekday      = undef,
+                                  $setcron      = true,
+                                ) {
   #
   validate_absolute_path($destination)
 
@@ -39,7 +39,7 @@ define mysql::backupmysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => template("${module_name}/backupmysqldump.erb")
+    content => template("${module_name}/backup/mysqldump/backupmysqldump.erb")
   }
 
   file { "${backupscript}.config":
@@ -47,7 +47,7 @@ define mysql::backupmysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => template("${module_name}/backupmysqldumpconfig.erb")
+    content => template("${module_name}/backup/mysqldump/backupmysqldumpconfig.erb")
   }
 
   if($setcron)
