@@ -92,6 +92,7 @@ function cleanup
 	else
 		find $LOGDIR -type f -mtime +$RETENTION -delete
 		find $LOGDIR -type d -empty -delete
+		find $LOGDIR -maxdepth 1 -mtime +$RETENTION -exec rm {} \;
 	fi
 }
 
