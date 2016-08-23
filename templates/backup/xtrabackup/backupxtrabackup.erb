@@ -94,21 +94,6 @@ function cleanup
 	fi
 }
 
-function compress
-{
-	if [ -z "$COMPRESS" ];
-	then
-		echo "compress skipped"
-	else
-    if [ "$COMPRESS" != "false" ];
-    then
-		  find $LOGDIR/$BACKUPTS -type f -exec gzip -9 {} \;
-    else
-      echo "compress disabled"
-    fi
-	fi
-}
-
 PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
 
 BASEDIRBCK=$(dirname $0)
@@ -152,5 +137,4 @@ then
 fi
 
 mailer
-compress
 cleanup
