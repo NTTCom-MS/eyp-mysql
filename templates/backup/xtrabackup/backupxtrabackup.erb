@@ -90,9 +90,7 @@ function cleanup
 	then
 		echo "cleanup skipped, no RETENTION defined"
 	else
-		find $LOGDIR -type f -mtime +$RETENTION -delete
-		find $LOGDIR -type d -empty -delete
-		find $LOGDIR -maxdepth 1 -mtime +$RETENTION -exec rm {} \;
+		find $LOGDIR -maxdepth 1 -mtime +$RETENTION -exec rm -fr {} \;
 	fi
 }
 
