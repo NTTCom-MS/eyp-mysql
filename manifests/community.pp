@@ -99,6 +99,16 @@ class mysql::community  (
     validate_string($isamchk_key_buffer)
   }
 
+  if($debianpw=='password')
+  {
+    fail('Please, change default password for debianpw')
+  }
+
+  if($rootpw=='password')
+  {
+    fail('Please, change default password for rootpw')
+  }
+
 
 
   Exec {
