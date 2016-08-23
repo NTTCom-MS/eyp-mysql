@@ -2,10 +2,10 @@
 
 #TODO: custom conf
 
-BACKUPTYPE="<%= @backupid %>"
-
 function initbck
 {
+
+	LOGDIR=${LOGDIR-$DESTINATION}
 
 	if [ -z "${LOGDIR}" ];
 	then
@@ -62,22 +62,25 @@ function mailer
 
 function dobackup
 {
-	DUMPDEST="$LOGDIR/$BACKUPTS"
+	DUMPDEST="$DESTINATION"
 
 	mkdir -p $DUMPDEST
 
-	if [ -z "$INSTANCE_NAME" ];
-	then
-		echo "no instances defined"
-		BCKFAILED=1
-	else
-		$BARMANBIN backup $INSTANCE_NAME > ${DUMPDEST}/barman.log 2>&1
+	# do xtrabackup
+	innobackupex ${DUMPDEST}
 
-		if [ "$?" -ne 0 ];
-		then
-			echo "barman error, check logs"
-			BCKFAILED=1
-		fi
+	if [ "$?" -ne 0 ];
+	then
+		echo "innobackupex error, check logs"
+		BCKFAILED=1
+	fi
+
+	grep "innobackupex: completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
+
+	if [ "$?" -ne 0 ];
+	then
+		echo "innobackupex error - completed OK not found - check logs"
+		BCKFAILED=1
 	fi
 }
 
@@ -112,6 +115,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
 BASEDIRBCK=$(dirname $0)
 BASENAMEBCK=$(basename $0)
 IDHOST=${IDHOST-$(hostname -s)}
+BACKUPTYPE=${BACKUPTYPE-MySQL}
 
 if [ ! -z "$1" ] && [ -f "$1" ];
 then
@@ -128,10 +132,10 @@ fi
 
 INSTANCE_NAME=${INSTANCE_NAME-$1}
 
-BARMANBIN=${BARMANBIN-$(which barman 2>/dev/null)}
-if [ -z "$BARMANBIN" ];
+XTRABACKUPBIN=${XTRABACKUPBIN-$(which innobackupex 2>/dev/null)}
+if [ -z "$XTRABACKUPBIN" ];
 then
-	echo "barman not found"
+	echo "xtrabackup (innobackupex) not found"
 	BCKFAILED=1
 fi
 

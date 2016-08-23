@@ -1,18 +1,19 @@
 define mysql::backup::xtrabackup (
                                     $destination,
-                                    $retention    = undef,
-                                    $logdir       = undef,
-                                    $compress     = true,
-                                    $mailto       = undef,
-                                    $idhost       = undef,
-                                    $backupscript = '/usr/local/bin/xtrabackup',
-                                    $hour         = '2',
-                                    $minute       = '0',
-                                    $month        = undef,
-                                    $monthday     = undef,
-                                    $weekday      = undef,
-                                    $setcron      = true,
-                                    $backupid     = 'MySQL',
+                                    $retention          = undef,
+                                    $logdir             = undef,
+                                    $compress           = true,
+                                    $mailto             = undef,
+                                    $idhost             = undef,
+                                    $backupscript       = '/usr/local/bin/backup_xtrabackup',
+                                    $hour               = '2',
+                                    $minute             = '0',
+                                    $month              = undef,
+                                    $monthday           = undef,
+                                    $weekday            = undef,
+                                    $setcron            = true,
+                                    $backupid           = 'MySQL',
+                                    $xtrabackup_version = '2.4.4',
                                   ) {
   #
   validate_absolute_path($destination)
@@ -71,5 +72,11 @@ define mysql::backup::xtrabackup (
   #
   # https://www.percona.com/doc/percona-xtrabackup/2.3/installation.html#installing-percona-xtrabackup-from-repositories
   #
+  if(!defined(Class['mysql::backup::xtrabackup::install']))
+  {
+    class { 'mysql::backup::xtrabackup::install':
+      version => $xtrabackup_version,
+    }
+  }
 
 }

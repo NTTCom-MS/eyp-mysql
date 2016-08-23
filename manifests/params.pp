@@ -50,6 +50,11 @@ class mysql::params {
   #isamchk config
   $isamchk_key_buffer_default=undef
 
+  $percona_xtrabackup_package_name = {
+                                        '2.4.4' => 'percona-xtrabackup-24',
+                                        '2.0.8' => 'percona-xtrabackup-20',
+                                      }
+
   case $::osfamily
   {
     'redhat':
@@ -66,6 +71,11 @@ class mysql::params {
           $mysql_comunity_repo_package={ '5.7' => 'mysql57-community-release'}
 
           $mysql_community_packages= [ 'mysql-community-client', 'mysql-community-server' ]
+
+          $percona_xtrabackup_package = {
+                                          '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/5/x86_64/percona-xtrabackup-24-2.4.4-1.el5.x86_64.rpm',
+                                          '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel5/x86_64/percona-xtrabackup-20-2.0.8-587.rhel5.x86_64.rpm',
+                                        }
         }
         /^6.*$/:
         {
@@ -74,6 +84,11 @@ class mysql::params {
           $mysql_comunity_repo_package={ '5.7' => 'mysql57-community-release'}
 
           $mysql_community_packages= [ 'mysql-community-client', 'mysql-community-server' ]
+
+          $percona_xtrabackup_package = {
+                                          '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/6/x86_64/percona-xtrabackup-24-2.4.4-1.el6.x86_64.rpm',
+                                          '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel6/x86_64/percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm',
+                                        }
         }
         default: { fail("Unsupported RHEL/CentOS version! - ${::operatingsystemrelease}")  }
       }
@@ -90,6 +105,10 @@ class mysql::params {
           {
             /^14.*$/:
             {
+              $percona_xtrabackup_package = {
+                                              '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/debian/trusty/x86_64/percona-xtrabackup-24_2.4.4-1.trusty_amd64.deb',
+                                              '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/deb/precise/x86_64/percona-xtrabackup-20_2.0.8-587.precise_amd64.deb',
+                                            }
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
