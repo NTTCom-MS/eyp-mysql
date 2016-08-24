@@ -2,7 +2,7 @@
 
 Major changes:
 
-## 0.2 to 0.3
+## 0.3
 
 * **INCOMPATIBLE CHANGE**: backup scripts moved to namespace **mysql::backup**:
   * **mysql::backupmysqldump** moved to **mysql::backup::mysqldump**
