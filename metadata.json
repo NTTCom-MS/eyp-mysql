@@ -2,7 +2,7 @@
   "name": "eyp-mysql",
   "version": "0.3.1",
   "author": "eyp",
-  "summary": "manages mysql (MariaDB so far) and deploys a backup script",
+  "summary": "manages mysql and deploys a backup script",
   "license": "Apache-2.0",
   "source": "",
   "project_page": null,
