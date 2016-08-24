@@ -35,14 +35,6 @@ class mysql::params {
   $tmpdir_default=undef
   $log_bin_trust_function_creators_default=undef
 
-  #community specific
-  $community_version_default='5.6'
-  $community_packages= [ 'mysql-server-5.6', 'mysql-client-5.6' ]
-
-  #MariaDB specific
-  $mariadb_version_default='5.5'
-  $mariadb_packages= [ 'mariadb-server-5.5', 'mariadb-client-5.5' ]
-
   #mysqldump config
   $mysqldump_quick_default=false
   $mysqldump_quote_names_default=false
@@ -59,19 +51,14 @@ class mysql::params {
   {
     'redhat':
     {
-      #$perconatoolkit_wgetcmd="bash -c 'curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\"'"
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\")\''
+
+      $package_provider='rpm'
 
       case $::operatingsystemrelease
       {
         /^5.*$/:
         {
-          $mysql_repo_pkg_url={ '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el5-7.noarch.rpm' }
-          $package_provider='rpm'
-          $mysql_comunity_repo_package={ '5.7' => 'mysql57-community-release'}
-
-          $mysql_community_packages= [ 'mysql-community-client', 'mysql-community-server' ]
-
           $percona_xtrabackup_package = {
                                           '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/5/x86_64/percona-xtrabackup-24-2.4.4-1.el5.x86_64.rpm',
                                           '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel5/x86_64/percona-xtrabackup-20-2.0.8-587.rhel5.x86_64.rpm',
@@ -79,16 +66,14 @@ class mysql::params {
         }
         /^6.*$/:
         {
-          $mysql_repo_pkg_url={ '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm' }
-          $package_provider='rpm'
-          $mysql_comunity_repo_package={ '5.7' => 'mysql57-community-release'}
-
-          $mysql_community_packages= [ 'mysql-community-client', 'mysql-community-server' ]
-
           $percona_xtrabackup_package = {
                                           '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/6/x86_64/percona-xtrabackup-24-2.4.4-1.el6.x86_64.rpm',
                                           '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel6/x86_64/percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm',
                                         }
+        }
+        /^7.*$/:
+        {
+
         }
         default: { fail("Unsupported RHEL/CentOS version! - ${::operatingsystemrelease}")  }
       }
@@ -96,6 +81,8 @@ class mysql::params {
     'Debian':
     {
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*deb"\' | cut -f 2 -d\")\''
+
+      $package_provider='dpkg'
 
       case $::operatingsystem
       {
@@ -119,5 +106,4 @@ class mysql::params {
     }
     default: { fail('Unsupported OS!')  }
   }
-
 }

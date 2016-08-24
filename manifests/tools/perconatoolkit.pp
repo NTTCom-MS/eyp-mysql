@@ -1,4 +1,4 @@
-class mysql::perconatoolkit() inherits mysql::params {
+class mysql::tools::perconatoolkit() inherits mysql::params {
 
   #TODO:
 

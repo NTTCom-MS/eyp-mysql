@@ -1,12 +1,12 @@
 {
   "name": "eyp-mysql",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "author": "eyp",
-  "summary": "manages mysql and deploys a backup script",
+  "summary": "manages mysql and deploys backup scripts",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/NTTCom-MS/eyp-mysql",
   "project_page": null,
-  "issues_url": null,
+  "issues_url": "https://github.com/NTTCom-MS/eyp-mysql/issues",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"},
     {"name":"eyp/eyplib","version_requirement":">= 0.1.0 < 0.2.0"}
@@ -14,11 +14,37 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": [ "5", "6" ]
+      "operatingsystemrelease": [ "5", "6", "7" ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [ "5", "6", "7" ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [ "5", "6", "7" ]
+    },
+    {
+      "operatingsystem": "OEL",
+      "operatingsystemrelease": [ "5", "6", "7" ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [ "5", "6", "7" ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [ "14.04" ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": ">= 3.0.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.0.0"
     }
   ]
 }

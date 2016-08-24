@@ -1,27 +1,19 @@
+# == Class: mysql
 #
-class mysql (
-              $rootpw,
-              $debianpw,
-              $mysql_type = 'community',
-            ) inherits mysql::params{
+# === mysql documentation
+#
+class mysql(
+                            $manage_package        = true,
+                            $package_ensure        = 'installed',
+                            $manage_service        = true,
+                            $manage_docker_service = true,
+                            $service_ensure        = 'running',
+                            $service_enable        = true,
+                          ) inherits mysql::params{
 
-  if defined(Class['ntteam'])
-  {
-    ntteam::tag{ 'mysql': }
-  }
+  class { '::mysql::install': } ->
+  class { '::mysql::config': } ~>
+  class { '::mysql::service': } ->
+  Class['::mysql']
 
-  if($mysql_type=='mariadb')
-  {
-    class { 'mysql::mariadb':
-    rootpw   => $rootpw,
-    debianpw => $debianpw,
-    }
-  }
-  elsif($mysql_type=='community')
-  {
-    class { 'mysql::community':
-    rootpw   => $rootpw,
-    debianpw => $debianpw,
-    }
-}
 }
