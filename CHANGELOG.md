@@ -1,6 +1,10 @@
 # CHANGELOG
 
-Major changes:
+## 0.4
+
+* **INCOMPATIBLE CHANGE**: major rewrite, not intended to be compatible with eyp-mysql 0.3 or lower in any way
+
+### 0.4.1
 
 ## 0.3
 
