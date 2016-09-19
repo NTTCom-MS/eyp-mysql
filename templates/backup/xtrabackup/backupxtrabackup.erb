@@ -112,6 +112,11 @@ function dobackup
 		innobackupex ${DUMPDEST}
 	else
 		# incremental
+
+		# buscar últim backup OK
+
+		# innobackupex --incremental /var/backups/xtrabackup/ --incremental-basedir=/var/backups/xtrabackup/2014-08-25_10-04-45/
+
 		# de moment full :D
 		innobackupex ${DUMPDEST}
 	fi
