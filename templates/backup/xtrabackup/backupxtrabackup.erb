@@ -66,8 +66,55 @@ function dobackup
 
 	mkdir -p $DUMPDEST
 
-	# do xtrabackup
-	innobackupex ${DUMPDEST}
+	#aqui logica fulls/diferencials:
+
+	#FULL_ON_MONTHDAY="<%= @fullbackup_monthday %>"
+	#FULL_ON_WEEKDAY="<%= @fullbackup_weekday %>"
+	if [ ! -z "$FULL_ON_MONTHDAY" ] && [ ! -z "$FULL_ON_WEEKDAY" ];
+	then
+		echo "FULL_ON_MONTHDAY and FULL_ON_WEEKDAY cannot be both defined"
+		BCKFAILED=1
+	elif [ ! -z "$FULL_ON_MONTHDAY" ];
+	then
+		# backup full on monthday definit
+		TODAY_MONTHDAY="$(date +%e | awk '{ print $NF }')"
+		TODAY_IS_FULL=0
+
+		for i in $FULL_ON_MONTHDAY;
+		do
+			if [[ "$i" == "$TODAY_MONTHDAY" ]];
+			then
+				TODAY_IS_FULL=1
+			fi
+		done
+
+	elif [ ! -z "$FULL_ON_WEEKDAY" ];
+	then
+		# backup full on weekday definit
+		TODAY_WEEKDAY="$(date +%u)"
+		TODAY_IS_FULL=0
+
+		for i in $FULL_ON_WEEKDAY;
+		do
+			if [[ "$i" == "$TODAY_WEEKDAY" ]];
+			then
+				TODAY_IS_FULL=1
+			fi
+		done
+	else
+		# comportament no definit, fem fulls sempre
+		TODAY_IS_FULL=1
+	fi
+
+	if [ "$TODAY_IS_FULL" -eq 1 ];
+	then
+		# full
+		innobackupex ${DUMPDEST}
+	else
+		# diferencial
+		# de moment full :D
+		innobackupex ${DUMPDEST}
+	fi
 
 	if [ "$?" -ne 0 ];
 	then

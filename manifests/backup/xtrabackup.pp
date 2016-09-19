@@ -1,22 +1,29 @@
 define mysql::backup::xtrabackup (
                                     $destination,
-                                    $retention          = undef,
-                                    $logdir             = undef,
-                                    $compress           = true,
-                                    $mailto             = undef,
-                                    $idhost             = undef,
-                                    $backupscript       = '/usr/local/bin/backup_xtrabackup',
-                                    $hour               = '2',
-                                    $minute             = '0',
-                                    $month              = undef,
-                                    $monthday           = undef,
-                                    $weekday            = undef,
-                                    $setcron            = true,
-                                    $backupid           = 'MySQL',
-                                    $xtrabackup_version = '2.4.4',
+                                    $retention           = undef,
+                                    $logdir              = undef,
+                                    $compress            = true,
+                                    $mailto              = undef,
+                                    $idhost              = undef,
+                                    $backupscript        = '/usr/local/bin/backup_xtrabackup',
+                                    $hour                = '2',
+                                    $minute              = '0',
+                                    $month               = undef,
+                                    $monthday            = undef,
+                                    $weekday             = undef,
+                                    $setcron             = true,
+                                    $backupid            = 'MySQL',
+                                    $xtrabackup_version  = '2.4.4',
+                                    $fullbackup_monthday = undef,
+                                    $fullbackup_weekday  = undef,
                                   ) {
   #
   validate_absolute_path($destination)
+
+  if defined($fullbackup_monthday) and defined($fullbackup_weekday)
+  {
+    fail('fullbackup_monthday and fullbackup_weekday cannot be defined at the same time')
+  }
 
   if defined(Class['netbackupclient'])
   {

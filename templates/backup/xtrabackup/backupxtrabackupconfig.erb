@@ -14,3 +14,9 @@ IDHOST="<%= @idhost %>"
 <% if(@backupid) -%>
 BACKUP_NAME_ID="<%= @backupid %>"
 <% end -%>
+<% if defined?(@fullbackup_monthday) -%>
+FULL_ON_MONTHDAY="<%= @fullbackup_monthday %>"
+<% end -%>
+<% if defined?(@fullbackup_weekday) -%>
+FULL_ON_WEEKDAY="<%= @fullbackup_weekday %>"
+<% end -%>
