@@ -32,9 +32,19 @@ class mysql::install inherits mysql {
           require  => Exec["download ${mysql:srcdir} repo community mysql"],
         }
 
-        # debian set mysql ver:
-        # echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
-
+        case $::osfamily
+        {
+          'Debian':
+          {
+            # debian set mysql ver:
+            # echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
+            exec { "debian set mysql ${mysql::version}":
+              command => "bash -c 'echo \"mysql-apt-config mysql-apt-config/select-server select mysql-${mysql::version}\" | debconf-set-selections'",
+              unless  => "bash -c 'debconf-get-selections | grep \"mysql-apt-config/select-server\" | grep \"mysql-${mysql::version}\"'",
+            }
+          }
+          default: {}
+        }
       }
       default:
       {

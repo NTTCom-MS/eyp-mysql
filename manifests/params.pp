@@ -98,6 +98,10 @@ class mysql::params {
 
       $package_provider='dpkg'
 
+      $mysql_repo_name = {
+                            '5.7' => 'mysql-apt-config',
+                        }
+
       case $::operatingsystem
       {
         'Ubuntu':
