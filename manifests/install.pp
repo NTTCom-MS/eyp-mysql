@@ -38,12 +38,22 @@ class mysql::install inherits mysql {
           {
             # debian set mysql ver:
             # echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
+
             exec { "debian set mysql ${mysql::version}":
               command => "bash -c 'echo \"mysql-apt-config mysql-apt-config/select-server select mysql-${mysql::version}\" | debconf-set-selections'",
               unless  => "bash -c 'debconf-get-selections | grep \"mysql-apt-config/select-server\" | grep \"mysql-${mysql::version}\"'",
+              before  => Package[$mysql_community_pkgs],
             }
           }
           default: {}
+        }
+
+        # aqui paquet mysql server
+
+        # mysql_community_pkgs
+        package { $mysql_community_pkgs:
+          ensure  => 'installed',
+          require => Package[$mysql::params::mysql_repo_name[$mysql::version]],
         }
       }
       default:
@@ -52,5 +62,4 @@ class mysql::install inherits mysql {
       }
     }
   }
-
 }

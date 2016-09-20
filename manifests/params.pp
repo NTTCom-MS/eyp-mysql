@@ -42,6 +42,8 @@ class mysql::params {
   #isamchk config
   $isamchk_key_buffer_default=undef
 
+  $mysql_community_pkgs= [ 'mysql-community-server' ]
+
   $percona_xtrabackup_package_name = {
                                         '2.4.4' => 'percona-xtrabackup-24',
                                         '2.0.8' => 'percona-xtrabackup-20',
