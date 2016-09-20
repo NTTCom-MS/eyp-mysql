@@ -10,10 +10,37 @@ class mysql::install inherits mysql {
 
   if($mysql::manage_package)
   {
-    # package here, for example:
-    #package { $mysql::params::package_name:
-    #  ensure => $mysql::package_ensure,
-    #}
+    case $mysql::flavor
+    {
+      'community':
+      {
+        exec { "mysql config srcdir ${mysql::srcdir}":
+          command => "mkdir -p ${mysql::srcdir}",
+          creates => $mysql::srcdir,
+        }
+
+        exec { "download ${mysql:srcdir} repo community mysql":
+          command => "wget ${mysql::params::mysql_repo[$mysql::version]} -O ${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
+          creates => "${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
+          require => Exec["mysql config srcdir ${mysql::srcdir}"],
+        }
+
+        package { $mysql::params::mysql_repo_name:
+          ensure   => $mysql::package_ensure,
+          provider => $mysql::params::package_provider,
+          source   => "${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
+          require  => Exec["download ${mysql:srcdir} repo community mysql"],
+        }
+
+        # debian set mysql ver:
+        # echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
+
+      }
+      default:
+      {
+        fail('unsuported MySQL flavor')
+      }
+    }
   }
 
 }

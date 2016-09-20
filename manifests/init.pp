@@ -9,6 +9,7 @@ class mysql(
                             $manage_docker_service = true,
                             $service_ensure        = 'running',
                             $service_enable        = true,
+                            $version               = '5.7',
                             $flavor                = 'community',
                             $srcdir                = '/usr/local/src',
                           ) inherits mysql::params{
