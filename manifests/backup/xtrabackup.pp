@@ -19,7 +19,7 @@ define mysql::backup::xtrabackup (
   #
   validate_absolute_path($destination)
 
-  if defined($fullbackup_monthday) and defined($fullbackup_weekday)
+  if $fullbackup_monthday!=undef and $fullbackup_weekday!=undef
   {
     fail('fullbackup_monthday and fullbackup_weekday cannot be defined at the same time')
   }
