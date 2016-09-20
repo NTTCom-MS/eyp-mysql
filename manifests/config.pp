@@ -17,12 +17,13 @@ class mysql::config inherits mysql {
         creates => $mysql::srcdir,
       }
 
-      exec { "download ${mysql:srcdir} community mysql":
+      exec { "download ${mysql:srcdir} repo community mysql":
         command => "wget ${mysql::params::mysql_repo} -O ${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
         creates => "${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
+        require => Exec["mysql config srcdir ${mysql::srcdir}"],
       }
 
-      
+
     }
     default:
     {
