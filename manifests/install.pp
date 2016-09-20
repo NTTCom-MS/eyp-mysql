@@ -20,7 +20,7 @@ class mysql::install inherits mysql {
         }
 
         exec { "download ${mysql::srcdir} repo community mysql":
-          command => "wget ${mysql::params::mysql_repo}[$mysql::version] -O ${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
+          command => "wget ${mysql::params::mysql_repo[$mysql::version]} -O ${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
           creates => "${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
           require => Exec["mysql config srcdir ${mysql::srcdir}"],
         }
