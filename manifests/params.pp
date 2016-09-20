@@ -53,6 +53,8 @@ class mysql::params {
   {
     'redhat':
     {
+      $repo_update_command="/bin/true"
+
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\")\''
 
       $package_provider='rpm'
@@ -96,6 +98,8 @@ class mysql::params {
     }
     'Debian':
     {
+      $repo_update_command="apt-get update"
+
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*deb"\' | cut -f 2 -d\")\''
 
       $package_provider='dpkg'
