@@ -9,6 +9,8 @@ class mysql(
                             $manage_docker_service = true,
                             $service_ensure        = 'running',
                             $service_enable        = true,
+                            $flavor                = 'community',
+                            $srcdir                = '/usr/local/src',
                           ) inherits mysql::params{
 
   class { '::mysql::install': } ->
