@@ -29,7 +29,7 @@ class mysql::install inherits mysql {
           ensure   => $mysql::package_ensure,
           provider => $mysql::params::package_provider,
           source   => "${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
-          require  => Exec["download ${mysql:srcdir} repo community mysql"],
+          require  => Exec["download ${mysql::srcdir} repo community mysql"],
         }
 
         case $::osfamily
