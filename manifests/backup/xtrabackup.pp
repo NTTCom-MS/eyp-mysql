@@ -2,7 +2,6 @@ define mysql::backup::xtrabackup (
                                     $destination,
                                     $retention           = undef,
                                     $logdir              = undef,
-                                    $compress            = true,
                                     $mailto              = undef,
                                     $idhost              = undef,
                                     $backupscript        = '/usr/local/bin/backup_xtrabackup',
