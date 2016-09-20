@@ -25,7 +25,7 @@ class mysql::install inherits mysql {
           require => Exec["mysql config srcdir ${mysql::srcdir}"],
         }
 
-        package { $mysql::params::mysql_repo_name:
+        package { $mysql::params::mysql_repo_name[$mysql::version]:
           ensure   => $mysql::package_ensure,
           provider => $mysql::params::package_provider,
           source   => "${mysql::srcdir}/repomysql.${mysql::params::package_provider}",
