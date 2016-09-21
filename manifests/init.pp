@@ -4,6 +4,7 @@
 #
 class mysql(
                             $password              = 'password',
+                            $remove_data_dir       = false,
                             $manage_package        = true,
                             $package_ensure        = 'installed',
                             $manage_service        = true,

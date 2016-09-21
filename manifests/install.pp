@@ -57,10 +57,17 @@ class mysql::install inherits mysql {
             }
 
             # echo "mysql-community-server mysql-community-server/root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
+
             # echo "mysql-community-server mysql-community-server/re-root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
-            # echo "mysql-community-server mysql-community-server/remove-data-dir boolean false" | /usr/bin/debconf-set-selections
+
             # echo "mysql-community-server mysql-community-server/data-dir note" | /usr/bin/debconf-set-selections
 
+            # echo "mysql-community-server mysql-community-server/remove-data-dir boolean false" | /usr/bin/debconf-set-selections
+            exec { 'debian ser remove datadir':
+              command => "bash -c 'echo \"mysql-community-server mysql-community-server/remove-data-dir boolean ${mysql::remove_data_dir}\" | debconf-set-selections'",
+              unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server/remove-data-dir\" | grep \"boolean ${mysql::remove_data_dir}\"'",
+              before  => Package[$mysql_community_pkgs],
+            }
           }
           default: {}
         }
