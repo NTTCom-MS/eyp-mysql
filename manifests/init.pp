@@ -3,6 +3,7 @@
 # === mysql documentation
 #
 class mysql(
+                            $password              = 'password',
                             $manage_package        = true,
                             $package_ensure        = 'installed',
                             $manage_service        = true,
