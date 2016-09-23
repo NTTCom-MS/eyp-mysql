@@ -87,7 +87,7 @@ class mysql::install inherits mysql {
 
         # mysql_community_pkgs
         package { $mysql_community_pkgs:
-          ensure  => 'installed',
+          ensure  => $mysql::package_ensure,
           require => Package[$mysql::params::mysql_repo_name[$mysql::version]],
         }
       }
