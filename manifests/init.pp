@@ -14,6 +14,7 @@ class mysql(
                             $version               = '5.7',
                             $flavor                = 'community',
                             $srcdir                = '/usr/local/src',
+                            $datadir               = $mysql::params::datadir_default,
                           ) inherits mysql::params{
 
   class { '::mysql::install': } ->
