@@ -14,7 +14,17 @@ class mysql(
                             $version               = '5.7',
                             $flavor                = 'community',
                             $srcdir                = '/usr/local/src',
+                            $binlog_format         = $mysql::params::binlog_format_default,
+                            $charset               = $mysql::params::charset_default,
                             $datadir               = $mysql::params::datadir_default,
+                            $expirelogsdays        = $mysql::params::expirelogsdays_default,
+                            $ignoreclientcharset   = $mysql::params::ignoreclientcharset_default,
+                            $readonly              = $mysql::params::readonly_default,
+                            $serverid              = $mysql::params::serverid_default,
+                            $skip_external_locking = $mysql::params::skip_external_locking_default,
+                            $tmpdir                = $mysql::params::tmpdir_default,
+                            $key_buffer_size       = $mysql::params::key_buffer_size_default,
+
                           ) inherits mysql::params{
 
   class { '::mysql::install': } ->
