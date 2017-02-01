@@ -24,7 +24,6 @@ class mysql(
                             $skip_external_locking = $mysql::params::skip_external_locking_default,
                             $tmpdir                = $mysql::params::tmpdir_default,
                             $key_buffer_size       = $mysql::params::key_buffer_size_default,
-
                           ) inherits mysql::params{
 
   class { '::mysql::install': } ->
