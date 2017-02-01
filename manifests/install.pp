@@ -91,6 +91,10 @@ class mysql::install inherits mysql {
           require => Package[$mysql::params::mysql_repo_name[$mysql::version]],
         }
       }
+      'galera-xtradb':
+      {
+        fail('unimplemented')
+      }
       default:
       {
         fail('unsuported MySQL flavor')
