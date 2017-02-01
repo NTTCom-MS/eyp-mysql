@@ -55,7 +55,7 @@ class mysql::params {
     {
       $servicename='mysqld'
 
-      $repo_update_command="/bin/true"
+      $repo_update_command='/bin/true'
 
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*rpm"\' | cut -f 2 -d\")\''
 
@@ -102,7 +102,7 @@ class mysql::params {
     {
       $servicename='mysql'
 
-      $repo_update_command="apt-get update"
+      $repo_update_command='apt-get update'
 
       $perconatoolkit_wgetcmd='bash -c \'echo https://www.percona.com$(curl https://www.percona.com/downloads/percona-toolkit/ 2>&1 | grep -Eo \'href="[^"]*deb"\' | cut -f 2 -d\")\''
 

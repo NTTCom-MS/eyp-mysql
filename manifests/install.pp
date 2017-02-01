@@ -41,7 +41,7 @@ class mysql::install inherits mysql {
         exec { 'mysql install repo update':
           command     => $mysql::params::repo_update_command,
           refreshonly => true,
-          before      => Package[$mysql_community_pkgs],
+          before      => Package[$mysql::params::mysql_community_pkgs],
         }
 
         case $::osfamily
@@ -53,21 +53,21 @@ class mysql::install inherits mysql {
             exec { "debian set mysql ${mysql::version}":
               command => "bash -c 'echo \"mysql-apt-config mysql-apt-config/select-server select mysql-${mysql::version}\" | debconf-set-selections'",
               unless  => "bash -c 'debconf-get-selections | grep \"mysql-apt-config/select-server\" | grep \"mysql-${mysql::version}\"'",
-              before  => Package[$mysql_community_pkgs],
+              before  => Package[$mysql::params::mysql_community_pkgs],
             }
 
             # echo "mysql-community-server mysql-community-server/root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
             exec { 'debian set root pass':
               command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password ${mysql::password}\" | debconf-set-selections'",
               unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server mysql-community-server/root-pass\" | grep \"${mysql::password}\"'",
-              before  => Package[$mysql_community_pkgs],
+              before  => Package[$mysql::params::mysql_community_pkgs],
             }
 
             # echo "mysql-community-server mysql-community-server/re-root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
             exec { 'debian set re root pass':
               command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password ${mysql::password}\" | debconf-set-selections'",
               unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server mysql-community-server/re-root-pass\" | grep \"${mysql::password}\"'",
-              before  => Package[$mysql_community_pkgs],
+              before  => Package[$mysql::params::mysql_community_pkgs],
             }
 
             # echo "mysql-community-server mysql-community-server/data-dir note" | /usr/bin/debconf-set-selections
@@ -77,7 +77,7 @@ class mysql::install inherits mysql {
             exec { 'debian ser remove datadir':
               command => "bash -c 'echo \"mysql-community-server mysql-community-server/remove-data-dir boolean ${mysql::remove_data_dir}\" | debconf-set-selections'",
               unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server/remove-data-dir\" | grep \"boolean ${mysql::remove_data_dir}\"'",
-              before  => Package[$mysql_community_pkgs],
+              before  => Package[$mysql::params::mysql_community_pkgs],
             }
           }
           default: {}
@@ -86,7 +86,7 @@ class mysql::install inherits mysql {
         # aqui paquet mysql server
 
         # mysql_community_pkgs
-        package { $mysql_community_pkgs:
+        package { $mysql::params::mysql_community_pkgs:
           ensure  => $mysql::package_ensure,
           require => Package[$mysql::params::mysql_repo_name[$mysql::version]],
         }
