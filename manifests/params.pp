@@ -118,7 +118,7 @@ class mysql::params {
         {
           case $::operatingsystemrelease
           {
-            /^14.*$/:
+            /^1[46].*$/:
             {
               $percona_xtrabackup_package = {
                                               '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/debian/trusty/x86_64/percona-xtrabackup-24_2.4.4-1.trusty_amd64.deb',

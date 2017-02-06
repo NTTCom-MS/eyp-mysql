@@ -1,11 +1,11 @@
 # concat my.cnf
 # 00 puppet managed file banner
 define mysql::mycnf (
-                      $mycnf = $name,
+                      $mycnf  = $name,
                       $ensure = 'present',
-                      $owner = 'root',
-                      $group = 'root',
-                      $mode = '0644',
+                      $owner  = 'root',
+                      $group  = 'root',
+                      $mode   = '0644',
                     ) {
 
   concat { $mycnf:
