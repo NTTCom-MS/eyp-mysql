@@ -1,7 +1,3 @@
-# == Class: mysql
-#
-# === mysql::install documentation
-#
 class mysql::install inherits mysql {
 
   Exec {

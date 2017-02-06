@@ -1,7 +1,3 @@
-# == Class: mysql
-#
-# === mysql documentation
-#
 class mysql(
                             $password              = 'password',
                             $remove_data_dir       = false,
