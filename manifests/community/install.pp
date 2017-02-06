@@ -1,4 +1,6 @@
-define mysql::community::install($version='5.7') {
+define mysql::community::install(
+                                  $version = '5.7'
+                                ) {
 
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
@@ -9,6 +11,7 @@ define mysql::community::install($version='5.7') {
   exec { "mysql config srcdir ${mysql::srcdir}":
     command => "mkdir -p ${mysql::srcdir}",
     creates => $mysql::srcdir,
+    require => Class['::mysql'],
   }
 
   exec { "download ${mysql::srcdir} repo community mysql":
