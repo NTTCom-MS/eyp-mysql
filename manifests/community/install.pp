@@ -65,9 +65,9 @@ define mysql::community::install(
       # ???
 
       # echo "mysql-community-server mysql-community-server/remove-data-dir boolean false" | /usr/bin/debconf-set-selections
-      exec { 'debian ser remove datadir':
+      exec { 'debian set remove datadir':
         command => "bash -c 'echo \"mysql-community-server mysql-community-server/remove-data-dir boolean ${mysql::remove_data_dir}\" | debconf-set-selections'",
-        unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server/remove-data-dir\" | grep \"boolean ${mysql::remove_data_dir}\"'",
+        unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server/remove-data-dir\" | grep -P \"boolean[ \\t]*${mysql::remove_data_dir}\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
     }
