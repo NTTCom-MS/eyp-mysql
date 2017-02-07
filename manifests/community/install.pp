@@ -1,4 +1,5 @@
 define mysql::community::install(
+                                  $password,
                                   $version = '5.7'
                                 ) {
 
@@ -48,15 +49,15 @@ define mysql::community::install(
 
       # echo "mysql-community-server mysql-community-server/root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
       exec { 'debian set root pass':
-        command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password ${mysql::password}\" | debconf-set-selections'",
-        unless  => "bash -c 'debconf-get-selections | grep -E \"mysql-community-server[ ]*mysql-community-server/root-pass\" | grep \"${mysql::password}\"'",
+        command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password ${password}\" | debconf-set-selections'",
+        unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/root-pass\" | grep \"${password}\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
 
       # echo "mysql-community-server mysql-community-server/re-root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
       exec { 'debian set re root pass':
-        command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password ${mysql::password}\" | debconf-set-selections'",
-        unless  => "bash -c 'debconf-get-selections | grep -E \"mysql-community-server[ ]*mysql-community-server/re-root-pass\" | grep \"${mysql::password}\"'",
+        command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password ${password}\" | debconf-set-selections'",
+        unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/re-root-pass\" | grep \"${password}\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
 
