@@ -23,7 +23,7 @@ define mysql::mycnf (
       mode    => $mode,
     }
 
-    concat::fragment{ "/etc/mysql/${instance_name}/my.cnf header":
+    concat::fragment{ "/etc/mysql/my.cnf header":
       target  => '/etc/mysql/my.cnf',
       order   => '00',
       content => "#\n# puppet managed file\n#\n\n",
@@ -31,11 +31,20 @@ define mysql::mycnf (
   }
   else
   {
+    file { "/etc/mysql/${instance_name}":
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      purge   => true,
+    }
+
     concat { "/etc/mysql/${instance_name}/my.cnf":
       ensure  => $ensure,
       owner   => $owner,
       group   => $group,
       mode    => $mode,
+      require => File["/etc/mysql/${instance_name}"],
     }
 
     concat::fragment{ "/etc/mysql/${instance_name}/my.cnf header":
