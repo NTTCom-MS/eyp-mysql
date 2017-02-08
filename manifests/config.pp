@@ -5,10 +5,4 @@ class mysql::config inherits mysql {
     mysql::mycnf { 'global':
     }
   }
-
-  if($mysql::params::systemd)
-  {
-    
-  }
-
 }
