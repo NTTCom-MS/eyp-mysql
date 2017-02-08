@@ -5,12 +5,13 @@ class mysql::install inherits mysql {
   }
 
   file { '/etc/mysql':
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    purge  => true,
-    recuse => true,
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    purge   => true,
+    recurse => true,
+    force   => true,
   }
-  
+
 }
