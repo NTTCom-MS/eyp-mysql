@@ -1,11 +1,16 @@
 define mysql::community::config (
-                                  $instance_name = $name,
+                                  $instance_name     = $name,
+                                  $add_default_mycnf = false,
                                 ) {
 
-  if($mysql::params::systemd)
+  if($add_default_mycnf)
   {
-    systemd::service { $instance_name:
-      execstart => "--defaults-file ",
+    mysql::mycnf { $instance_name:
+      require => Class['::mysql'],
+    }
+
+    mysql::mycnf::mysqld{ $instance_name:
+      
     }
   }
 }

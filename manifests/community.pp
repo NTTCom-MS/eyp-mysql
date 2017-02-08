@@ -11,11 +11,10 @@ define mysql::community (
     password => $password,
   }
 
-  if($add_default_mycnf)
-  {
-    mysql::mycnf { $instance_name:
-      require => Class['::mysql'],
-    }
-  }
+  ->
 
+  mysql::community::config { $instance_name:
+    add_default_mycnf => $add_default_mycnf,
+    require           => Class['::mysql'],
+  }
 }

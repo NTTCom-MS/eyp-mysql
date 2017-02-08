@@ -4,7 +4,10 @@
 # option files and !includedir to search specific directories for option
 #
 # concat my.cnf
-# 00 puppet managed file banner
+# 000 puppet managed file banner
+#
+# 100 mysqld
+# 101 general
 #
 define mysql::mycnf (
                       $instance_name = $name,
@@ -25,7 +28,7 @@ define mysql::mycnf (
 
     concat::fragment{ "/etc/mysql/my.cnf header":
       target  => '/etc/mysql/my.cnf',
-      order   => '00',
+      order   => '000',
       content => "#\n# puppet managed file\n#\n\n",
     }
   }
@@ -49,7 +52,7 @@ define mysql::mycnf (
 
     concat::fragment{ "/etc/mysql/${instance_name}/my.cnf header":
       target  => "/etc/mysql/${instance_name}/my.cnf",
-      order   => '00',
+      order   => '000',
       content => "#\n# puppet managed file\n#\n\n",
     }
   }
