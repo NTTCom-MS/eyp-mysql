@@ -87,4 +87,10 @@ define mysql::community::install(
   }
 
   # aqui instalació datadir
+  exec { "mkdir p ${datadir} ${instance_name}":
+    command => "mkdir -p ${datadir}",
+    creates => $datadir,
+    require => Package[$mysql::params::mysql_community_pkgs],
+  }
+
 }
