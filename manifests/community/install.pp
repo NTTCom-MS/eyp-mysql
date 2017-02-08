@@ -1,6 +1,8 @@
 define mysql::community::install(
                                   $password,
-                                  $version = '5.7'
+                                  $instance_name = $name,
+                                  $version       = '5.7',
+                                  $datadir       = "/var/mysql/${name}",
                                 ) {
 
   Exec {
@@ -47,17 +49,19 @@ define mysql::community::install(
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
 
+      # password for default instance, not used
       # echo "mysql-community-server mysql-community-server/root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
       exec { 'debian set root pass':
-        command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password ${password}\" | debconf-set-selections'",
-        unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/root-pass\" | grep \"${password}\"'",
+        command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\" | debconf-set-selections'",
+        unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/root-pass\" | grep \"dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
 
+      # password for default instance, not used
       # echo "mysql-community-server mysql-community-server/re-root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
       exec { 'debian set re root pass':
-        command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password ${password}\" | debconf-set-selections'",
-        unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/re-root-pass\" | grep \"${password}\"'",
+        command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\" | debconf-set-selections'",
+        unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/re-root-pass\" | grep \"dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
 
@@ -81,4 +85,6 @@ define mysql::community::install(
     ensure  => $mysql::package_ensure,
     require => Package[$mysql::params::mysql_repo_name[$version]],
   }
+
+  # aqui instalació datadir
 }
