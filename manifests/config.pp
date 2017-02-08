@@ -6,4 +6,9 @@ class mysql::config inherits mysql {
     }
   }
 
+  if($mysql::params::systemd)
+  {
+    
+  }
+
 }

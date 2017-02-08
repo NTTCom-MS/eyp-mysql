@@ -69,6 +69,7 @@ class mysql::params {
       {
         /^5.*$/:
         {
+          $systemd=false
           $percona_xtrabackup_package = {
                                           '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/5/x86_64/percona-xtrabackup-24-2.4.4-1.el5.x86_64.rpm',
                                           '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel5/x86_64/percona-xtrabackup-20-2.0.8-587.rhel5.x86_64.rpm',
@@ -80,6 +81,7 @@ class mysql::params {
         }
         /^6.*$/:
         {
+          $systemd=false
           $percona_xtrabackup_package = {
                                           '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/6/x86_64/percona-xtrabackup-24-2.4.4-1.el6.x86_64.rpm',
                                           '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel6/x86_64/percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm',
@@ -91,6 +93,7 @@ class mysql::params {
         }
         /^7.*$/:
         {
+          $systemd=true
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm',
                         }
@@ -116,18 +119,23 @@ class mysql::params {
       {
         'Ubuntu':
         {
+          $percona_xtrabackup_package = {
+                                          '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/debian/trusty/x86_64/percona-xtrabackup-24_2.4.4-1.trusty_amd64.deb',
+                                          '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/deb/precise/x86_64/percona-xtrabackup-20_2.0.8-587.precise_amd64.deb',
+                                        }
+
+          $mysql_repo = {
+                          '5.7' => 'http://dev.mysql.com/get/mysql-apt-config_0.8.0-1_all.deb',
+                        }
           case $::operatingsystemrelease
           {
-            /^1[46].*$/:
+            /^14.*$/:
             {
-              $percona_xtrabackup_package = {
-                                              '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/debian/trusty/x86_64/percona-xtrabackup-24_2.4.4-1.trusty_amd64.deb',
-                                              '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/deb/precise/x86_64/percona-xtrabackup-20_2.0.8-587.precise_amd64.deb',
-                                            }
-
-              $mysql_repo = {
-                              '5.7' => 'http://dev.mysql.com/get/mysql-apt-config_0.8.0-1_all.deb',
-                            }
+              $systemd=false
+            }
+            /^16.*$/:
+            {
+              $systemd=true
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }

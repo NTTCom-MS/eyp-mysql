@@ -1,3 +1,3 @@
-define mysql::mycnf::client($mycnf=$name) {
+define mysql::mycnf::client($instance_name=$name) {
 
 }

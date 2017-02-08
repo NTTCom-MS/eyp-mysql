@@ -1,3 +1,3 @@
-define mysql::mycnf::mysqlupgrade($mycnf=$name) {
+define mysql::mycnf::mysqlupgrade($instance_name=$name) {
 
 }

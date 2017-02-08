@@ -1,3 +1,3 @@
-define mysql::mycnf::mysqldump($mycnf=$name) {
+define mysql::mycnf::mysqldump($instance_name=$name) {
 
 }
