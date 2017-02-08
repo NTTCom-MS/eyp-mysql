@@ -7,23 +7,41 @@
 # 00 puppet managed file banner
 #
 define mysql::mycnf (
-                      $mycnf  = $name,
-                      $ensure = 'present',
-                      $owner  = 'root',
-                      $group  = 'root',
-                      $mode   = '0644',
+                      $instance_name = $name,
+                      $ensure        = 'present',
+                      $owner         = 'root',
+                      $group         = 'root',
+                      $mode          = '0644',
                     ) {
 
-  concat { $mycnf:
-    ensure  => $ensure,
-    owner   => $owner,
-    group   => $group,
-    mode    => $mode,
-  }
+  if($instance_name=='global')
+  {
+    concat { '/etc/mysql/my.cnf':
+      ensure  => $ensure,
+      owner   => $owner,
+      group   => $group,
+      mode    => $mode,
+    }
 
-  concat::fragment{ "${mycnf} header":
-    target  => $mycnf,
-    order   => '00',
-    content => "#\n# puppet managed file\n#\n\n",
+    concat::fragment{ "/etc/mysql/${instance_name}/my.cnf header":
+      target  => '/etc/mysql/my.cnf',
+      order   => '00',
+      content => "#\n# puppet managed file\n#\n\n",
+    }
+  }
+  else
+  {
+    concat { "/etc/mysql/${instance_name}/my.cnf":
+      ensure  => $ensure,
+      owner   => $owner,
+      group   => $group,
+      mode    => $mode,
+    }
+
+    concat::fragment{ "/etc/mysql/${instance_name}/my.cnf header":
+      target  => "/etc/mysql/${instance_name}/my.cnf",
+      order   => '00',
+      content => "#\n# puppet managed file\n#\n\n",
+    }
   }
 }
