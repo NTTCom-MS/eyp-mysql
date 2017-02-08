@@ -4,27 +4,13 @@ class mysql::install inherits mysql {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
-  # if($mysql::password=='password')
-  # {
-  #   fail('please change default password for MySQL')
-  # }
-
-  # if($mysql::manage_package)
-  # {
-  #   case $mysql::flavor
-  #   {
-  #     'community':
-  #     {
-  #       #
-  #     }
-  #     'galera-xtradb':
-  #     {
-  #       fail('unimplemented')
-  #     }
-  #     default:
-  #     {
-  #       fail('unsuported MySQL flavor')
-  #     }
-  #   }
-  # }
+  file { '/etc/mysql':
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    purge  => true,
+    recuse => true,
+  }
+  
 }

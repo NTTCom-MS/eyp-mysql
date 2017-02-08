@@ -15,7 +15,7 @@ class mysql::service inherits mysql {
   {
     if($mysql::manage_service)
     {
-      service { $servicename:
+      service { $mysql::params::servicename:
         ensure => $mysql::service_ensure,
         enable => $mysql::service_enable,
       }

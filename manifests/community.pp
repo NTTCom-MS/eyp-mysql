@@ -6,7 +6,7 @@ define mysql::community (
   include ::mysql
 
   mysql::community::install { $instance_name:
-    version => $version,
+    version  => $version,
     password => $password,
   }
 
