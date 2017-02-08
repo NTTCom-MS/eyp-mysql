@@ -12,7 +12,7 @@ class mysql::config inherits mysql {
     systemd::service { "mysqlcommunity@":
       description                 => 'mysql community %i',
       type                        => 'forking',
-      execstart                   => "/usr/sbin/mysqld --daemonize --pid-file=/var/run/community%i/mysqld.pid --defaults-file /etc/mysql/%i/my.cnf",
+      execstart                   => "/usr/sbin/mysqld --daemonize --pid-file=/var/run/community%i/mysqld.pid --defaults-file=/etc/mysql/%i/my.cnf",
       user                        => 'mysql',
       group                       => 'mysql',
       pid_file                    => '/var/run/community%i/mysqld.pid',
