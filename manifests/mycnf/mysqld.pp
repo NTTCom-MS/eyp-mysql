@@ -4,6 +4,7 @@ define mysql::mycnf::mysqld (
                               $instance_name         = $name,
                               $skip_external_locking = $mysql::params::skip_external_locking_default,
                               $tmpdir                = $mysql::params::tmpdir_default,
+                              $datadir               = "/var/mysql/${name}",
                               $default_storage_engine = 'InnoDB',
                             ) {
   if($instance_name=='global')
