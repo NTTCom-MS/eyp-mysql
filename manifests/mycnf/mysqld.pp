@@ -36,4 +36,10 @@ define mysql::mycnf::mysqld (
     order   => '102',
     content => template("${module_name}/mycnf/mysqld/02_charset.erb"),
   }
+
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld RW status":
+    target  => "/etc/mysql/${instance_name}/my.cnf",
+    order   => '103',
+    content => template("${module_name}/mycnf/mysqld/03_rw.erb"),
+  }
 }
