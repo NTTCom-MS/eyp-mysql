@@ -8,6 +8,7 @@ define mysql::mycnf::mysqld (
                               $default_storage_engine = 'InnoDB',
                               $ignoreclientcharset    = true,
                               $charset                = 'utf8',
+                              $readonly               = false,
                             ) {
   if($instance_name=='global')
   {
@@ -27,12 +28,12 @@ define mysql::mycnf::mysqld (
   concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld general":
     target  => "/etc/mysql/${instance_name}/my.cnf",
     order   => '101',
-    content => template("${module_name}/mycnf/mysqld/general.erb"),
+    content => template("${module_name}/mycnf/mysqld/01_general.erb"),
   }
 
   concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld charset":
     target  => "/etc/mysql/${instance_name}/my.cnf",
     order   => '102',
-    content => template("${module_name}/mycnf/mysqld/charset.erb"),
+    content => template("${module_name}/mycnf/mysqld/02_charset.erb"),
   }
 }
