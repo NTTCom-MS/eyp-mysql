@@ -1,11 +1,13 @@
 # notes:
 # tmp_table_size=max_heap_table_size
 define mysql::mycnf::mysqld (
-                              $instance_name         = $name,
-                              $skip_external_locking = $mysql::params::skip_external_locking_default,
-                              $tmpdir                = $mysql::params::tmpdir_default,
-                              $datadir               = "/var/mysql/${name}",
+                              $instance_name          = $name,
+                              $skip_external_locking  = $mysql::params::skip_external_locking_default,
+                              $tmpdir                 = $mysql::params::tmpdir_default,
+                              $datadir                = "/var/mysql/${name}",
                               $default_storage_engine = 'InnoDB',
+                              $ignoreclientcharset    = true,
+                              $charset                = 'utf8',
                             ) {
   if($instance_name=='global')
   {
@@ -26,5 +28,11 @@ define mysql::mycnf::mysqld (
     target  => "/etc/mysql/${instance_name}/my.cnf",
     order   => '101',
     content => template("${module_name}/mycnf/mysqld/general.erb"),
+  }
+
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld charset":
+    target  => "/etc/mysql/${instance_name}/my.cnf",
+    order   => '102',
+    content => template("${module_name}/mycnf/mysqld/charset.erb"),
   }
 }

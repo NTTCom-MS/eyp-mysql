@@ -1,6 +1,7 @@
 define mysql::community::config (
                                   $instance_name     = $name,
                                   $add_default_mycnf = false,
+                                  $datadir           = "/var/mysql/${name}",
                                 ) {
 
   if($add_default_mycnf)
@@ -10,7 +11,7 @@ define mysql::community::config (
     }
 
     mysql::mycnf::mysqld{ $instance_name:
-      
+      datadir => $datadir,
     }
   }
 }

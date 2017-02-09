@@ -8,6 +8,7 @@
 #
 # 100 mysqld
 # 101 general
+# 102 charset
 #
 define mysql::mycnf (
                       $instance_name = $name,

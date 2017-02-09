@@ -1,0 +1,9 @@
+
+# CHARSETS #
+<% if @ignoreclientcharset -%>
+skip-character-set-client-handshake
+<% end -%>
+<% if @charset == "utf8" -%>
+collation_server=utf8_general_ci
+character_set_server=utf8
+<% end -%>
