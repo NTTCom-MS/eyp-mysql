@@ -5,6 +5,8 @@ define mysql::mycnf::mysqld (
                               $skip_external_locking           = $mysql::params::skip_external_locking_default,
                               $tmpdir                          = $mysql::params::tmpdir_default,
                               $datadir                         = "/var/mysql/${name}",
+                              $relaylogdir                     = "/var/mysql/${name}/binlogs",
+                              $logdir                          = "/var/log/mysql/${name}",
                               $default_storage_engine          = 'InnoDB',
                               $ignoreclientcharset             = true,
                               $charset                         = 'utf8',
@@ -24,7 +26,6 @@ define mysql::mycnf::mysqld (
                               $max_binlog_size                 = '1073741824',
                               $log_bin_trust_function_creators = false,
                               $slave                           = false,
-                              $relaylogdir                     = '/var/mysql/binlogs',
                               $max_relay_log_size              = '0',
                               $replicate_ignore_db             = [],
                               $max_heap_table_size             = '32M',
@@ -46,6 +47,8 @@ define mysql::mycnf::mysqld (
                               $innodb_flush_log_at_trx_commit  = '2',
                               $innodb_file_per_table           = true,
                               $innodb_buffer_pool_size         = ceiling(sprintf('%f', $::memorysize_mb)*838860),
+                              $log_queries_not_using_indexes = false,
+                              $slow_query_log = true,
                             ) {
   if($instance_name=='global')
   {
