@@ -13,13 +13,37 @@ define mysql::community::install(
     creates => $datadir,
   }
 
+  file { $datadir:
+    ensure  => 'directory',
+    owner   => 'mysql',
+    group   => 'mysql',
+    mode    => '0750'
+    require => Exec["mkdir datadir ${instance_name}"],
+  }
+
   exec { "mkdir relaylogdir ${instance_name}":
     command => "mkdir -p ${relaylogdir}",
     creates => $relaylogdir,
   }
 
+  file { $relaylogdir:
+    ensure  => 'directory',
+    owner   => 'mysql',
+    group   => 'mysql',
+    mode    => '0750'
+    require => Exec["mkdir datadir ${relaylogdir}"],
+  }
+
   exec { "mkdir logdir ${instance_name}":
     command => "mkdir -p ${logdir}",
     creates => $logdir,
+  }
+
+  file { $logdir:
+    ensure  => 'directory',
+    owner   => 'mysql',
+    group   => 'mysql',
+    mode    => '0750'
+    require => Exec["mkdir datadir ${logdir}"],
   }
 }
