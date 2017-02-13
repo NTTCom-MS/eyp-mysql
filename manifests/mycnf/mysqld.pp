@@ -26,7 +26,7 @@ define mysql::mycnf::mysqld (
                               $slave                           = false,
                               $relaylogdir                     = '/var/mysql/binlogs',
                               $max_relay_log_size              = '0',
-                              $replicate_ignore_db             = undef,
+                              $replicate_ignore_db             = [],
                             ) {
   if($instance_name=='global')
   {

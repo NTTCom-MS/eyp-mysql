@@ -9,6 +9,6 @@ sync-relay-log                 = 1
 sync-relay-log-info            = 1
 max-relay-log-size             = <%= @max_relay_log_size %>
 <% end -%>
-<%- if defined?(@replicate_ignore_db) -%>
+<%- if @replicate_ignore_db.any? -%>
 replicate-ignore-db            = <%= @replicate_ignore_db.join(',') %>
 <%- end -%>
