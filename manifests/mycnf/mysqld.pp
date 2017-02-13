@@ -23,6 +23,10 @@ define mysql::mycnf::mysqld (
                               $serverid                        = '1',
                               $max_binlog_size                 = '1073741824',
                               $log_bin_trust_function_creators = false,
+                              $slave                           = false,
+                              $relaylogdir                     = '/var/mysql/binlogs',
+                              $max_relay_log_size              = '0',
+                              $replicate_ignore_db             = undef,
                             ) {
   if($instance_name=='global')
   {
