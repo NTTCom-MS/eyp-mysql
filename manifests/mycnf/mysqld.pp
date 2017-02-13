@@ -28,6 +28,7 @@ define mysql::mycnf::mysqld (
                               $max_relay_log_size              = '0',
                               $replicate_ignore_db             = [],
                               $max_heap_table_size             = '32M',
+                              $tmp_table_size                  = '32M',
                               $query_cache_type                = '0',
                               $query_cache_size                = '0',
                               $query_cache_limit               = '1048576',
@@ -39,7 +40,12 @@ define mysql::mycnf::mysqld (
                               $table_open_cache                = '100',
                               $sort_buffer_size                = '262144',
                               $join_buffer_size                = '131072',
-                              $tmp_table_size = '32M',
+                              $innodb_flush_method             = 'O_DIRECT',
+                              $innodb_log_files_in_group       = '2',
+                              $innodb_log_file_size            = '50331648',
+                              $innodb_flush_log_at_trx_commit  = '2',
+                              $innodb_file_per_table           = true,
+                              $innodb_buffer_pool_size         = ceiling(sprintf('%f', $::memorysize_mb)*0.8),
                             ) {
   if($instance_name=='global')
   {
@@ -108,5 +114,17 @@ define mysql::mycnf::mysqld (
     target  => "/etc/mysql/${instance_name}/my.cnf",
     order   => '109',
     content => template("${module_name}/mycnf/mysqld/09_caches_limits.erb"),
+  }
+
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld innodb":
+    target  => "/etc/mysql/${instance_name}/my.cnf",
+    order   => '110',
+    content => template("${module_name}/mycnf/mysqld/10_innodb.erb"),
+  }
+
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld logging":
+    target  => "/etc/mysql/${instance_name}/my.cnf",
+    order   => '111',
+    content => template("${module_name}/mycnf/mysqld/11_logging.erb"),
   }
 }
