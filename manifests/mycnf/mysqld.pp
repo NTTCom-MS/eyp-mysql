@@ -45,7 +45,7 @@ define mysql::mycnf::mysqld (
                               $innodb_log_file_size            = '50331648',
                               $innodb_flush_log_at_trx_commit  = '2',
                               $innodb_file_per_table           = true,
-                              $innodb_buffer_pool_size         = ceiling(sprintf('%f', $::memorysize_mb)*0.8),
+                              $innodb_buffer_pool_size         = ceiling(sprintf('%f', $::memorysize_mb)*838861),
                             ) {
   if($instance_name=='global')
   {
