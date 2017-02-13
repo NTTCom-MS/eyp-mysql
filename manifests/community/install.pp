@@ -3,9 +3,23 @@ define mysql::community::install(
                                   $datadir       = "/var/mysql/${name}/datadir",
                                   $relaylogdir   = "/var/mysql/${name}/binlogs",
                                   $logdir        = "/var/log/mysql/${name}",
+                                  $instancedir   = "/var/mysql/${name}",
                                 ) {
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
+  }
+
+  exec { "mkdir instancedir ${instance_name}":
+    command => "mkdir -p ${instancedir}",
+    creates => $instancedir,
+  }
+
+  file { $instancedir:
+    ensure  => 'directory',
+    owner   => 'mysql',
+    group   => 'mysql',
+    mode    => '0750',
+    require => Exec["mkdir datadir ${instance_name}"],
   }
 
   exec { "mkdir datadir ${instance_name}":
@@ -52,7 +66,7 @@ define mysql::community::install(
     command => "bash -c 'mysql_install_db --defaults-file=/etc/mysql/my.cnf --random-password-file=$(dirname ${datadir})/.mypass --datadir=${datadir} --basedir=/usr'",
     unless  => "bash -c 'test -f $(dirname ${datadir})/.mypass'",
     user    => 'mysql',
-    require => File[ [ $logdir, $relaylogdir, $datadir ] ],
+    require => File[ [ $logdir, $relaylogdir, $datadir, $instancedir ] ],
   }
 
 }

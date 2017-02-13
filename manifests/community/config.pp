@@ -1,6 +1,7 @@
 define mysql::community::config (
                                   $instance_name     = $name,
                                   $add_default_mycnf = false,
+                                  $instancedir       = "/var/mysql/${name}",
                                   $datadir           = "/var/mysql/${name}/datadir",
                                   $relaylogdir       = "/var/mysql/${name}/binlogs",
                                   $logdir            = "/var/log/mysql/${name}",
