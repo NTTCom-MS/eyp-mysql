@@ -31,7 +31,7 @@ define mysql::community::install(
     owner   => 'mysql',
     group   => 'mysql',
     mode    => '0750',
-    require => Exec["mkdir relaylogdir ${relaylogdir}"],
+    require => Exec["mkdir relaylogdir ${instance_name}"],
   }
 
   exec { "mkdir logdir ${instance_name}":
@@ -44,6 +44,6 @@ define mysql::community::install(
     owner   => 'mysql',
     group   => 'mysql',
     mode    => '0750',
-    require => Exec["mkdir logdir ${logdir}"],
+    require => Exec["mkdir logdir ${instance_name}"],
   }
 }
