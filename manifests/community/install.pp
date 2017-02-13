@@ -46,4 +46,10 @@ define mysql::community::install(
     mode    => '0750',
     require => Exec["mkdir logdir ${instance_name}"],
   }
+
+  #mysql_install_db --defaults-file=/etc/mysql/my.cnf  --random-password-file=/var/mysql/test/.mypass --datadir=/var/mysql/test/datadir/ --basedir=/usr
+  exec { "mysql_install_db ${instance_name}":
+    command => "bash -c 'mysql_install_db --defaults-file =/etc/mysql/my.cnf --random-password-file =$(dirname ${datadir})/.mypass --datadir =${datadir} --basedir =/usr'",
+    unless  => "bash -c 'file $(dirname ${datadir})/.mypass'",
+  }
 }
