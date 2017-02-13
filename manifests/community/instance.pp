@@ -3,6 +3,9 @@ define mysql::community::instance (
                                     $instance_name     = $name,
                                     $datadir           = "/var/mysql/${name}",
                                     $add_default_mycnf = false,
+                                    $datadir           = "/var/mysql/${name}",
+                                    $relaylogdir       = "/var/mysql/${name}/binlogs",
+                                    $logdir            = "/var/log/mysql/${name}",
                                   ) {
   include ::mysql
 
