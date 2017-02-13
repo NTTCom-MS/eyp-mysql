@@ -10,6 +10,9 @@ define mysql::community::instance (
   include ::mysql
 
   mysql::community::install { $instance_name:
+    datadir     => $datadir,
+    relaylogdir => $relaylogdir,
+    logdir      => $logdir,
   }
 
   ->
@@ -17,6 +20,8 @@ define mysql::community::instance (
   mysql::community::config { $instance_name:
     add_default_mycnf => $add_default_mycnf,
     datadir           => $datadir,
+    relaylogdir       => $relaylogdir,
+    logdir            => $logdir,
     require           => Class['::mysql'],
   }
 

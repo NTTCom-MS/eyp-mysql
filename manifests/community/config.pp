@@ -13,10 +13,10 @@ define mysql::community::config (
     }
 
     mysql::mycnf::mysqld{ $instance_name:
-      datadir => $datadir,
-      relaylogdir => $relaylogdir,
-      log_error => $log_error,
-      slow_query_log_file => $slow_query_log_file,
+      datadir             => $datadir,
+      relaylogdir         => $relaylogdir,
+      log_error           => "${logdir}/mysql-error.log",
+      slow_query_log_file => "${logdir}/mysql-slow.log",
     }
   }
 }
