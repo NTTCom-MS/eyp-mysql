@@ -4,5 +4,18 @@ define mysql::community::install(
                                   $relaylogdir   = "/var/mysql/${name}/binlogs",
                                   $logdir        = "/var/log/mysql/${name}",
                                 ) {
+  exec { "mkdir datadir ${instance_name}":
+    command => "mkdir -p ${datadir}",
+    creates => $datadir,
+  }
 
+  exec { "mkdir relaylogdir ${instance_name}":
+    command => "mkdir -p ${relaylogdir}",
+    creates => $relaylogdir,
+  }
+
+  exec { "mkdir logdir ${instance_name}":
+    command => "mkdir -p ${logdir}",
+    creates => $logdir,
+  }
 }
