@@ -49,8 +49,9 @@ define mysql::community::install(
 
   #mysql_install_db --defaults-file=/etc/mysql/my.cnf  --random-password-file=/var/mysql/test/.mypass --datadir=/var/mysql/test/datadir/ --basedir=/usr
   exec { "mysql_install_db ${instance_name}":
-    command => "bash -c 'mysql_install_db --defaults-file =/etc/mysql/my.cnf --random-password-file =$(dirname ${datadir})/.mypass --datadir =${datadir} --basedir =/usr'",
+    command => "bash -c 'mysql_install_db --defaults-file=/etc/mysql/my.cnf --random-password-file=$(dirname ${datadir})/.mypass --datadir=${datadir} --basedir=/usr'",
     unless  => "bash -c 'test -f $(dirname ${datadir})/.mypass'",
+    user    => 'mysql',
     require => File[ [ $logdir, $relaylogdir, $datadir ] ],
   }
 
