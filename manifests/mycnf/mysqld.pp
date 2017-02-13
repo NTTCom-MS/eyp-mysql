@@ -6,7 +6,6 @@ define mysql::mycnf::mysqld (
                               $tmpdir                          = $mysql::params::tmpdir_default,
                               $datadir                         = "/var/mysql/${name}",
                               $relaylogdir                     = "/var/mysql/${name}/binlogs",
-                              $logdir                          = "/var/log/mysql/${name}",
                               $default_storage_engine          = 'InnoDB',
                               $ignoreclientcharset             = true,
                               $charset                         = 'utf8',
@@ -47,8 +46,10 @@ define mysql::mycnf::mysqld (
                               $innodb_flush_log_at_trx_commit  = '2',
                               $innodb_file_per_table           = true,
                               $innodb_buffer_pool_size         = ceiling(sprintf('%f', $::memorysize_mb)*838860),
-                              $log_queries_not_using_indexes = false,
-                              $slow_query_log = true,
+                              $log_queries_not_using_indexes   = false,
+                              $slow_query_log                  = true,
+                              $log_error                       = "/var/log/mysql/${name}/mysql-error.log",
+                              $slow_query_log_file             = "/var/log/mysql/${name}/mysql-slow.log",
                             ) {
   if($instance_name=='global')
   {

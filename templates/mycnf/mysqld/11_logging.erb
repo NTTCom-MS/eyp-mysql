@@ -1,6 +1,6 @@
 
 # LOGGING #
-log-error                       = <%= @logdir %>/mysql-error.log
+log-error                       = <%= @log_error %>
 log-queries-not-using-indexes   = <%= scope.function_bool2number([@log_queries_not_using_indexes]) %>
 slow-query-log                  = <%= scope.function_bool2number([@slow_query_log]) %>
-slow-query-log-file             = <%= @logdir %>/mysql-slow.log
+slow-query-log-file             = <%= @slow_query_log_file %>
