@@ -98,9 +98,15 @@ define mysql::mycnf::mysqld (
     content => template("${module_name}/mycnf/mysqld/07_binlogs.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld caches and limits":
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld slave":
     target  => "/etc/mysql/${instance_name}/my.cnf",
     order   => '108',
-    content => template("${module_name}/mycnf/mysqld/08_caches_limits.erb"),
+    content => template("${module_name}/mycnf/mysqld/08_slave.erb"),
+  }
+
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld caches and limits":
+    target  => "/etc/mysql/${instance_name}/my.cnf",
+    order   => '109',
+    content => template("${module_name}/mycnf/mysqld/09_caches_limits.erb"),
   }
 }
