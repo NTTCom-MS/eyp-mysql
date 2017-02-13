@@ -1,9 +1,8 @@
 define mysql::community::instance (
                                     $password,
                                     $instance_name     = $name,
-                                    $datadir           = "/var/mysql/${name}",
                                     $add_default_mycnf = false,
-                                    $datadir           = "/var/mysql/${name}",
+                                    $datadir           = "/var/mysql/${name}/datadir",
                                     $relaylogdir       = "/var/mysql/${name}/binlogs",
                                     $logdir            = "/var/log/mysql/${name}",
                                   ) {
