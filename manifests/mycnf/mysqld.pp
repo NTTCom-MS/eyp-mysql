@@ -27,6 +27,19 @@ define mysql::mycnf::mysqld (
                               $relaylogdir                     = '/var/mysql/binlogs',
                               $max_relay_log_size              = '0',
                               $replicate_ignore_db             = [],
+                              $max_heap_table_size             = '32M',
+                              $query_cache_type                = '0',
+                              $query_cache_size                = '0',
+                              $query_cache_limit               = '1048576',
+                              $max_connections                 = '500',
+                              $max_user_connections            = '0',
+                              $thread_cache_size               = '50',
+                              $open_files_limit                = '65535',
+                              $table_definition_cache          = '4096',
+                              $table_open_cache                = '100',
+                              $sort_buffer_size                = '262144',
+                              $join_buffer_size                = '131072',
+                              $tmp_table_size = '32M',
                             ) {
   if($instance_name=='global')
   {
