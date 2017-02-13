@@ -97,4 +97,10 @@ define mysql::mycnf::mysqld (
     order   => '107',
     content => template("${module_name}/mycnf/mysqld/07_binlogs.erb"),
   }
+
+  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld caches and limits":
+    target  => "/etc/mysql/${instance_name}/my.cnf",
+    order   => '108',
+    content => template("${module_name}/mycnf/mysqld/08_caches_limits.erb"),
+  }
 }
