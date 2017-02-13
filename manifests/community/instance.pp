@@ -16,4 +16,9 @@ define mysql::community::instance (
     datadir           => $datadir,
     require           => Class['::mysql'],
   }
+
+  ~>
+
+  mysql::community::service { $instance_name:
+  }
 }
