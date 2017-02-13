@@ -60,74 +60,74 @@ define mysql::mycnf::mysqld (
     $mycnf_path="/etc/mysql/${instance_name}/my.cnf"
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf header mysqld":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} header mysqld":
+    target  => $mycnf_path,
     order   => '100',
     content => "[mysqld]\n\n",
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld general":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld general":
+    target  => $mycnf_path,
     order   => '101',
     content => template("${module_name}/mycnf/mysqld/01_general.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld charset":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld charset":
+    target  => $mycnf_path,
     order   => '102',
     content => template("${module_name}/mycnf/mysqld/02_charset.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld RW status":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld RW status":
+    target  => $mycnf_path,
     order   => '103',
     content => template("${module_name}/mycnf/mysqld/03_rw.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld myisam":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld myisam":
+    target  => $mycnf_path,
     order   => '104',
     content => template("${module_name}/mycnf/mysqld/04_myisam.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld safety":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld safety":
+    target  => $mycnf_path,
     order   => '105',
     content => template("${module_name}/mycnf/mysqld/05_safety.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld data storage":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld data storage":
+    target  => $mycnf_path,
     order   => '106',
     content => template("${module_name}/mycnf/mysqld/06_data_storage.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld binlogs":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld binlogs":
+    target  => $mycnf_path,
     order   => '107',
     content => template("${module_name}/mycnf/mysqld/07_binlogs.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld slave":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld slave":
+    target  => $mycnf_path,
     order   => '108',
     content => template("${module_name}/mycnf/mysqld/08_slave.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld caches and limits":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld caches and limits":
+    target  => $mycnf_path,
     order   => '109',
     content => template("${module_name}/mycnf/mysqld/09_caches_limits.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld innodb":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld innodb":
+    target  => $mycnf_path,
     order   => '110',
     content => template("${module_name}/mycnf/mysqld/10_innodb.erb"),
   }
 
-  concat::fragment{ "/etc/mysql/${instance_name}/my.cnf mysqld logging":
-    target  => "/etc/mysql/${instance_name}/my.cnf",
+  concat::fragment{ "${mycnf_path} mysqld logging":
+    target  => $mycnf_path,
     order   => '111',
     content => template("${module_name}/mycnf/mysqld/11_logging.erb"),
   }
