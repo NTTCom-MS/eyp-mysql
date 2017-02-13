@@ -29,4 +29,8 @@ define mysql::community::instance (
 
   mysql::community::service { $instance_name:
   }
+
+  # 5.7
+  # root@ubuntu16:/var/log/mysql/test# echo "alter user root@localhost identified by 'password' password expire never;" | mysql -S /var/mysql/test/datadir/mysqld.sock  -p$(tail -n1 /var/mysql/test/.mypass) --connect-expired-password
+
 }
