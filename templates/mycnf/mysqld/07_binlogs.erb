@@ -1,6 +1,6 @@
 
 # BINARY LOGGING #
-log-bin                         = <%= @binlogdir %>/binlogs
+log-bin                         = <%= @binlogdir %>
 expire-logs-days                = <%= @expirelogsdays %>
 binlog-format                   = <%= @binlog_format %>
 sync-binlog                     = <%= scope.function_bool2number([@sync_binlog]) %>

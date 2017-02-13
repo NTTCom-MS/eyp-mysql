@@ -16,7 +16,6 @@ define mysql::mycnf::mysqld (
                               $max_allowed_packet              = '16M',
                               $max_connect_errors              = '1000000',
                               $nameresolve                     = false,
-                              $myisam_recover                  = [ 'FORCE', 'BACKUP' ],
                               $innodb                          = 'FORCE',
                               $expirelogsdays                  = '5',
                               $binlog_format                   = 'MIXED',
