@@ -1,9 +1,9 @@
 define mysql::community::install(
                                   $instance_name = $name,
+                                  $instancedir   = "/var/mysql/${name}",
                                   $datadir       = "/var/mysql/${name}/datadir",
                                   $relaylogdir   = "/var/mysql/${name}/binlogs",
                                   $logdir        = "/var/log/mysql/${name}",
-                                  $instancedir   = "/var/mysql/${name}",
                                 ) {
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
