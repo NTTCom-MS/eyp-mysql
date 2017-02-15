@@ -40,6 +40,10 @@ Puppet::Type.newtype(:mysql_sql) do
     defaultto("mysql")
   end
 
+  newparam(:instance_name) do
+    desc "instance name to connect to"
+  end
+
   newparam(:socket) do
     desc "The name of the socked to use"
   end
