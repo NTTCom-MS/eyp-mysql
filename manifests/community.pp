@@ -49,7 +49,8 @@ class mysql::community(
       # password for default instance, not used
       # echo "mysql-community-server mysql-community-server/root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
       exec { 'debian set root pass':
-        command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\" | debconf-set-selections'",
+        #command => "bash -c 'echo \"mysql-community-server mysql-community-server/root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\" | debconf-set-selections'",
+        command => 'bash -c \'echo "mysql-community-server mysql-community-server/root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo" | debconf-set-selections\'',
         unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/root-pass\" | grep \"dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
@@ -57,7 +58,8 @@ class mysql::community(
       # password for default instance, not used
       # echo "mysql-community-server mysql-community-server/re-root-pass password $ROOT_PASSWORD" | /usr/bin/debconf-set-selections
       exec { 'debian set re root pass':
-        command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\" | debconf-set-selections'",
+        #command => "bash -c 'echo \"mysql-community-server mysql-community-server/re-root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\" | debconf-set-selections'",
+        command => 'bash -c \'echo "mysql-community-server mysql-community-server/re-root-pass password dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo" | debconf-set-selections\'',
         unless  => "bash -c 'debconf-get-selections | grep -P \"mysql-community-server[ \\t]*mysql-community-server/re-root-pass\" | grep \"dmlzY2EgY2F0YWx1bnlhIGxsaXVyZQo\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
