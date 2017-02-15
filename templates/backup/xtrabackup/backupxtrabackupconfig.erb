@@ -1,0 +1,22 @@
+<% if defined?(@mailto) -%>
+MAILTO="<%= @mailto %>"
+<% end -%>
+DESTINATION="<%= @destination %>"
+<% if defined?(@retention) -%>
+RETENTION="<%= @retention %>"
+<% end -%>
+<% if defined?(@logdir) -%>
+LOGDIR="<%= @logdir %>"
+<% end -%>
+<% if defined?(@idhost) -%>
+IDHOST="<%= @idhost %>"
+<% end -%>
+<% if(@backupid) -%>
+BACKUP_NAME_ID="<%= @backupid %>"
+<% end -%>
+<% if defined?(@fullbackup_monthday) -%>
+FULL_ON_MONTHDAY="<%= @fullbackup_monthday %>"
+<% end -%>
+<% if defined?(@fullbackup_weekday) -%>
+FULL_ON_WEEKDAY="<%= @fullbackup_weekday %>"
+<% end -%>

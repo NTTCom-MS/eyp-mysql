@@ -1,0 +1,9 @@
+
+# SAFETY #
+max-allowed-packet              = <%= @max_allowed_packet %>
+max-connect-errors              = <%= @max_connect_errors %>
+<% if ! @nameresolve -%>
+skip-name-resolve
+<% end -%>
+sysdate-is-now                  = <%= scope.function_bool2number([@sysdate_is_now]) %>
+innodb                          = <%= @innodb %>

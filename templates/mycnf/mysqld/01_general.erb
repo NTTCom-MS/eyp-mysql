@@ -1,0 +1,12 @@
+
+# GENERAL #
+user                            = mysql
+default-storage-engine          = <%= @default_storage_engine %>
+socket                          = <%= @datadir %>/mysqld.sock
+port                            = <%= @port %>
+<%- if @skip_external_locking -%>
+skip-external-locking
+<%- end -%>
+<%- if defined?(@tmpdir) -%>
+tmpdir                          = <%= @tmpdir %>
+<%- end -%>
