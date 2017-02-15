@@ -11,7 +11,7 @@ define mysql::community::instance (
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
-  
+
   include ::mysql
 
   mysql::community::install { $instance_name:
@@ -41,6 +41,7 @@ define mysql::community::instance (
   exec { "reset password ${instance_name}":
     command => "echo \"alter user root@localhost identified by '${password}' password expire never;\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password",
     require => Mysql::Community::Service[$instance_name],
+    unless  => "echo \"select version()\" | mysql -S /var/mysql/test/datadir/mysqld.sock -p${password}",
   }
 
 }
