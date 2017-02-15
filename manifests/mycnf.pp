@@ -25,7 +25,6 @@ define mysql::mycnf (
       owner   => $owner,
       group   => $group,
       mode    => $mode,
-      require => Class['::mysql'],
     }
 
     concat::fragment{ "/etc/mysql/my.cnf header":
@@ -42,7 +41,6 @@ define mysql::mycnf (
       group   => 'root',
       mode    => '0755',
       purge   => true,
-      require => Class['::mysql'],
     }
 
     concat { "/etc/mysql/${instance_name}/my.cnf":
