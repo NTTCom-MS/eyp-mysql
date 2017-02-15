@@ -8,6 +8,10 @@ define mysql::community::instance (
                                     $relaylogdir       = "/var/mysql/${name}/binlogs",
                                     $logdir            = "/var/log/mysql/${name}",
                                   ) {
+  Exec {
+    path => '/usr/sbin:/usr/bin:/sbin:/bin',
+  }
+  
   include ::mysql
 
   mysql::community::install { $instance_name:
