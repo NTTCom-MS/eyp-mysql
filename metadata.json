@@ -2,7 +2,7 @@
   "name": "eyp-mysql",
   "version": "0.4.0",
   "author": "eyp",
-  "summary": "manages mysql and deploys backup scripts",
+  "summary": "multi instance mysql and deploys backup scripts",
   "license": "Apache-2.0",
   "source": "https://github.com/NTTCom-MS/eyp-mysql",
   "project_page": null,
