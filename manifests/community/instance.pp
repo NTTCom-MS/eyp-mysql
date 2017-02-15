@@ -7,12 +7,28 @@ define mysql::community::instance (
                                     $datadir           = "/var/mysql/${name}/datadir",
                                     $relaylogdir       = "/var/mysql/${name}/binlogs",
                                     $logdir            = "/var/log/mysql/${name}",
+                                    $default_instance  = false,
                                   ) {
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
   include ::mysql
+
+  if($default_instance)
+  {
+    if(!$add_default_mycnf)
+    {
+      fail('cannot set a mysql instance as the default instance if it\'s my.cnf is managed manually')
+    }
+
+    mysql::mycnf::client { "default_instance_${$instance_name}":
+      instance_name => 'global',
+      default       => true,
+      password      => $password,
+      socket        => "${datadir}/mysqld.sock",
+    }
+  }
 
   mysql::community::install { $instance_name:
     datadir     => $datadir,

@@ -2,7 +2,8 @@
 
 ## 0.4.0
 
-* **INCOMPATIBLE CHANGE**: major rewrite, not intended to be compatible with eyp-mysql 0.3 or lower in any way
+**INCOMPATIBLE WITH PREVIOUS VERSIONS**: major rewrite, not intended to be compatible with eyp-mysql 0.3 or lower in any way
+* **mysql community**: multi instance
 
 ## 0.3
 

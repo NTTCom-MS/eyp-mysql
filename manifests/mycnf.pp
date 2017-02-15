@@ -5,7 +5,9 @@
 #
 # concat my.cnf
 # 000 puppet managed file banner
-#
+# ...
+# 001 mysql
+# ...
 # 100 mysqld
 # 101 general
 # 102 charset
