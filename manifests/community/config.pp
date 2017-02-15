@@ -10,8 +10,6 @@ define mysql::community::config (
 
   if($add_default_mycnf)
   {
-    #TODO: afegir dependencies generiques
-
     mysql::mycnf { $instance_name:
       require => Class['::mysql'],
     }
