@@ -44,6 +44,10 @@ Puppet::Type.newtype(:mysql_sql) do
     desc "instance name to connect to"
   end
 
+  newparam(:password) do
+    desc "password to connect"
+  end
+
   newparam(:socket) do
     desc "The name of the socked to use"
   end

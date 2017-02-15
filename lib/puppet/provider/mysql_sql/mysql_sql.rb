@@ -15,8 +15,9 @@ Puppet::Type.type(:mysql_sql).provide(:mysql_sql) do
     # mysql --defaults-group-suffix=slave
 
     command = [resource[:mysql_path]]
-    command.push("--defaults-group-suffix", resource[:instance_name]) if resource[:instance_name]
+    command.push("--defaults-group-suffix=" + resource[:instance_name]) if resource[:instance_name]
     command.push("-S", resource[:socket]) if resource[:socket]
+    command.push("-p" + resource[:password]) if resource[:password]
     command.push("-e", '"' + sql.gsub('"', '\"') + '"')
     command.push(resource[:db]) if resource[:db]
 
