@@ -15,7 +15,7 @@ define mysql::mycnf::client(
 
   if($default)
   {
-    concat::fragment{ "${mycnf_path} mysql default instance: $instance_name":
+    concat::fragment{ "${mycnf_path} mysql default instance":
       target  => $mycnf_path,
       order   => '001',
       content => template("${module_name}/mycnf/mysql/01_default_client.erb"),
@@ -23,7 +23,11 @@ define mysql::mycnf::client(
   }
   else
   {
-    fail('TODO')
+    concat::fragment{ "${mycnf_path} mysql client $instance_name":
+      target  => $mycnf_path,
+      order   => '002',
+      content => template("${module_name}/mycnf/mysql/02_client.erb"),
+    }
   }
 
 }

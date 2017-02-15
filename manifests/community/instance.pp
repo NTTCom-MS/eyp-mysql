@@ -22,9 +22,18 @@ define mysql::community::instance (
       fail('cannot set a mysql instance as the default instance if it\'s my.cnf is managed manually')
     }
 
-    mysql::mycnf::client { "default_instance_${$instance_name}":
+    mysql::mycnf::client { "default_client":
       instance_name => 'global',
       default       => true,
+      password      => $password,
+      socket        => "${datadir}/mysqld.sock",
+    }
+  }
+  else
+  {
+    mysql::mycnf::client { $instance_name:
+      instance_name => $instance_name,
+      default       => false,
       password      => $password,
       socket        => "${datadir}/mysqld.sock",
     }
