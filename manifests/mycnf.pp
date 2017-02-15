@@ -27,7 +27,7 @@ define mysql::mycnf (
       mode    => $mode,
     }
 
-    concat::fragment{ "/etc/mysql/my.cnf header":
+    concat::fragment{ '/etc/mysql/my.cnf header':
       target  => '/etc/mysql/my.cnf',
       order   => '000',
       content => "#\n# puppet managed file\n#\n\n",
