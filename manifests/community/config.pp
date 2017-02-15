@@ -1,5 +1,6 @@
 define mysql::community::config (
                                   $instance_name     = $name,
+                                  $port              = '3306',
                                   $add_default_mycnf = false,
                                   $instancedir       = "/var/mysql/${name}",
                                   $datadir           = "/var/mysql/${name}/datadir",
@@ -16,6 +17,7 @@ define mysql::community::config (
     }
 
     mysql::mycnf::mysqld{ $instance_name:
+      port                => $port,
       datadir             => $datadir,
       relaylogdir         => $relaylogdir,
       log_error           => "${logdir}/mysql-error.log",

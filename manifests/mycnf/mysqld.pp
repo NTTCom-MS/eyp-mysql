@@ -4,6 +4,7 @@ define mysql::mycnf::mysqld (
                               $instance_name                   = $name,
                               $skip_external_locking           = $mysql::params::skip_external_locking_default,
                               $tmpdir                          = $mysql::params::tmpdir_default,
+                              $port                            = '3306',
                               $datadir                         = "/var/mysql/${name}",
                               $relaylogdir                     = "/var/mysql/${name}/relaylogs",
                               $binlogdir                       = "/var/mysql/${name}/binlogs",

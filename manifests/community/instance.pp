@@ -1,5 +1,6 @@
 define mysql::community::instance (
                                     $password,
+                                    $port              = '3306',
                                     $instance_name     = $name,
                                     $add_default_mycnf = false,
                                     $instancedir       = "/var/mysql/${name}",
@@ -18,6 +19,7 @@ define mysql::community::instance (
   ->
 
   mysql::community::config { $instance_name:
+    port              => $port,
     add_default_mycnf => $add_default_mycnf,
     datadir           => $datadir,
     relaylogdir       => $relaylogdir,
