@@ -11,7 +11,7 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
 
       # charset
       #select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='cacadevaca';
-      #attributes['charset'] = run_sql_command("select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='" + name + "'")
+      attributes['charset'] = provider.run_sql_command("select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='" + name + "'")
 
       #collation
       #attributes['collation'] = run_sql_command("select DEFAULT_COLLATION_NAME from information_schema.schemata where schema_name='" + name + "'")
