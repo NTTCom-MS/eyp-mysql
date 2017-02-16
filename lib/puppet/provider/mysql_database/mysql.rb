@@ -1,11 +1,19 @@
 Puppet::Type.type(:mysql_database).provide(:mysql) do
 
+  commands :mysql => 'mysql'
+
   def self.instances
-    run_sql_command('show databases').split("\n").collect do |db|
-      new(
-        :ensure => :present,
-        :name => db,
-        )
+    mysql([defaults_file, '-NBe', 'show databases'].compact).split("\n").collect do |name|
+      attributes = {}
+      mysql([defaults_file, '-NBe', "show variables like '%_database'", name].compact).split("\n").each do |line|
+        k,v = line.split(/\s/)
+        attributes[k] = v
+      end
+      new(:name    => name,
+          :ensure  => :present,
+          :charset => attributes['character_set_database'],
+          :collate => attributes['collation_database']
+         )
     end
   end
 
@@ -30,7 +38,6 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     run_sql_command("drop database " + resource[:name])
   end
 
-
   def run_sql_command(sql)
 
     # mysql --defaults-group-suffix=slave
@@ -49,6 +56,20 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     else
       run_command(command)
     end
+  end
+
+  private
+
+  def run_command(command)
+    command = command.join ' '
+    output = Puppet::Util::Execution.execute(command, {
+      :uid                => 'root',
+      :gid                => 'root',
+      :failonfail         => false,
+      :combine            => true,
+      :override_locale    => true,
+    })
+    output
   end
 
   mk_resource_methods
