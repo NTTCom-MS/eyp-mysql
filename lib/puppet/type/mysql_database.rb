@@ -51,5 +51,9 @@ Puppet::Type.newtype(:mysql_database) do
     defaultto("utf8_general_ci")
   end
 
+  newparam(:cwd, :parent => Puppet::Parameter::Path) do
+    desc "The working directory under which the mysql command should be executed."
+    defaultto("/tmp")
+  end
 
 end
