@@ -41,12 +41,12 @@ Puppet::Type.newtype(:mysql_database) do
     desc "The name of the socked to use"
   end
 
-  newparam(:charset) do
+  newproperty(:charset) do
     desc "database's default charset"
     defaultto("utf8")
   end
 
-  newparam(:collate) do
+  newproperty(:collate) do
     desc "database's default collate"
     defaultto("utf8_general_ci")
   end
