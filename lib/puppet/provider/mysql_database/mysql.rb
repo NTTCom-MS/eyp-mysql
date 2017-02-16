@@ -3,9 +3,9 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
   commands :mysql => 'mysql'
 
   def self.instances
-    mysql([defaults_file, '-NBe', 'show databases'].compact).split("\n").collect do |name|
+    mysql(['-NBe', 'show databases'].compact).split("\n").collect do |name|
       attributes = {}
-      mysql([defaults_file, '-NBe', "show variables like '%_database'", name].compact).split("\n").each do |line|
+      mysql(['-NBe', "show variables like '%_database'", name].compact).split("\n").each do |line|
         k,v = line.split(/\s/)
         attributes[k] = v
       end
@@ -46,8 +46,8 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     command.push("--defaults-group-suffix=" + resource[:instance_name]) if resource[:instance_name]
     command.push("-S", resource[:socket]) if resource[:socket]
     command.push("-p" + resource[:password]) if resource[:password]
+    command.push("-NB")
     command.push("-e", '"' + sql.gsub('"', '\"') + '"')
-    command.push(resource[:db]) if resource[:db]
 
     if resource[:cwd]
       Dir.chdir resource[:cwd] do
@@ -75,13 +75,13 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
   mk_resource_methods
 
   def charset=(value)
-    mysql([defaults_file, '-NBe', "alter database `#{resource[:name]}` CHARACTER SET #{value}"].compact)
+    mysql(['-NBe', "alter database `#{resource[:name]}` CHARACTER SET #{value}"].compact)
     @property_hash[:charset] = value
     charset == value ? (return true) : (return false)
   end
 
   def collate=(value)
-    mysql([defaults_file, '-NBe', "alter database `#{resource[:name]}` COLLATE #{value}"].compact)
+    mysql(['-NBe', "alter database `#{resource[:name]}` COLLATE #{value}"].compact)
     @property_hash[:collate] = value
     collate == value ? (return true) : (return false)
   end
