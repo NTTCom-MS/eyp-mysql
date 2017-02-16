@@ -1,4 +1,4 @@
-Puppet::Type.newtype(:mysql_sql) do
+Puppet::Type.newtype(:mysql_database) do
   @doc = 'manage MySQL databases'
 
   newparam(:database) do

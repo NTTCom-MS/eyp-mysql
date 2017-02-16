@@ -1,4 +1,4 @@
-Puppet::Type.type(:mysql_sql).provide(:mysql_sql) do
+Puppet::Type.type(:mysql_database).provide(:mysql_database) do
 
   def self.instances
     self.run_sql_command('show databases').split("\n").collect do |db|
