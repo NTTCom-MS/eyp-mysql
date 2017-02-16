@@ -63,7 +63,7 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
   end
 
   def collate
-    run_sql_command("select DEFAULT_COLLATION_NAME from information_schema.schemata where schema_name='" + name + "'")
+    run_sql_command("select DEFAULT_COLLATION_NAME from information_schema.schemata where schema_name='" + name + "'").split("\n")[0]
   end
 
   def collate=(value)
