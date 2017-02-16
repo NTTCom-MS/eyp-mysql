@@ -3,7 +3,7 @@ Puppet::Type.newtype(:mysql_database) do
 
   ensurable
 
-  newparam(:database) do
+  newparam(:database, :namevar => true) do
     desc 'The name of the MySQL DB to manage.'
 
     defaultto { @resource[:name] }
