@@ -1,7 +1,7 @@
 Puppet::Type.type(:mysql_database).provide(:mysql_database) do
 
   def self.instances
-    self.run_sql_command('show databases').split("\n").collect do |db|
+    run_sql_command('show databases').split("\n").collect do |db|
       new(
         :ensure => :present,
         :name => db,
@@ -25,11 +25,11 @@ Puppet::Type.type(:mysql_database).provide(:mysql_database) do
   mk_resource_methods
 
   def create
-    self.run_sql_command("create database " + resource[:name] + " CHARACTER SET " + resource[:charset] + " COLLATE " + resource[:collate] + ";")
+    run_sql_command("create database " + resource[:name] + " CHARACTER SET " + resource[:charset] + " COLLATE " + resource[:collate] + ";")
   end
 
   def destroy
-    self.run_sql_command("drop database " + resource[:name])
+    run_sql_command("drop database " + resource[:name])
   end
 
 
