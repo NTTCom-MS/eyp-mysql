@@ -1,6 +1,8 @@
 Puppet::Type.newtype(:mysql_database) do
   @doc = 'manage MySQL databases'
 
+  ensurable
+
   newparam(:database) do
     desc 'The name of the MySQL DB to manage.'
 
