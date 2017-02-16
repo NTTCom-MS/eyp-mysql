@@ -2,7 +2,7 @@
 # based on puppetlabs-postgresql's postgresql_psql:
 #   https://github.com/puppetlabs/puppetlabs-postgresql/blob/master/lib/puppet/provider/postgresql_psql/ruby.rb
 #
-Puppet::Type.type(:mysql_sql).provide(:mysql_sql) do
+Puppet::Type.type(:mysql_sql).provide(:mysql) do
 
   def run_unless_sql_command(sql)
     # for the 'unless' queries, we wrap the user's query in a 'SELECT COUNT',
