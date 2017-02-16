@@ -25,7 +25,7 @@ Puppet::Type.type(:mysql_sql).provide(:mysql_sql) do
   mk_resource_methods
 
   def create
-    self.run_sql_command(("create database " + resource[:name] + " CHARACTER SET " + resource[:charset] + " COLLATE " + resource[:collate] + ";")
+    self.run_sql_command("create database " + resource[:name] + " CHARACTER SET " + resource[:charset] + " COLLATE " + resource[:collate] + ";")
   end
 
   def destroy
