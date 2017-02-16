@@ -62,6 +62,21 @@ mysql::community::instance { 'test2':
 
 ## Usage
 
+### mysql
+
+run SQL query
+```puppet
+mysql_sql { 'caca':
+  command => 'select version()',
+  instance_name => 'test',
+}
+```
+
+create database
+```puppet
+mysql::database { 'provaprova': }
+```
+
 ### xtrabackup
 
 * general options:

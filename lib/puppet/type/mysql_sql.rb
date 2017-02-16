@@ -3,6 +3,7 @@
 #   https://github.com/puppetlabs/puppetlabs-postgresql/blob/master/lib/puppet/type/postgresql_psql.rb
 #
 Puppet::Type.newtype(:mysql_sql) do
+  @doc = 'execute arbitrary SQL queries'
 
   newparam(:name) do
     desc "An arbitrary tag for your own reference"
