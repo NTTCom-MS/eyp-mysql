@@ -3,16 +3,20 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
   commands :mysql => 'mysql'
 
   def self.instances
-    mysql(['-NBe', 'show databases'].compact).split("\n").collect do |name|
+    run_sql_command('show databases').split("\n").collect do |name|
       attributes = {}
-      mysql(['-NBe', "show variables like '%_database'", name].compact).split("\n").each do |line|
-        k,v = line.split(/\s/)
-        attributes[k] = v
-      end
+
+      # charset
+      #select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='cacadevaca';
+      attributes['charset'] = run_sql_command("select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='" + name + "'")
+
+      #collation
+      attributes['collation'] = run_sql_command("select DEFAULT_COLLATION_NAME from information_schema.schemata where schema_name='" + name + "'")
+
       new(:name    => name,
           :ensure  => :present,
-          :charset => attributes['character_set_database'],
-          :collate => attributes['collation_database']
+          :charset => attributes['charset'],
+          :collate => attributes['collation']
          )
     end
   end
