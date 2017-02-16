@@ -3,22 +3,28 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
   commands :mysql => 'mysql'
 
   def self.instances
-    run_sql_command('show databases').split("\n").collect do |name|
+    dbs = []
+
+    #run_sql_command('show databases').split("\n").collect do |name|
+    mysql(['-NBe', 'show databases'].compact).split("\n").collect do |name|
       attributes = {}
 
       # charset
       #select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='cacadevaca';
-      attributes['charset'] = run_sql_command("select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='" + name + "'")
+      #attributes['charset'] = run_sql_command("select DEFAULT_CHARACTER_SET_NAME from information_schema.schemata where schema_name='" + name + "'")
 
       #collation
-      attributes['collation'] = run_sql_command("select DEFAULT_COLLATION_NAME from information_schema.schemata where schema_name='" + name + "'")
+      #attributes['collation'] = run_sql_command("select DEFAULT_COLLATION_NAME from information_schema.schemata where schema_name='" + name + "'")
 
-      new(:name    => name,
+      dbs << new( {
+          :name    => name,
           :ensure  => :present,
           :charset => attributes['charset'],
           :collate => attributes['collation']
-         )
+        } )
     end
+
+    return dbs
   end
 
   def self.prefetch(resources)
@@ -62,20 +68,6 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     end
   end
 
-  private
-
-  def run_command(command)
-    command = command.join ' '
-    output = Puppet::Util::Execution.execute(command, {
-      :uid                => 'root',
-      :gid                => 'root',
-      :failonfail         => false,
-      :combine            => true,
-      :override_locale    => true,
-    })
-    output
-  end
-
   mk_resource_methods
 
   def charset=(value)
@@ -88,6 +80,20 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     mysql(['-NBe', "alter database `#{resource[:name]}` COLLATE #{value}"].compact)
     @property_hash[:collate] = value
     collate == value ? (return true) : (return false)
+  end
+
+  private
+
+  def run_command(command)
+    command = command.join ' '
+    output = Puppet::Util::Execution.execute(command, {
+      :uid                => 'root',
+      :gid                => 'root',
+      :failonfail         => false,
+      :combine            => true,
+      :override_locale    => true,
+    })
+    output
   end
 
 end
