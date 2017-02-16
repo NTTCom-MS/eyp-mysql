@@ -22,8 +22,6 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     @property_hash[:ensure] == :present || false
   end
 
-  mk_resource_methods
-
   def create
     run_sql_command("create database " + resource[:name] + " CHARACTER SET " + resource[:charset] + " COLLATE " + resource[:collate] + ";")
   end
@@ -51,6 +49,20 @@ Puppet::Type.type(:mysql_database).provide(:mysql) do
     else
       run_command(command)
     end
+  end
+
+  mk_resource_methods
+
+  def charset=(value)
+    mysql([defaults_file, '-NBe', "alter database `#{resource[:name]}` CHARACTER SET #{value}"].compact)
+    @property_hash[:charset] = value
+    charset == value ? (return true) : (return false)
+  end
+
+  def collate=(value)
+    mysql([defaults_file, '-NBe', "alter database `#{resource[:name]}` COLLATE #{value}"].compact)
+    @property_hash[:collate] = value
+    collate == value ? (return true) : (return false)
   end
 
 end
