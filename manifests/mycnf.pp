@@ -23,10 +23,10 @@ define mysql::mycnf (
   if($instance_name=='global')
   {
     concat { '/etc/mysql/my.cnf':
-      ensure  => $ensure,
-      owner   => $owner,
-      group   => $group,
-      mode    => $mode,
+      ensure => $ensure,
+      owner  => $owner,
+      group  => $group,
+      mode   => $mode,
     }
 
     concat::fragment{ '/etc/mysql/my.cnf header':
@@ -38,11 +38,11 @@ define mysql::mycnf (
   else
   {
     file { "/etc/mysql/${instance_name}":
-      ensure  => 'directory',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      purge   => true,
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      purge  => true,
     }
 
     concat { "/etc/mysql/${instance_name}/my.cnf":

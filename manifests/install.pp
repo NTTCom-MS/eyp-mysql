@@ -15,10 +15,10 @@ class mysql::install inherits mysql {
   }
 
   file { '/var/mysql':
-    ensure  => 'directory',
-    owner   => 'mysql',
-    group   => 'mysql',
-    mode    => '0750',
+    ensure => 'directory',
+    owner  => 'mysql',
+    group  => 'mysql',
+    mode   => '0750',
   }
 
 }

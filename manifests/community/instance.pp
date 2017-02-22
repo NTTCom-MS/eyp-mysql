@@ -22,7 +22,7 @@ define mysql::community::instance (
       fail('cannot set a mysql instance as the default instance if it\'s my.cnf is managed manually')
     }
 
-    mysql::mycnf::client { "default_client":
+    mysql::mycnf::client { 'default_client':
       instance_name => 'global',
       default       => true,
       password      => $password,
