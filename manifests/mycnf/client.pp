@@ -23,7 +23,7 @@ define mysql::mycnf::client(
   }
   else
   {
-    concat::fragment{ "${mycnf_path} mysql client $instance_name":
+    concat::fragment{ "${mycnf_path} mysql client ${instance_name}":
       target  => $mycnf_path,
       order   => '002',
       content => template("${module_name}/mycnf/mysql/02_client.erb"),
