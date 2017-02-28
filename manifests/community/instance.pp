@@ -13,7 +13,7 @@ define mysql::community::instance (
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
-  include ::mysql
+  include ::mysql::community
 
   if($default_instance)
   {
