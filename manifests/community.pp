@@ -74,6 +74,10 @@ class mysql::community(
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
     }
+    'RedHat':
+    {
+      # no actions?
+    }
     default: {}
   }
 

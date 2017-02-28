@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.2
+
+* added mysql user and group under puppet management
+
 ## 0.4.1
 
 **INCOMPATIBLE WITH PREVIOUS VERSIONS**: major rewrite, not intended to be compatible with eyp-mysql 0.3 or lower in any way

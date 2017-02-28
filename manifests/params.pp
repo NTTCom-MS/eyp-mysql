@@ -1,5 +1,7 @@
 class mysql::params {
 
+  $mysql_username = 'mysql'
+
   #MySQL config
   $binlogdir_default='/var/mysql/binlogs'
   $binlog_format_default='STATEMENT'
@@ -53,6 +55,9 @@ class mysql::params {
   {
     'redhat':
     {
+      $mysql_username_uid = '27'
+      $mysql_username_gid = '27'
+
       $servicename='mysqld'
 
       $repo_update_command='/bin/true'
@@ -103,6 +108,9 @@ class mysql::params {
     }
     'Debian':
     {
+      $mysql_username_uid = '113'
+      $mysql_username_gid = '119'
+
       $servicename='mysql'
 
       $repo_update_command='apt-get update'
