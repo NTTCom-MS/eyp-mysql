@@ -6,7 +6,7 @@ class mysql::xtradbcluster(
   #
   include ::mysql::perconarepo
 
-  package { $::mysql::percona_xtradbcluster_package_name:
+  package { $::mysql::percona_xtradbcluster_package_name[$version]:
     ensure => $mysql::package_ensure,
     require => Class['::mysql::perconarepo'],
   }
