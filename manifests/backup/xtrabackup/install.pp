@@ -8,20 +8,28 @@ class mysql::backup::xtrabackup::install(
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
-  exec { 'wget xtrabackup package':
-    command => "wget ${mysql::params::percona_xtrabackup_package[$version]} -O ${srcdir}/xtrabackup.${mysql::params::package_provider}",
-    creates => "${srcdir}/xtrabackup.${mysql::params::package_provider}",
+  if($version == undef)
+  {
+    $version_release=''
+  }
+  else
+  {
+    if($version =~ /^([0-9])\.([0-9])/)
+    {
+      $version_release="$1$2"
+    }
+    else {
+      fail('invalid version')
+    }
   }
 
   # exec { 'install xtrabackup package':
   #   command => "yum install -y ${srcdir}/xtrabackup.${mysql::params::package_provider}",
   #   unless  => "rpm -qi ${mysql::params::percona_xtrabackup_package_name[$version]}"
   # }
-  package { $mysql::params::percona_xtrabackup_package_name[$version]:
-    ensure   => $mysql::package_ensure,
-    provider => $mysql::params::package_provider,
-    source   => "${mysql::srcdir}/xtrabackup.${mysql::params::package_provider}",
-    require  => Exec['wget xtrabackup package'],
+  package { $mysql::params::percona_xtrabackup_package_name[$version_release]:
+    ensure  => $mysql::package_ensure,
+    require => Class['::mysql::perconarepo']
   }
 
 }
