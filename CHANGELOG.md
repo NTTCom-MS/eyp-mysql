@@ -3,6 +3,8 @@
 ## 0.4.2
 
 * added mysql user and group under puppet management
+* added percona repo support
+* added support for xtrabackup in Ubuntu 16.04
 
 ## 0.4.1
 

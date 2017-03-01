@@ -11,7 +11,6 @@ class mysql::backup::xtrabackup::install(
   exec { 'wget xtrabackup package':
     command => "wget ${mysql::params::percona_xtrabackup_package[$version]} -O ${srcdir}/xtrabackup.${mysql::params::package_provider}",
     creates => "${srcdir}/xtrabackup.${mysql::params::package_provider}",
-    notify  => Exec['install xtrabackup package'],
   }
 
   # exec { 'install xtrabackup package':
