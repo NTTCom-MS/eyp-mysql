@@ -4,6 +4,13 @@ class mysql::config inherits mysql {
   {
     mysql::mycnf { 'global':
     }
+
+    #ln -s /etc/mysql/my.cnf /etc/mysql/my.cnf.fallback
+    file { '/etc/mysql/my.cnf.fallback':
+      ensure => 'link',
+      target => '/etc/mysql/my.cnf',
+      require => Mysql::Mycnf['global'],
+    }
   }
 
   if($mysql::params::systemd)

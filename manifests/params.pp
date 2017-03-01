@@ -51,8 +51,8 @@ class mysql::params {
                                         '2.0.8' => 'percona-xtrabackup-20',
                                       }
   $percona_xtradbcluster_package_name = {
-                                          '5.6' => [ 'percona-xtradb-cluster-server-5.6', 'percona-xtradb-cluster-client-5.6'],
-                                          '5.7' => [ 'percona-xtradb-cluster-server-5.7', 'percona-xtradb-cluster-client-5.7'],
+                                          '5.6' => [ 'percona-xtradb-cluster-server-5.6', 'percona-xtradb-cluster-client-5.6', 'percona-xtradb-cluster-common-5.6' ],
+                                          '5.7' => [ 'percona-xtradb-cluster-server-5.7', 'percona-xtradb-cluster-client-5.7', 'percona-xtradb-cluster-common-5.7' ],
                                         }
   $perconarepo_reponame = 'percona-release'
 
