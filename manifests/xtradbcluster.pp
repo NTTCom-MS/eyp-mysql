@@ -6,8 +6,10 @@ class mysql::xtradbcluster(
   #
   include ::mysql::perconarepo
 
+  include ::mysql::backup::xtrabackup::install
+
   package { $::mysql::percona_xtradbcluster_package_name[$version]:
     ensure => $mysql::package_ensure,
-    require => Class['::mysql::perconarepo'],
+    require => Class[ [ '::mysql::perconarepo', '::mysql::backup::xtrabackup::install' ] ],
   }
 }

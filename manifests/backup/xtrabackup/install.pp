@@ -14,9 +14,15 @@ class mysql::backup::xtrabackup::install(
     notify  => Exec['install xtrabackup package'],
   }
 
-  exec { 'install xtrabackup package':
-    command => "yum install -y ${srcdir}/xtrabackup.${mysql::params::package_provider}",
-    unless  => "rpm -qi ${mysql::params::percona_xtrabackup_package_name[$version]}"
+  # exec { 'install xtrabackup package':
+  #   command => "yum install -y ${srcdir}/xtrabackup.${mysql::params::package_provider}",
+  #   unless  => "rpm -qi ${mysql::params::percona_xtrabackup_package_name[$version]}"
+  # }
+  package { $mysql::params::percona_xtrabackup_package_name[$version]:
+    ensure   => $mysql::package_ensure,
+    provider => $mysql::params::package_provider,
+    source   => "${mysql::srcdir}/xtrabackup.${mysql::params::package_provider}",
+    require  => Exec['wget xtrabackup package'],
   }
 
 }
