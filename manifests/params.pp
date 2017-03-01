@@ -50,6 +50,11 @@ class mysql::params {
                                         '2.4.4' => 'percona-xtrabackup-24',
                                         '2.0.8' => 'percona-xtrabackup-20',
                                       }
+  $percona_xtradbcluster_package_name = {
+                                          '5.6' => 'percona-xtradb-cluster-56',
+                                          '5.7' => 'percona-xtradb-cluster-57',
+                                        }
+  $perconarepo_reponame = 'percona-release'
 
   case $::osfamily
   {
@@ -122,6 +127,7 @@ class mysql::params {
       $mysql_repo_name = {
                             '5.7' => 'mysql-apt-config',
                         }
+      $perconarepo_repo = "https://repo.percona.com/apt/percona-release_0.1-4.${::lsbdistcodename}_all.deb"
 
       case $::operatingsystem
       {
