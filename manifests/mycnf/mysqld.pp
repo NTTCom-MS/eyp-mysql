@@ -46,6 +46,7 @@ define mysql::mycnf::mysqld (
                               $innodb_flush_log_at_trx_commit  = '2',
                               $innodb_file_per_table           = true,
                               $innodb_buffer_pool_size         = ceiling(sprintf('%f', $::memorysize_mb)*838860),
+                              $innodb_autoinc_lock_mode        = undef,
                               $log_queries_not_using_indexes   = false,
                               $slow_query_log                  = true,
                               $log_error                       = "/var/log/mysql/${name}/mysql-error.log",

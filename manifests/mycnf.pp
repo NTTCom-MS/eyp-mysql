@@ -11,6 +11,17 @@
 # 100 mysqld
 # 101 general
 # 102 charset
+# 103
+# 104
+# 105
+# 106
+# 107
+# 108
+# 109
+# 110
+# 111
+#
+# 180 galera
 #
 define mysql::mycnf (
                       $instance_name = $name,

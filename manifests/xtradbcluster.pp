@@ -13,6 +13,6 @@ class mysql::xtradbcluster(
   package { $::mysql::percona_xtradbcluster_package_name[$version]:
     ensure  => $mysql::package_ensure,
     require => Class[ [ '::mysql::perconarepo', '::mysql::backup::xtrabackup::install' ] ],
-    before  => Service[$mysql::params::servicename],
   }
+  
 }

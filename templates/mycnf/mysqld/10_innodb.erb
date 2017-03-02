@@ -6,3 +6,6 @@ innodb-log-file-size            = <%= @innodb_log_file_size %>
 innodb-flush-log-at-trx-commit  = <%= @innodb_flush_log_at_trx_commit %>
 innodb-file-per-table           = <%= scope.function_bool2number([@innodb_file_per_table]) %>
 innodb-buffer-pool-size         = <%= @innodb_buffer_pool_size %>
+<% if defined?(@innodb_autoinc_lock_mode) -%>
+innodb_autoinc_lock_mode        = <%= @innodb_autoinc_lock_mode %>
+<% end -%>

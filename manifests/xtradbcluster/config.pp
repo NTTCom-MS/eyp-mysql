@@ -15,11 +15,14 @@ define mysql::xtradbcluster::config (
     }
 
     mysql::mycnf::mysqld{ $instance_name:
-      port                => $port,
-      datadir             => $datadir,
-      relaylogdir         => $relaylogdir,
-      log_error           => "${logdir}/mysql-error.log",
-      slow_query_log_file => "${logdir}/mysql-slow.log",
+      port                     => $port,
+      datadir                  => $datadir,
+      relaylogdir              => $relaylogdir,
+      log_error                => "${logdir}/mysql-error.log",
+      slow_query_log_file      => "${logdir}/mysql-slow.log",
+      binlog_format            => 'ROW',
+      default_storage_engine   => 'InnoDB',
+      innodb_autoinc_lock_mode => '2',
     }
   }
 }
