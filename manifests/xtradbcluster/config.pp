@@ -1,5 +1,6 @@
 define mysql::xtradbcluster::config (
                                   $instance_name     = $name,
+                                  $cluster_name      = $name,
                                   $port              = '3306',
                                   $add_default_mycnf = false,
                                   $instancedir       = "/var/mysql/${name}",
@@ -23,6 +24,10 @@ define mysql::xtradbcluster::config (
       binlog_format            => 'ROW',
       default_storage_engine   => 'InnoDB',
       innodb_autoinc_lock_mode => '2',
+    }
+
+    mysql::mycnf::galera { $instance_name:
+      wsrep_cluster_name => $cluster_name,
     }
   }
 }

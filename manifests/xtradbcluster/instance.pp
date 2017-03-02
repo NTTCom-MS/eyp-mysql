@@ -2,6 +2,7 @@ define mysql::xtradbcluster::instance (
                                     $password,
                                     $port              = '3306',
                                     $instance_name     = $name,
+                                    $cluster_name      = $name,
                                     $add_default_mycnf = false,
                                     $instancedir       = "/var/mysql/${name}",
                                     $datadir           = "/var/mysql/${name}/datadir",
@@ -53,6 +54,7 @@ define mysql::xtradbcluster::instance (
     datadir           => $datadir,
     relaylogdir       => $relaylogdir,
     logdir            => $logdir,
+    cluster_name      => $cluster_name,
     require           => Class['::mysql'],
   }
 

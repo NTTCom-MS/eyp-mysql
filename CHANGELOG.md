@@ -6,6 +6,7 @@
 * added percona repo support
 * **INCOMPATIBLE CHANGE**: xtrabackup is now installed using perconarepo
 * added support for xtrabackup in Ubuntu 16.04
+* added Percona XtraDB cluster support
 
 ## 0.4.1
 
