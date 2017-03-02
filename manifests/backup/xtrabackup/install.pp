@@ -8,6 +8,8 @@ class mysql::backup::xtrabackup::install(
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
+  include ::mysql::perconarepo
+
   if($version == undef)
   {
     $version_release=''
