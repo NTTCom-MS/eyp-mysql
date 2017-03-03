@@ -6,11 +6,13 @@
 # Path to Galera library
 wsrep_provider=<%= @wsrep_provider %>
 
+<% if @wsrep_cluster_address.any? -%>
 # Cluster connection URL contains the IPs of node#1, node#2 and node#3
-wsrep_cluster_address=gcomm://192.168.70.61,192.168.70.62,192.168.70.63
+wsrep_cluster_address=gcomm://<%= @@wsrep_cluster_address.join(',') %>
+<% end -%>
 
 # Node #1 address
-wsrep_node_address=192.168.70.61
+wsrep_node_address=<%= @wsrep_node_address %>
 
 # SST method
 wsrep_sst_method=<%= @wsrep_sst_method %>
@@ -19,4 +21,20 @@ wsrep_sst_method=<%= @wsrep_sst_method %>
 wsrep_cluster_name=<%= @wsrep_cluster_name %>
 
 # Authentication for SST method
-wsrep_sst_auth="sstuser:s3cretPass"
+wsrep_sst_auth="<%= @wsrep_sst_auth_username %>:<%= @wsrep_sst_auth_password %>"
+
+# Controls whether the node participates in Flow Control
+# If set to true, allows this node to be desync without freezing the whole cluster
+wsrep_desync = <%= scope.function_bool2number([@wsrep_desync]) %>
+
+# This variable can be used to reject queries for that node (NONE, ALL, ALL_KILL)
+wsrep_reject_queries = <%= @wsrep_reject_queries %>
+
+# When this variable is enabled SST donor node will not accept incoming queries,
+# instead it will reject queries with UNKNOWN COMMAND error code
+wsrep_sst_donor_rejects_queries=<%= scope.function_bool2number([@wsrep_sst_donor_rejects_queries]) %>
+
+<% if defined?(@wsrep_sst_donor) -%>
+# Contains the name (wsrep_node_name) of the preferred donor for the SST
+wsrep_sst_donor = <%= @wsrep_sst_donor %>
+<% end -%>

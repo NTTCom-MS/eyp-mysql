@@ -1,5 +1,6 @@
 define mysql::xtradbcluster::instance (
                                     $password,
+                                    $serverid,
                                     $port              = '3306',
                                     $instance_name     = $name,
                                     $cluster_name      = $name,
@@ -9,6 +10,7 @@ define mysql::xtradbcluster::instance (
                                     $relaylogdir       = "/var/mysql/${name}/binlogs",
                                     $logdir            = "/var/log/mysql/${name}",
                                     $default_instance  = false,
+                                    $node_address      = $::ipaddress,
                                   ) {
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
@@ -40,7 +42,7 @@ define mysql::xtradbcluster::instance (
     }
   }
 
-  mysql::community::install { $instance_name:
+  mysql::xtradbcluster::install { $instance_name:
     datadir     => $datadir,
     relaylogdir => $relaylogdir,
     logdir      => $logdir,
@@ -48,19 +50,21 @@ define mysql::xtradbcluster::instance (
 
   ->
 
-  mysql::community::config { $instance_name:
-    port              => $port,
-    add_default_mycnf => $add_default_mycnf,
-    datadir           => $datadir,
-    relaylogdir       => $relaylogdir,
-    logdir            => $logdir,
-    cluster_name      => $cluster_name,
-    require           => Class['::mysql'],
+  mysql::xtradbcluster::config { $instance_name:
+    port               => $port,
+    add_default_mycnf  => $add_default_mycnf,
+    datadir            => $datadir,
+    relaylogdir        => $relaylogdir,
+    logdir             => $logdir,
+    cluster_name       => $cluster_name,
+    serverid           => $serverid,
+    wsrep_node_address => $node_address,
+    require            => Class['::mysql'],
   }
 
   ~>
 
-  mysql::community::service { $instance_name:
+  mysql::xtradbcluster::service { $instance_name:
     tag => "eypmysql_${instance_name}",
   }
 
