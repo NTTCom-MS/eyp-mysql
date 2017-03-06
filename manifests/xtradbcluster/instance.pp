@@ -2,6 +2,8 @@ define mysql::xtradbcluster::instance (
                                     $password,
                                     $serverid,
                                     $cluster_list,
+                                    $sst_username,
+                                    $sst_password,
                                     $port              = '3306',
                                     $instance_name     = $name,
                                     $cluster_name      = $name,
@@ -54,17 +56,19 @@ define mysql::xtradbcluster::instance (
   ->
 
   mysql::xtradbcluster::config { $instance_name:
-    port                  => $port,
-    add_default_mycnf     => $add_default_mycnf,
-    datadir               => $datadir,
-    relaylogdir           => $relaylogdir,
-    logdir                => $logdir,
-    binlogdir             => $binlogdir,
-    cluster_name          => $cluster_name,
-    serverid              => $serverid,
-    wsrep_node_address    => $node_address,
-    wsrep_cluster_address => $cluster_list,
-    require               => Class['::mysql'],
+    port                    => $port,
+    add_default_mycnf       => $add_default_mycnf,
+    datadir                 => $datadir,
+    relaylogdir             => $relaylogdir,
+    logdir                  => $logdir,
+    binlogdir               => $binlogdir,
+    cluster_name            => $cluster_name,
+    serverid                => $serverid,
+    wsrep_node_address      => $node_address,
+    wsrep_cluster_address   => $cluster_list,
+    wsrep_sst_auth_username => $sst_username,
+    wsrep_sst_auth_password => $sst_password,
+    require                 => Class['::mysql'],
   }
 
   ~>
@@ -83,6 +87,15 @@ define mysql::xtradbcluster::instance (
     command => "echo \"alter user root@localhost identified by '${password}' password expire never;\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
     require => Mysql::Xtradbcluster::Service[$instance_name],
     unless  => "echo \"select version()\" | mysql -S /var/mysql/${instance_name}/datadir/mysqld.sock -p${password}",
+  }
+
+  if($sst_username!=undef)
+  {
+    exec { "sst ${instance_name}":
+      command => "echo \"GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO '${sst_username}'@'localhost' identified by '${sst_password}';\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
+      require => [ Exec["reset password ${instance_name}"], Mysql::Xtradbcluster::Service[$instance_name] ],
+      unless  => "echo \"select user from mysql.user where user='${sst_username}' and authentication_string=password('$sst_password');\" | mysql -NB -S /var/mysql/${instance_name}/datadir/mysqld.sock -p${password} | grep ${sst_username}",
+    }
   }
 
   file { "/etc/mysql/$instance_name/puppet_options":
