@@ -4,6 +4,9 @@ user                            = mysql
 default-storage-engine          = <%= @default_storage_engine %>
 socket                          = <%= @datadir %>/mysqld.sock
 port                            = <%= @port %>
+<% if defined?(@pidfile) -%>
+pid-file                        = <%= @pidfile %>
+<% end -%>
 <%- if @skip_external_locking -%>
 skip-external-locking
 <%- end -%>

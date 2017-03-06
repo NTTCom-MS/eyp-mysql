@@ -31,6 +31,25 @@ class mysql::config inherits mysql {
       runtime_directory           => [ 'community%i' ],
       runtime_directory_mode      => '755',
       restart_sec                 => '1',
+      environment_files           => [ '-/etc/mysql/%i/puppet_options', '-/etc/mysql/%i/options' ],
+    }
+
+    systemd::service { 'xtradbcluster@':
+      description                 => 'percona xtradbcluster (galera) %i',
+      type                        => 'forking',
+      execstart                   => '/usr/bin/mysqld_safe --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/xtradbcluster%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
+      user                        => 'mysql',
+      group                       => 'mysql',
+      pid_file                    => '/var/run/xtradbcluster%i/mysqld.pid',
+      permissions_start_only      => true,
+      restart                     => 'on-failure',
+      limit_nofile                => '10000',
+      timeoutsec                  => '600',
+      restart_prevent_exit_status => [ '1' ],
+      runtime_directory           => [ 'xtradbcluster%i' ],
+      runtime_directory_mode      => '755',
+      restart_sec                 => '1',
+      environment_files           => [ '-/etc/mysql/%i/puppet_options', '-/etc/mysql/%i/options' ],
     }
   }
   else

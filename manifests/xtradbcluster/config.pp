@@ -27,6 +27,7 @@ define mysql::xtradbcluster::config(
       default_storage_engine   => 'InnoDB',
       innodb_autoinc_lock_mode => '2',
       serverid                 => $serverid,
+      pidfile                  => "/var/run/xtradbcluster${instance_name}/mysqld.pid",
     }
 
     mysql::mycnf::galera { $instance_name:

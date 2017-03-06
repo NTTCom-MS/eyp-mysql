@@ -2,7 +2,7 @@ define mysql::community::instance (
                                     $password,
                                     $port              = '3306',
                                     $instance_name     = $name,
-                                    $add_default_mycnf = false,
+                                    $add_default_mycnf = true,
                                     $instancedir       = "/var/mysql/${name}",
                                     $datadir           = "/var/mysql/${name}/datadir",
                                     $relaylogdir       = "/var/mysql/${name}/binlogs",
@@ -71,7 +71,7 @@ define mysql::community::instance (
   exec { "reset password ${instance_name}":
     command => "echo \"alter user root@localhost identified by '${password}' password expire never;\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
     require => Mysql::Community::Service[$instance_name],
-    unless  => "echo \"select version()\" | mysql -S /var/mysql/test/datadir/mysqld.sock -p${password}",
+    unless  => "echo \"select version()\" | mysql -S /var/mysql/${instance_name}/datadir/mysqld.sock -p${password}",
   }
 
 }
