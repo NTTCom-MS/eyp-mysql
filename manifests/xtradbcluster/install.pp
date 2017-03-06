@@ -2,7 +2,8 @@ define mysql::xtradbcluster::install(
                                   $instance_name = $name,
                                   $instancedir   = "/var/mysql/${name}",
                                   $datadir       = "/var/mysql/${name}/datadir",
-                                  $relaylogdir   = "/var/mysql/${name}/binlogs",
+                                  $relaylogdir   = "/var/mysql/${name}/relaylog",
+                                  $binlogdir     = "/var/mysql/${name}/binlogs",
                                   $logdir        = "/var/log/mysql/${name}",
                                 ) {
   Exec {
@@ -61,12 +62,25 @@ define mysql::xtradbcluster::install(
     require => Exec["mkdir logdir ${instance_name}"],
   }
 
+  exec { "mkdir binlogdir ${instance_name}":
+    command => "mkdir -p ${binlogdir}",
+    creates => $binlogdir,
+  }
+
+  file { $binlogdir:
+    ensure  => 'directory',
+    owner   => 'mysql',
+    group   => 'mysql',
+    mode    => '0755',
+    require => Exec["mkdir binlogdir ${instance_name}"],
+  }
+
   #mysql_install_db --defaults-file=/etc/mysql/my.cnf  --random-password-file=/var/mysql/test/.mypass --datadir=/var/mysql/test/datadir/ --basedir=/usr
   exec { "mysql_install_db ${instance_name}":
     command => "bash -c 'mysql_install_db --defaults-file=/etc/mysql/my.cnf --random-password-file=$(dirname ${datadir})/.mypass --datadir=${datadir} --basedir=/usr'",
     unless  => "bash -c 'test -f $(dirname ${datadir})/.mypass'",
     user    => 'mysql',
-    require => File[ [ $logdir, $relaylogdir, $datadir, $instancedir ] ],
+    require => [ Class['::mysql::xtradbcluster'], File[ [ $logdir, $relaylogdir, $datadir, $instancedir ] ] ],
   }
 
 }

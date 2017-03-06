@@ -8,7 +8,10 @@ wsrep_provider=<%= @wsrep_provider %>
 
 <% if @wsrep_cluster_address.any? -%>
 # Cluster connection URL contains the IPs of node#1, node#2 and node#3
-wsrep_cluster_address=gcomm://<%= @@wsrep_cluster_address.join(',') %>
+wsrep_cluster_address=gcomm://<%= @wsrep_cluster_address.join(',') %>
+<% else -%>
+# enforcing bootstrap mode
+wsrep_cluster_address=gcomm://
 <% end -%>
 
 # Node #1 address
@@ -20,12 +23,18 @@ wsrep_sst_method=<%= @wsrep_sst_method %>
 # Cluster name
 wsrep_cluster_name=<%= @wsrep_cluster_name %>
 
+# SST method
+wsrep_sst_method=<%= @wsrep_sst_method %>
+
 # Authentication for SST method
 wsrep_sst_auth="<%= @wsrep_sst_auth_username %>:<%= @wsrep_sst_auth_password %>"
 
 # Controls whether the node participates in Flow Control
 # If set to true, allows this node to be desync without freezing the whole cluster
 wsrep_desync = <%= scope.function_bool2number([@wsrep_desync]) %>
+
+# dirty reads when not synchronized with the group
+wsrep_dirty_reads = <%= scope.function_bool2number([@wsrep_dirty_reads]) %>
 
 # This variable can be used to reject queries for that node (NONE, ALL, ALL_KILL)
 wsrep_reject_queries = <%= @wsrep_reject_queries %>
