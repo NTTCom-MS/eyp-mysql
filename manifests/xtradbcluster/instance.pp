@@ -105,6 +105,7 @@ define mysql::xtradbcluster::instance (
     mode    => '0644',
     content => template("${module_name}/xtradbcluster/puppet_options.erb"),
     require => Mysql::Xtradbcluster::Config[$instance_name],
+    notify  => Mysql::Xtradbcluster::Service[$instance_name],
   }
 
   # we are just deploying a template, this file is not really managed
