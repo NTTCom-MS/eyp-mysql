@@ -13,6 +13,7 @@
 
 **INCOMPATIBLE WITH PREVIOUS VERSIONS**: major rewrite, not intended to be compatible with eyp-mysql 0.3 or lower in any way
 * **mysql community**: multi instance
+* dropped CentOS 5 support
 
 ## 0.3
 
