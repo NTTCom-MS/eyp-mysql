@@ -94,13 +94,13 @@ define mysql::xtradbcluster::instance (
   if($sst_username!=undef)
   {
     exec { "sst localhost ${instance_name}":
-      command => "echo \"GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO '${sst_username}'@'localhost' identified by '${sst_password}';\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
+      command => "echo \"GRANT PROCESS, RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO '${sst_username}'@'localhost' identified by '${sst_password}';\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
       require => [ Exec["reset password ${instance_name}"], Mysql::Xtradbcluster::Service[$instance_name] ],
       unless  => "echo \"select concat(user,'@',host) from mysql.user where host='localhost' and user='${sst_username}' and authentication_string=password('$sst_password');\" | mysql -NB -S /var/mysql/${instance_name}/datadir/mysqld.sock -p${password} | grep ${sst_username}",
     }
 
     exec { "sst any ${instance_name}":
-      command => "echo \"GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO '${sst_username}'@'%' identified by '${sst_password}';\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
+      command => "echo \"GRANT PROCESS, RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO '${sst_username}'@'%' identified by '${sst_password}';\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
       require => [ Exec["reset password ${instance_name}"], Mysql::Xtradbcluster::Service[$instance_name] ],
       unless  => "echo \"select concat(user,'@',host) from mysql.user where host='%' and user='${sst_username}' and authentication_string=password('$sst_password');\" | mysql -NB -S /var/mysql/${instance_name}/datadir/mysqld.sock -p${password} | grep ${sst_username}",
     }
