@@ -37,7 +37,7 @@ class mysql::config inherits mysql {
     systemd::service { 'xtradbcluster@':
       description                 => 'percona xtradbcluster (galera) %i',
       type                        => 'forking',
-      execstart                   => '/usr/bin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/xtradbcluster%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
+      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/xtradbcluster%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
       user                        => 'mysql',
       group                       => 'mysql',
       pid_file                    => '/var/run/xtradbcluster%i/mysqld.pid',
