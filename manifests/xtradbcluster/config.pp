@@ -37,7 +37,7 @@ define mysql::xtradbcluster::config(
 
     mysql::mycnf::galera { $instance_name:
       wsrep_cluster_name      => $cluster_name,
-      wsrep_node_address      => $::ipaddress,
+      wsrep_node_address      => $wsrep_node_address,
       wsrep_cluster_address   => $wsrep_cluster_address,
       wsrep_sst_auth_username => $wsrep_sst_auth_username,
       wsrep_sst_auth_password => $wsrep_sst_auth_password,
