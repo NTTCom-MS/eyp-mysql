@@ -1,13 +1,15 @@
 define mysql::xtradbcluster::instance (
                                     $password,
                                     $serverid,
+                                    $cluster_list,
                                     $port              = '3306',
                                     $instance_name     = $name,
                                     $cluster_name      = $name,
                                     $add_default_mycnf = true,
                                     $instancedir       = "/var/mysql/${name}",
                                     $datadir           = "/var/mysql/${name}/datadir",
-                                    $relaylogdir       = "/var/mysql/${name}/binlogs",
+                                    $relaylogdir       = "/var/mysql/${name}/relaylog",
+                                    $binlogdir         = "/var/mysql/${name}/binlogs",
                                     $logdir            = "/var/log/mysql/${name}",
                                     $default_instance  = false,
                                     $node_address      = $::ipaddress,
@@ -52,15 +54,17 @@ define mysql::xtradbcluster::instance (
   ->
 
   mysql::xtradbcluster::config { $instance_name:
-    port               => $port,
-    add_default_mycnf  => $add_default_mycnf,
-    datadir            => $datadir,
-    relaylogdir        => $relaylogdir,
-    logdir             => $logdir,
-    cluster_name       => $cluster_name,
-    serverid           => $serverid,
-    wsrep_node_address => $node_address,
-    require            => Class['::mysql'],
+    port                  => $port,
+    add_default_mycnf     => $add_default_mycnf,
+    datadir               => $datadir,
+    relaylogdir           => $relaylogdir,
+    logdir                => $logdir,
+    binlogdir             => $binlogdir,
+    cluster_name          => $cluster_name,
+    serverid              => $serverid,
+    wsrep_node_address    => $node_address,
+    wsrep_cluster_address => $cluster_list,
+    require               => Class['::mysql'],
   }
 
   ~>
