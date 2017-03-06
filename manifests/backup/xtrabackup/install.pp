@@ -18,7 +18,7 @@ class mysql::backup::xtrabackup::install(
   {
     if($version =~ /^([0-9])\.([0-9])/)
     {
-      $version_release="$1$2"
+      $version_release="${1}${2}"
     }
     else {
       fail('invalid version')

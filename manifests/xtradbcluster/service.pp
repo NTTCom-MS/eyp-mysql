@@ -1,4 +1,4 @@
-define mysql::community::service(
+define mysql::xtradbcluster::service(
                                   $instance_name         = $name,
                                   $manage_service        = true,
                                   $manage_docker_service = true,

@@ -14,5 +14,4 @@ class mysql::xtradbcluster(
     ensure  => $mysql::package_ensure,
     require => Class[ [ '::mysql::perconarepo', '::mysql::backup::xtrabackup::install' ] ],
   }
-  
 }
