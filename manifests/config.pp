@@ -4,6 +4,13 @@ class mysql::config inherits mysql {
   {
     mysql::mycnf { 'global':
     }
+
+    #ln -s /etc/mysql/my.cnf /etc/mysql/my.cnf.fallback
+    file { '/etc/mysql/my.cnf.fallback':
+      ensure  => 'link',
+      target  => '/etc/mysql/my.cnf',
+      require => Mysql::Mycnf['global'],
+    }
   }
 
   if($mysql::params::systemd)
@@ -12,7 +19,7 @@ class mysql::config inherits mysql {
     systemd::service { 'mysqlcommunity@':
       description                 => 'mysql community %i',
       type                        => 'forking',
-      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/community%i/mysqld.pid',
+      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/community%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
       user                        => 'mysql',
       group                       => 'mysql',
       pid_file                    => '/var/run/community%i/mysqld.pid',
@@ -22,8 +29,28 @@ class mysql::config inherits mysql {
       timeoutsec                  => '600',
       restart_prevent_exit_status => [ '1' ],
       runtime_directory           => [ 'community%i' ],
-      runtime_directory_mode      => '755',
+      runtime_directory_mode      => '0755',
       restart_sec                 => '1',
+      environment_files           => [ '-/etc/mysql/%i/puppet_options', '-/etc/mysql/%i/options' ],
+    }
+
+    systemd::service { 'xtradbcluster@':
+      description                 => 'percona xtradbcluster (galera) %i',
+      type                        => 'forking',
+      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/xtradbcluster%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
+      user                        => 'mysql',
+      group                       => 'mysql',
+      pid_file                    => '/var/run/xtradbcluster%i/mysqld.pid',
+      permissions_start_only      => true,
+      restart                     => 'on-failure',
+      #restart                     => 'no',
+      limit_nofile                => '10000',
+      timeoutsec                  => '600',
+      restart_prevent_exit_status => [ '1' ],
+      runtime_directory           => [ 'xtradbcluster%i' ],
+      runtime_directory_mode      => '0755',
+      restart_sec                 => '1',
+      environment_files           => [ '-/etc/mysql/%i/puppet_options', '-/etc/mysql/%i/options' ],
     }
   }
   else

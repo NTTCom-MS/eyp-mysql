@@ -47,9 +47,15 @@ class mysql::params {
   $mysql_community_pkgs= [ 'mysql-community-server' ]
 
   $percona_xtrabackup_package_name = {
-                                        '2.4.4' => 'percona-xtrabackup-24',
-                                        '2.0.8' => 'percona-xtrabackup-20',
+                                        '' => 'percona-xtrabackup',
+                                        '24' => 'percona-xtrabackup-24',
+                                        '20' => 'percona-xtrabackup-20',
                                       }
+  $percona_xtradbcluster_package_name = {
+                                          '5.6' => [ 'percona-xtradb-cluster-server-5.6', 'percona-xtradb-cluster-client-5.6' ],
+                                          '5.7' => [ 'percona-xtradb-cluster-server-5.7', 'percona-xtradb-cluster-client-5.7' ],
+                                        }
+  $perconarepo_reponame = 'percona-release'
 
   case $::osfamily
   {
@@ -75,10 +81,6 @@ class mysql::params {
         /^5.*$/:
         {
           $systemd=false
-          $percona_xtrabackup_package = {
-                                          '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/5/x86_64/percona-xtrabackup-24-2.4.4-1.el5.x86_64.rpm',
-                                          '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel5/x86_64/percona-xtrabackup-20-2.0.8-587.rhel5.x86_64.rpm',
-                                        }
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el5-7.noarch.rpm',
@@ -87,10 +89,6 @@ class mysql::params {
         /^6.*$/:
         {
           $systemd=false
-          $percona_xtrabackup_package = {
-                                          '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/6/x86_64/percona-xtrabackup-24-2.4.4-1.el6.x86_64.rpm',
-                                          '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/RPM/rhel6/x86_64/percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm',
-                                        }
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm',
@@ -122,15 +120,12 @@ class mysql::params {
       $mysql_repo_name = {
                             '5.7' => 'mysql-apt-config',
                         }
+      $perconarepo_repo = "https://repo.percona.com/apt/percona-release_0.1-4.${::lsbdistcodename}_all.deb"
 
       case $::operatingsystem
       {
         'Ubuntu':
         {
-          $percona_xtrabackup_package = {
-                                          '2.4.4' => 'https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/debian/trusty/x86_64/percona-xtrabackup-24_2.4.4-1.trusty_amd64.deb',
-                                          '2.0.8' => 'https://www.percona.com/downloads/XtraBackup/XtraBackup-2.0.8/deb/precise/x86_64/percona-xtrabackup-20_2.0.8-587.precise_amd64.deb',
-                                        }
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql-apt-config_0.8.0-1_all.deb',
