@@ -4,6 +4,7 @@ define mysql::xtradbcluster::instance (
                                     $cluster_list,
                                     $sst_username,
                                     $sst_password,
+                                    $sst_method        = 'xtrabackup-v2',
                                     $port              = '3306',
                                     $instance_name     = $name,
                                     $cluster_name      = $name,
@@ -68,6 +69,7 @@ define mysql::xtradbcluster::instance (
     wsrep_cluster_address   => $cluster_list,
     wsrep_sst_auth_username => $sst_username,
     wsrep_sst_auth_password => $sst_password,
+    wsrep_sst_method        => $sst_method,
     require                 => Class['::mysql'],
   }
 

@@ -13,6 +13,7 @@ define mysql::xtradbcluster::config(
                                       $logdir                  = "/var/log/mysql/${name}",
                                       $wsrep_sst_auth_username = 'dmlzY2EK',
                                       $wsrep_sst_auth_password = 'Y2F0YWx1bnlhCg',
+                                      $wsrep_sst_method        = 'xtrabackup-v2',
                                     ) {
 
   if($add_default_mycnf)
@@ -41,6 +42,7 @@ define mysql::xtradbcluster::config(
       wsrep_cluster_address   => $wsrep_cluster_address,
       wsrep_sst_auth_username => $wsrep_sst_auth_username,
       wsrep_sst_auth_password => $wsrep_sst_auth_password,
+      wsrep_sst_method        => $wsrep_sst_method,
     }
   }
 }
