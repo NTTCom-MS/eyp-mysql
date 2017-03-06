@@ -50,6 +50,7 @@ define mysql::xtradbcluster::instance (
     datadir     => $datadir,
     relaylogdir => $relaylogdir,
     logdir      => $logdir,
+    binlogdir   => $binlogdir,
   }
 
   ->
