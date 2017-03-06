@@ -2,7 +2,8 @@ define mysql::xtradbcluster::install(
                                   $instance_name = $name,
                                   $instancedir   = "/var/mysql/${name}",
                                   $datadir       = "/var/mysql/${name}/datadir",
-                                  $relaylogdir   = "/var/mysql/${name}/binlogs",
+                                  $relaylogdir   = "/var/mysql/${name}/relaylog",
+                                  $binlogdir     = "/var/mysql/${name}/binlogs",
                                   $logdir        = "/var/log/mysql/${name}",
                                 ) {
   Exec {
