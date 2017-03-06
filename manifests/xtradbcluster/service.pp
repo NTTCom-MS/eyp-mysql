@@ -19,7 +19,7 @@ define mysql::xtradbcluster::service(
   {
     if($manage_service)
     {
-      service { "mysqlcommunity@${instance_name}":
+      service { "xtradbcluster@${instance_name}":
         ensure => $service_ensure,
         enable => $service_enable,
       }

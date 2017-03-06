@@ -19,7 +19,7 @@ class mysql::config inherits mysql {
     systemd::service { 'mysqlcommunity@':
       description                 => 'mysql community %i',
       type                        => 'forking',
-      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/community%i/mysqld.pid',
+      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/community%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
       user                        => 'mysql',
       group                       => 'mysql',
       pid_file                    => '/var/run/community%i/mysqld.pid',
@@ -43,7 +43,7 @@ class mysql::config inherits mysql {
       pid_file                    => '/var/run/xtradbcluster%i/mysqld.pid',
       permissions_start_only      => true,
       #restart                     => 'on-failure',
-      restart                     => 'never',
+      restart                     => 'no',
       limit_nofile                => '10000',
       timeoutsec                  => '600',
       restart_prevent_exit_status => [ '1' ],
