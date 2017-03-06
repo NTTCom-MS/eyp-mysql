@@ -1,5 +1,23 @@
 class mysql::config inherits mysql {
 
+  case $mysql::pid_location
+  {
+    'run':
+    {
+      $pid_location_systemd_community='/var/run/community%i/mysqld.pid'
+      $pid_location_systemd_xtradbcluster='/var/run/xtradbcluster%i/mysqld.pid'
+    }
+    'datadir':
+    {
+      $pid_location_systemd_community='/var/mysql/%i/datadir/mysqld.pid'
+      $pid_location_systemd_xtradbcluster='/var/mysql/%i/datadir/mysqld.pid'
+    }
+    default:
+    {
+      fail("unsupported mode: ${mysql::pid_location}")
+    }
+  }
+
   if($mysql::add_default_global_mycnf)
   {
     mysql::mycnf { 'global':
@@ -19,10 +37,10 @@ class mysql::config inherits mysql {
     systemd::service { 'mysqlcommunity@':
       description                 => 'mysql community %i',
       type                        => 'forking',
-      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/community%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
+      execstart                   => "/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=${pid_location_systemd_community} \$PUPPET_MYSQLD_OPTIONS \$MYSQLD_OPTIONS",
       user                        => 'mysql',
       group                       => 'mysql',
-      pid_file                    => '/var/run/community%i/mysqld.pid',
+      pid_file                    => $pid_location_systemd_community,
       permissions_start_only      => true,
       restart                     => 'on-failure',
       limit_nofile                => '10000',
@@ -37,10 +55,10 @@ class mysql::config inherits mysql {
     systemd::service { 'xtradbcluster@':
       description                 => 'percona xtradbcluster (galera) %i',
       type                        => 'forking',
-      execstart                   => '/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=/var/run/xtradbcluster%i/mysqld.pid $PUPPET_MYSQLD_OPTIONS $MYSQLD_OPTIONS',
+      execstart                   => "/usr/sbin/mysqld --defaults-file=/etc/mysql/%i/my.cnf  --daemonize --pid-file=${pid_location_systemd_xtradbcluster} \$PUPPET_MYSQLD_OPTIONS \$MYSQLD_OPTIONS",
       user                        => 'mysql',
       group                       => 'mysql',
-      pid_file                    => '/var/run/xtradbcluster%i/mysqld.pid',
+      pid_file                    => $pid_location_systemd_xtradbcluster,
       permissions_start_only      => true,
       #restart                     => 'on-failure',
       restart                     => 'no',

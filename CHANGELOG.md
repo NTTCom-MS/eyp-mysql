@@ -7,6 +7,7 @@
 * **INCOMPATIBLE CHANGE**: xtrabackup is now installed using perconarepo
 * added support for xtrabackup in Ubuntu 16.04
 * added Percona XtraDB cluster support
+* **INCOMPATIBLE CHANGE**: added **mysql::pid_location** to define where to store instance's pid file (default: run)
 
 ## 0.4.1
 
