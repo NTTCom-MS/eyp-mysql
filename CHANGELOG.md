@@ -7,11 +7,14 @@
 * **INCOMPATIBLE CHANGE**: xtrabackup is now installed using perconarepo
 * added support for xtrabackup in Ubuntu 16.04
 * added Percona XtraDB cluster support
+* **INCOMPATIBLE CHANGE**: added **mysql::pid_location** to define where to store instance's pid file
+* bugfix: default pid_location for CentOS 7 is datadir (instead of run) due to this bug: [Bug 1428110 - RFE: RuntimeDirectory= should resolve %i and other specifiers](https://bugzilla.redhat.com/show_bug.cgi?id=1428110)
 
 ## 0.4.1
 
 **INCOMPATIBLE WITH PREVIOUS VERSIONS**: major rewrite, not intended to be compatible with eyp-mysql 0.3 or lower in any way
 * **mysql community**: multi instance
+* dropped CentOS 5 support
 
 ## 0.3
 

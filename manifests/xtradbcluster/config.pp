@@ -16,6 +16,22 @@ define mysql::xtradbcluster::config(
                                       $wsrep_sst_method        = 'xtrabackup-v2',
                                     ) {
 
+  case $mysql::pid_location
+  {
+    'run':
+    {
+      $pid_location_systemd_xtradbcluster="/var/run/xtradbcluster${instance_name}/mysqld.pid"
+    }
+    'datadir':
+    {
+      $pid_location_systemd_xtradbcluster="/var/mysql/${instance_name}/datadir/mysqld.pid"
+    }
+    default:
+    {
+      fail("unsupported mode: ${mysql::pid_location}")
+    }
+  }
+
   if($add_default_mycnf)
   {
     mysql::mycnf { $instance_name:
@@ -33,7 +49,7 @@ define mysql::xtradbcluster::config(
       default_storage_engine   => 'InnoDB',
       innodb_autoinc_lock_mode => '2',
       serverid                 => $serverid,
-      pidfile                  => "/var/run/xtradbcluster${instance_name}/mysqld.pid",
+      pidfile                  => $pid_location_systemd_xtradbcluster,
     }
 
     mysql::mycnf::galera { $instance_name:
