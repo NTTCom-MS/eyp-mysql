@@ -40,7 +40,6 @@ define mysql::xtradbcluster::instance (
   else
   {
     mysql::mycnf::client { $instance_name:
-      instance_name => 'global',
       default       => false,
       password      => $password,
       socket        => "${datadir}/mysqld.sock",
