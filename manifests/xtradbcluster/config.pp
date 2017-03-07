@@ -14,6 +14,7 @@ define mysql::xtradbcluster::config(
                                       $wsrep_sst_auth_username = 'dmlzY2EK',
                                       $wsrep_sst_auth_password = 'Y2F0YWx1bnlhCg',
                                       $wsrep_sst_method        = 'xtrabackup-v2',
+                                      $gmcast_listen_addr      = 'tcp://0.0.0.0:4567',
                                     ) {
 
   case $mysql::pid_location
@@ -59,6 +60,7 @@ define mysql::xtradbcluster::config(
       wsrep_sst_auth_username => $wsrep_sst_auth_username,
       wsrep_sst_auth_password => $wsrep_sst_auth_password,
       wsrep_sst_method        => $wsrep_sst_method,
+      gmcast_listen_addr      => $gmcast_listen_addr,
     }
   }
 }

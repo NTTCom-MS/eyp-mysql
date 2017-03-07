@@ -3,6 +3,7 @@
 ## 0.4.3
 
 * bugfix: Added a dependency for **mysql_install_db** for **mysql::community::instance**
+* added **gmcast_listen_addr** variable for *single node* XtraDB clusters (sic)
 
 ## 0.4.2
 
