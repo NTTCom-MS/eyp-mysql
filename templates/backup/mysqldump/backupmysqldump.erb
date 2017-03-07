@@ -65,7 +65,7 @@ function dump_grants
 
 	GRANTSDESTFILE="$GRANTSDEST/${IDHOST}.grants.sql"
 
-	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN -N | $MYSQLBIN -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
+	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N | $MYSQLBIN -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
 
 	if [[ ! -s "$GRANTSDESTFILE" ]];
 	then
