@@ -20,3 +20,6 @@ FULL_ON_MONTHDAY="<%= @fullbackup_monthday %>"
 <% if defined?(@fullbackup_weekday) -%>
 FULL_ON_WEEKDAY="<%= @fullbackup_weekday %>"
 <% end -%>
+<% if(@instance) -%>
+INSTANCE_NAME="<%= @instance %>"
+<% end -%>

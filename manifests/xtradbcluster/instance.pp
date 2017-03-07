@@ -59,6 +59,7 @@ define mysql::xtradbcluster::instance (
 
   mysql::xtradbcluster::config { $instance_name:
     port                    => $port,
+    password                => $password,
     add_default_mycnf       => $add_default_mycnf,
     datadir                 => $datadir,
     relaylogdir             => $relaylogdir,

@@ -1,5 +1,6 @@
 define mysql::xtradbcluster::config(
                                       $serverid,
+                                      $password                = undef,
                                       $wsrep_node_address      = $::ipaddress,
                                       $wsrep_cluster_address   = [],
                                       $instance_name           = $name,
@@ -37,6 +38,11 @@ define mysql::xtradbcluster::config(
   {
     mysql::mycnf { $instance_name:
       require => Class['::mysql'],
+    }
+
+    mysql::mycnf::client { $instance_name:
+      password => $password,
+      socket   => "${datadir}/mysqld.sock",
     }
 
     mysql::mycnf::mysqld{ $instance_name:

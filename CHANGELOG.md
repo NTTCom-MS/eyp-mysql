@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.4
+
+* bugfix: fixed xtrabackup script to use the propper my.cnf file
+
 ## 0.4.3
 
 * bugfix: Added a dependency for **mysql_install_db** for **mysql::community::instance**
