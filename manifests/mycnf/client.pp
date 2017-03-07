@@ -1,5 +1,6 @@
 define mysql::mycnf::client(
                               $instance_name = $name,
+                              $client_name   = $name,
                               $default       = false,
                               $password      = undef,
                               $socket        = undef,

@@ -65,7 +65,7 @@ define mysql::mycnf::mysqld (
   concat::fragment{ "${mycnf_path} header mysqld":
     target  => $mycnf_path,
     order   => '100',
-    content => "[mysqld]\n\n",
+    content => "\n[mysqld]\n\n",
   }
 
   concat::fragment{ "${mycnf_path} mysqld general":

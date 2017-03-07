@@ -42,6 +42,7 @@ define mysql::xtradbcluster::instance (
 
   mysql::mycnf::client { $instance_name:
     default       => false,
+    client_name   => '',
     password      => $password,
     socket        => "${datadir}/mysqld.sock",
   }
