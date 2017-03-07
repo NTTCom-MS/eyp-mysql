@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.4.4
+
+* bugfix: fixed xtrabackup and mysqldump scripts to use the proper my.cnf file
+
+## 0.4.3
+
+* bugfix: Added a dependency for **mysql_install_db** for **mysql::community::instance**
+* added **gmcast_listen_addr** variable for *single node* XtraDB clusters (sic)
+* added percona repo support for CentOS
+
 ## 0.4.2
 
 * added mysql user and group under puppet management

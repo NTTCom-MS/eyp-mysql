@@ -109,7 +109,7 @@ function dobackup
 	if [ "$TODAY_IS_FULL" -eq 1 ];
 	then
 		# full
-		innobackupex ${DUMPDEST}
+		innobackupex --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf ${DUMPDEST}
 	else
 		# incremental
 
@@ -118,20 +118,20 @@ function dobackup
 		# innobackupex --incremental /var/backups/xtrabackup/ --incremental-basedir=/var/backups/xtrabackup/2014-08-25_10-04-45/
 
 		# de moment full :D
-		innobackupex ${DUMPDEST}
+		innobackupex --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf ${DUMPDEST}
 	fi
 
 	if [ "$?" -ne 0 ];
 	then
-		echo "innobackupex error, check logs"
+		echo "innobackupex error, check logs - error code: $?"
 		BCKFAILED=1
 	fi
 
-	grep "innobackupex: completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
+	grep "completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
 
 	if [ "$?" -ne 0 ];
 	then
-		echo "innobackupex error - completed OK not found - check logs"
+		echo "innobackupex error - completed OK not found - unexpected log output, please check logs"
 		BCKFAILED=1
 	fi
 }

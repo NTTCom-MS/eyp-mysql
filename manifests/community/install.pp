@@ -66,7 +66,7 @@ define mysql::community::install(
     command => "bash -c 'mysql_install_db --defaults-file=/etc/mysql/my.cnf --random-password-file=$(dirname ${datadir})/.mypass --datadir=${datadir} --basedir=/usr'",
     unless  => "bash -c 'test -f $(dirname ${datadir})/.mypass'",
     user    => 'mysql',
-    require => File[ [ $logdir, $relaylogdir, $datadir, $instancedir ] ],
+    require => [ Class['::mysql::community'], File[ [ $logdir, $relaylogdir, $datadir, $instancedir ] ] ],
   }
 
 }

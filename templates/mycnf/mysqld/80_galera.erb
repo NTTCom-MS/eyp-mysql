@@ -8,7 +8,7 @@ wsrep_provider=<%= @wsrep_provider %>
 
 <% if @wsrep_cluster_address.any? -%>
 # Cluster connection URL contains the IPs of node#1, node#2 and node#3
-wsrep_cluster_address=gcomm://<%= @wsrep_cluster_address.join(',') %>
+wsrep_cluster_address=gcomm://<%= @wsrep_cluster_address.join(',') %>?gmcast.listen_addr=<%= @gmcast_listen_addr %>
 <% else -%>
 # enforcing bootstrap mode
 wsrep_cluster_address=gcomm://

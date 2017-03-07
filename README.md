@@ -62,6 +62,42 @@ mysql::community::instance { 'test2':
 
 ## Usage
 
+### single node demo XtraDB cluster
+
+```puppet
+mysql::xtradbcluster::instance { 'cluster1':
+  cluster_name       => 'galera',
+  port						   => '3306',
+  bootstrap          => true,
+  password           => 'password',
+  serverid           => '1',
+  default_instance   => true,
+  cluster_list       => [ '192.168.56.103:4568' ],
+  sst_username       => 'sstuser',
+  sst_password       => 'sstpassw0rd',
+  node_address       => '192.168.56.103',
+  gmcast_listen_addr => 'tcp://0.0.0.0:4567'
+}
+
+->
+
+mysql::xtradbcluster::instance { 'cluster2':
+  cluster_name       => 'galera',
+  port						   => '3307',
+  bootstrap          => false,
+  password           => 'password',
+  serverid           => '2',
+  default_instance   => false,
+  cluster_list       => [ '192.168.56.103:4567' ],
+  sst_username       => 'sstuser',
+  sst_password       => 'sstpassw0rd',
+  node_address       => '192.168.56.103',
+  gmcast_listen_addr => 'tcp://0.0.0.0:4568'
+}
+```
+
+*Note: Once cluster is bootstraped we need to change bootstrap to false in the primary node*
+
 ### mysql
 
 run SQL query

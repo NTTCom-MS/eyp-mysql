@@ -65,7 +65,7 @@ function dump_grants
 
 	GRANTSDESTFILE="$GRANTSDEST/${IDHOST}.grants.sql"
 
-	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN -N | $MYSQLBIN -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
+	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
 
 	if [[ ! -s "$GRANTSDESTFILE" ]];
 	then
@@ -81,7 +81,7 @@ function mysqldump
 
 	mkdir -p $DUMPDEST
 
-	DBS=${DBS-$(echo show databases | $MYSQLBIN -N  | grep -vE '^(information|performance)_schema$|^mysql$')}
+	DBS=${DBS-$(echo show databases | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N  | grep -vE '^(information|performance)_schema$|^mysql$')}
 
 	MASTERDATA=${MASTERDATA-1}
 
@@ -173,7 +173,7 @@ then
 	BCKFAILED=1
 fi
 
-VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN -N)
+VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N)
 
 if [ "$?" -ne 0 ];
 then

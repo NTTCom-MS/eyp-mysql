@@ -1,5 +1,6 @@
 define mysql::backup::xtrabackup (
                                     $destination,
+                                    $instance            = $name,
                                     $retention           = undef,
                                     $logdir              = undef,
                                     $mailto              = undef,

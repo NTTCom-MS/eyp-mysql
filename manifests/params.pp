@@ -76,6 +76,8 @@ class mysql::params {
                             '5.7' => 'mysql57-community-release',
                         }
 
+      $perconarepo_repo = "http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm"
+
       case $::operatingsystemrelease
       {
         /^6.*$/:
