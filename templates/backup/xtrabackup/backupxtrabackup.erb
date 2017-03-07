@@ -123,15 +123,15 @@ function dobackup
 
 	if [ "$?" -ne 0 ];
 	then
-		echo "innobackupex error, check logs"
+		echo "innobackupex error, check logs - error code: $?"
 		BCKFAILED=1
 	fi
 
-	grep "innobackupex: completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
+	grep "completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
 
 	if [ "$?" -ne 0 ];
 	then
-		echo "innobackupex error - completed OK not found - check logs"
+		echo "innobackupex error - completed OK not found - unexpected log output, please check logs"
 		BCKFAILED=1
 	fi
 }
