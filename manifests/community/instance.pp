@@ -29,15 +29,14 @@ define mysql::community::instance (
       socket        => "${datadir}/mysqld.sock",
     }
   }
-  else
-  {
-    mysql::mycnf::client { $instance_name:
-      instance_name => 'global',
-      default       => false,
-      password      => $password,
-      socket        => "${datadir}/mysqld.sock",
-    }
+
+  mysql::mycnf::client { $instance_name:
+    instance_name => 'global',
+    default       => false,
+    password      => $password,
+    socket        => "${datadir}/mysqld.sock",
   }
+
 
   mysql::community::install { $instance_name:
     datadir     => $datadir,

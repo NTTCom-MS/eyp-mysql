@@ -39,13 +39,11 @@ define mysql::xtradbcluster::instance (
       socket        => "${datadir}/mysqld.sock",
     }
   }
-  else
-  {
-    mysql::mycnf::client { $instance_name:
-      default       => false,
-      password      => $password,
-      socket        => "${datadir}/mysqld.sock",
-    }
+
+  mysql::mycnf::client { $instance_name:
+    default       => false,
+    password      => $password,
+    socket        => "${datadir}/mysqld.sock",
   }
 
   mysql::xtradbcluster::install { $instance_name:
