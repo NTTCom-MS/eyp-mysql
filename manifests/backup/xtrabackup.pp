@@ -1,5 +1,6 @@
 define mysql::backup::xtrabackup (
                                     $destination,
+                                    $instance            = $name,
                                     $retention           = undef,
                                     $logdir              = undef,
                                     $mailto              = undef,
@@ -15,7 +16,6 @@ define mysql::backup::xtrabackup (
                                     $xtrabackup_version  = '2.4.4',
                                     $fullbackup_monthday = undef,
                                     $fullbackup_weekday  = undef,
-                                    $instance            = $name,
                                   ) {
   #
   validate_absolute_path($destination)
