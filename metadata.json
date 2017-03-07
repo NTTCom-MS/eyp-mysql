@@ -2,7 +2,7 @@
   "name": "eyp-mysql",
   "version": "0.4.2",
   "author": "eyp",
-  "summary": "multi instance mysql and deploys backup scripts",
+  "summary": "multi instance mysql community and Percona xtraDB cluster (galera)",
   "license": "Apache-2.0",
   "source": "https://github.com/NTTCom-MS/eyp-mysql",
   "project_page": null,
