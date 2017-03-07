@@ -2,7 +2,7 @@
 
 ## 0.4.4
 
-* bugfix: fixed xtrabackup script to use the propper my.cnf file
+* bugfix: fixed xtrabackup and mysqldump scripts to use the proper my.cnf file
 
 ## 0.4.3
 
