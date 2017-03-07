@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.3
+
+* bugfix: Added a dependency for **mysql_install_db** for **mysql::community::instance**
+
 ## 0.4.2
 
 * added mysql user and group under puppet management

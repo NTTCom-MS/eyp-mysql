@@ -1,8 +1,8 @@
 {
   "name": "eyp-mysql",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "author": "eyp",
-  "summary": "multi instance mysql community and Percona xtraDB cluster (galera)",
+  "summary": "multi instance mysql community and Percona XtraDB cluster (galera)",
   "license": "Apache-2.0",
   "source": "https://github.com/NTTCom-MS/eyp-mysql",
   "project_page": null,
