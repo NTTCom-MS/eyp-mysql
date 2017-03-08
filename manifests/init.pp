@@ -23,6 +23,9 @@ class mysql (
               # v4
               $add_default_global_mycnf = true,
               $pid_location             = $mysql::params::pid_location_default,
+              $mysql_username           = 'mysql',
+              $mysql_username_uid       = $mysql::params::mysql_username_uid_default,
+              $mysql_username_gid       = $mysql::params::mysql_username_gid_default,
             ) inherits mysql::params{
 
   class { '::mysql::install': } ->

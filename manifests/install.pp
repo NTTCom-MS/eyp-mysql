@@ -7,16 +7,16 @@ class mysql::install inherits mysql {
   # ubnutu 16
   # id mysql
   # uid=113(mysql) gid=119(mysql) groups=119(mysql)
-  group { $mysql::params::mysql_username:
+  group { $mysql::mysql_username:
     ensure  => 'present',
-    gid     => $mysql::params::mysql_username_gid,
+    gid     => $mysql::mysql_username_gid,
   }
 
-  user { $mysql::params::mysql_username:
+  user { $mysql::mysql_username:
     ensure  => 'present',
-    uid     => $mysql::params::mysql_username_uid,
-    gid     => $mysql::params::mysql_username_gid,
-    require => Group[$mysql::params::mysql_username],
+    uid     => $mysql::mysql_username_uid,
+    gid     => $mysql::mysql_username_gid,
+    require => Group[$mysql::mysql_username],
   }
 
   file { '/etc/mysql':
@@ -31,10 +31,10 @@ class mysql::install inherits mysql {
 
   file { '/var/mysql':
     ensure  => 'directory',
-    owner   => $mysql::params::mysql_username,
-    group   => $mysql::params::mysql_username,
+    owner   => $mysql::mysql_username,
+    group   => $mysql::mysql_username,
     mode    => '0750',
-    require => User[$mysql::params::mysql_username],
+    require => User[$mysql::mysql_username],
   }
 
 }

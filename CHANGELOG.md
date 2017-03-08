@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.5
+
+* added options to changed uid and gid for mysql user and group
+
 ## 0.4.4
 
 * bugfix: fixed xtrabackup and mysqldump scripts to use the proper my.cnf file
