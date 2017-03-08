@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 0.4.7
+
+* added client connect info using a group in the global my.cnf for mysqlcommunity
+
 ## 0.4.6
 
-* added client connect info using a group in the global my.cnf
+* added client connect info using a group in the global my.cnf for xtradbcluster
 
 ## 0.4.5
 
