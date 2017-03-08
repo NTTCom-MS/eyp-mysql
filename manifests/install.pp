@@ -33,7 +33,7 @@ class mysql::install inherits mysql {
     ensure  => 'directory',
     owner   => $mysql::mysql_username,
     group   => $mysql::mysql_username,
-    mode    => '0750',
+    mode    => '0755',
     require => User[$mysql::mysql_username],
   }
 

@@ -1,12 +1,16 @@
 # CHANGELOG
 
+## 0.4.8
+
+* changed /var/mysql mode from 0750 to 0755
+
 ## 0.4.7
 
-* added client connect info using a group in the global my.cnf for mysqlcommunity
+* added client connect info using a group in the global my.cnf for **mysqlcommunity**
 
 ## 0.4.6
 
-* added client connect info using a group in the global my.cnf for xtradbcluster
+* added client connect info using a group in the global my.cnf for **xtradbcluster**
 
 ## 0.4.5
 
