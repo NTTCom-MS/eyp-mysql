@@ -102,8 +102,8 @@ class mysql::params {
     }
     'Debian':
     {
-      $mysql_username_uid = '113'
-      $mysql_username_gid = '119'
+      $mysql_username_uid = '222'
+      $mysql_username_gid = '222'
 
       $servicename='mysql'
 
