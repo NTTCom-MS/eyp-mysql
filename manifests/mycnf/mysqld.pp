@@ -62,6 +62,8 @@ define mysql::mycnf::mysqld (
     $mycnf_path="/etc/mysql/${instance_name}/my.cnf"
   }
 
+  #https://dev.mysql.com/doc/refman/5.7/en/switchable-optimizations.html
+
   concat::fragment{ "${mycnf_path} header mysqld":
     target  => $mycnf_path,
     order   => '100',
