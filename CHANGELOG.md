@@ -2,8 +2,9 @@
 
 ## 0.4.8
 
-* changed /var/mysql mode from 0750 to 0755
+* changed /var/mysql and instancedir mode from 0750 to 0755
 * moved socket from datadir to instancedir
+* bugfix: binlog filename
 
 ## 0.4.7
 
