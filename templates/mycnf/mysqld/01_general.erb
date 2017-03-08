@@ -2,7 +2,7 @@
 # GENERAL #
 user                            = mysql
 default-storage-engine          = <%= @default_storage_engine %>
-socket                          = <%= @datadir %>/mysqld.sock
+socket                          = <%= @instancedir %>/mysqld.sock
 port                            = <%= @port %>
 <% if defined?(@pidfile) -%>
 pid-file                        = <%= @pidfile %>

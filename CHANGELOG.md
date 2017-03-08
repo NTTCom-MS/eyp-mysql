@@ -3,6 +3,7 @@
 ## 0.4.8
 
 * changed /var/mysql mode from 0750 to 0755
+* moved socket from datadir to instancedir
 
 ## 0.4.7
 
