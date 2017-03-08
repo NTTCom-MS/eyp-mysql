@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.6
+
+* added client connect info using a group in the global my.cnf
+
 ## 0.4.5
 
 * added options to changed uid and gid for mysql user and group
