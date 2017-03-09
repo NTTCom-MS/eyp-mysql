@@ -81,7 +81,9 @@ class mysql::params {
         /^6.*$/:
         {
           $systemd=false
+          $manage_default_service=true
           $pid_location_default='datadir'
+          fail('untested')
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm',
@@ -90,7 +92,10 @@ class mysql::params {
         /^7.*$/:
         {
           $systemd=true
+          $manage_default_service=true
           $pid_location_default='datadir'
+          fail('untested')
+
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm',
                         }
@@ -129,11 +134,13 @@ class mysql::params {
             /^14.*$/:
             {
               $systemd=false
+              $manage_default_service=false
               $pid_location_default='datadir'
             }
             /^16.*$/:
             {
               $systemd=true
+              $manage_default_service=true
               $pid_location_default='run'
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }

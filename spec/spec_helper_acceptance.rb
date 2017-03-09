@@ -37,8 +37,10 @@ RSpec.configure do |c|
     puppet_module_install(:source => proj_root, :module_name => 'mysql')
     hosts.each do |host|
       # dependencies
-      on host, puppet('module', 'install', 'puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module', 'install', 'eyp-eyplib'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module', 'install', 'eyp-systemd'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module', 'install', 'eyp-initscript'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module', 'install', 'puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
     end
   end
 end

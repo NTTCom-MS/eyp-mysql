@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.10
+
+* added Ubuntu14 (sys-v) compatibility
+
 ## 0.4.9
 
 * bugfix: xtradbcluster binlogdir
