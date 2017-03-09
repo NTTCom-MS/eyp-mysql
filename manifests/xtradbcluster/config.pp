@@ -43,7 +43,7 @@ define mysql::xtradbcluster::config(
       port                     => $port,
       datadir                  => $datadir,
       relaylogdir              => $relaylogdir,
-      binlogdir                => "${binlogdir}/binlog",
+      binlogdir                => $binlogdir,
       log_error                => "${logdir}/mysql-error.log",
       slow_query_log_file      => "${logdir}/mysql-slow.log",
       binlog_format            => 'ROW',
