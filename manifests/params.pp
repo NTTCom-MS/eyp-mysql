@@ -1,7 +1,5 @@
 class mysql::params {
 
-  $mysql_username = 'mysql'
-
   #MySQL config
   $binlogdir_default='/var/mysql/binlogs'
   $binlog_format_default='STATEMENT'
@@ -61,8 +59,8 @@ class mysql::params {
   {
     'redhat':
     {
-      $mysql_username_uid = '27'
-      $mysql_username_gid = '27'
+      $mysql_username_uid_default = '27'
+      $mysql_username_gid_default = '27'
 
       $servicename='mysqld'
 
@@ -102,8 +100,8 @@ class mysql::params {
     }
     'Debian':
     {
-      $mysql_username_uid = '113'
-      $mysql_username_gid = '119'
+      $mysql_username_uid_default = '113'
+      $mysql_username_gid_default = '119'
 
       $servicename='mysql'
 

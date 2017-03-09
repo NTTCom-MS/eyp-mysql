@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 0.4.8
+
+* changed /var/mysql and instancedir mode from 0750 to 0755
+* moved socket from datadir to instancedir
+* bugfix: binlog filename
+
+## 0.4.7
+
+* added client connect info using a group in the global my.cnf for **mysqlcommunity**
+
+## 0.4.6
+
+* added client connect info using a group in the global my.cnf for **xtradbcluster**
+
+## 0.4.5
+
+* added options to changed uid and gid for mysql user and group
+
 ## 0.4.4
 
 * bugfix: fixed xtrabackup and mysqldump scripts to use the proper my.cnf file

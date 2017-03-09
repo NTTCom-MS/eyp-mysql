@@ -19,7 +19,7 @@ define mysql::xtradbcluster::install(
     ensure  => 'directory',
     owner   => 'mysql',
     group   => 'mysql',
-    mode    => '0750',
+    mode    => '0755',
     require => Exec["mkdir datadir ${instance_name}"],
   }
 

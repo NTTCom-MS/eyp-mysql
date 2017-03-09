@@ -26,15 +26,24 @@ define mysql::community::instance (
       instance_name => 'global',
       default       => true,
       password      => $password,
-      socket        => "${datadir}/mysqld.sock",
+      socket        => "${instancedir}/mysqld.sock",
     }
   }
 
+  #client a /etc/mysql/instance_name/my.cnf
   mysql::mycnf::client { $instance_name:
+    default     => false,
+    client_name => '',
+    password    => $password,
+    socket      => "${instancedir}/mysqld.sock",
+  }
+
+  mysql::mycnf::client { "$instance_name global config":
     default       => false,
-    client_name   => '',
+    client_name   => $instance_name,
+    instance_name => 'global',
     password      => $password,
-    socket        => "${datadir}/mysqld.sock",
+    socket        => "${instancedir}/mysqld.sock",
   }
 
   mysql::community::install { $instance_name:
@@ -67,9 +76,9 @@ define mysql::community::instance (
   # 5.7
   # echo "alter user root@localhost identified by 'password' password expire never;" | mysql -S /var/mysql/test/datadir/mysqld.sock  -p$(tail -n1 /var/mysql/test/.mypass) --connect-expired-password
   exec { "reset password ${instance_name}":
-    command => "echo \"alter user root@localhost identified by '${password}' password expire never;\" | mysql -S ${datadir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
+    command => "echo \"alter user root@localhost identified by '${password}' password expire never;\" | mysql -S ${instancedir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
     require => Mysql::Community::Service[$instance_name],
-    unless  => "echo \"select version()\" | mysql -S /var/mysql/${instance_name}/datadir/mysqld.sock -p${password}",
+    unless  => "echo \"select version()\" | mysql -S ${instancedir}/mysqld.sock -p${password}",
   }
 
 }
