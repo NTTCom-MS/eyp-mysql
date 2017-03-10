@@ -134,7 +134,7 @@ class mysql::params {
             /^14.*$/:
             {
               $systemd=false
-              $manage_default_service=false
+              $manage_default_service=true
               $pid_location_default='datadir'
             }
             /^16.*$/:
