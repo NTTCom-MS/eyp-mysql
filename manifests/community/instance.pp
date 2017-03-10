@@ -77,7 +77,7 @@ define mysql::community::instance (
   # echo "alter user root@localhost identified by 'password' password expire never;" | mysql -S /var/mysql/test/datadir/mysqld.sock  -p$(tail -n1 /var/mysql/test/.mypass) --connect-expired-password
   exec { "reset password ${instance_name}":
     command => "echo \"alter user root@localhost identified by '${password}' password expire never;\" | mysql -S ${instancedir}/mysqld.sock  -p$(tail -n1 ${instancedir}/.mypass) --connect-expired-password && echo ${password} > ${instancedir}/.mypass",
-    require => Mysql::Community::Service[$instance_name],
+    require => [ Mysql::Community::Install[$instance_name], Mysql::Community::Service[$instance_name] ],
     unless  => "echo \"select version()\" | mysql -S ${instancedir}/mysqld.sock -p${password}",
   }
 
