@@ -71,9 +71,4 @@ class mysql::config inherits mysql {
       environment_files           => [ '-/etc/mysql/%i/puppet_options', '-/etc/mysql/%i/options' ],
     }
   }
-  else
-  {
-    #sys-v init script
-    fail('TODO: init script sys-v')
-  }
 }

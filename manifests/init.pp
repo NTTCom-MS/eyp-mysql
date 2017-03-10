@@ -3,7 +3,7 @@ class mysql (
               $remove_data_dir          = false,
               $manage_package           = true,
               $package_ensure           = 'installed',
-              $manage_service           = true,
+              $manage_service           = $mysql::params::manage_default_service,
               $manage_docker_service    = true,
               $service_ensure           = 'stopped',
               $service_enable           = false,
@@ -28,9 +28,9 @@ class mysql (
               $mysql_username_gid       = $mysql::params::mysql_username_gid_default,
             ) inherits mysql::params{
 
-  class { '::mysql::install': } ->
-  class { '::mysql::config': } ~>
   class { '::mysql::service': } ->
+  class { '::mysql::install': } ->
+  class { '::mysql::config': } ->
   Class['::mysql']
 
 }
