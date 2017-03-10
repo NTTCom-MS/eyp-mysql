@@ -127,7 +127,7 @@ class mysql::params {
         {
 
           $mysql_repo = {
-                          '5.7' => 'http://dev.mysql.com/get/mysql-apt-config_0.8.0-1_all.deb',
+                          '5.7' => 'https://dev.mysql.com/get/mysql-apt-config_0.8.3-1_all.deb',
                         }
           case $::operatingsystemrelease
           {
