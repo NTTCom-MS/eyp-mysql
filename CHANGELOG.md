@@ -2,7 +2,7 @@
 
 ## 0.4.10
 
-* added Ubuntu14 (sys-v) compatibility
+* added Ubuntu14 (sys-v) compatibility for mysqlcommunity and xtradbcluster
 
 ## 0.4.9
 
