@@ -17,19 +17,13 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+multi instance / multi flavor MySQL management
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+multi instance / multi flavor MySQL management:
+* MySQL Community
+* XtraDB Cluster (percona's Galera)
 
 ## Setup
 
@@ -153,7 +147,7 @@ have some test to check both presence and absence of any feature
 
 ### TODO
 
-TODO list
+* On Ubuntu fails to install because packages are starting the service before being configured. Should be installed using RUNLEVEL=1 (puppet package provider does not support environment variables) or to use a similar approach
 
 ### Contributing
 
