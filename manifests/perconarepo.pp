@@ -1,5 +1,6 @@
 class mysql::perconarepo(
-                          $srcdir = '/usr/local/src',
+                          $srcdir         = '/usr/local/src',
+                          $package_ensure = 'installed',
                         ) inherits mysql::params {
   #
   Exec {
@@ -24,7 +25,7 @@ class mysql::perconarepo(
   }
 
   package { $mysql::params::perconarepo_reponame:
-    ensure   => $mysql::package_ensure,
+    ensure   => $package_ensure,
     provider => $mysql::params::package_provider,
     source   => "${srcdir}/repo_perconarepo.${mysql::params::package_provider}",
     require  => Exec['wget perconarepo'],
