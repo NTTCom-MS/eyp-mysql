@@ -1,33 +1,33 @@
-class mysql::perconarepo() inherits mysql::params {
+class mysql::perconarepo(
+                          $srcdir = '/usr/local/src',
+                        ) inherits mysql::params {
   #
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
-  include ::mysql
-
-  exec { "mysql perconarepo srcdir ${mysql::srcdir}":
-    command => "mkdir -p ${mysql::srcdir}",
-    creates => $mysql::srcdir,
+  exec { "mysql perconarepo srcdir ${srcdir}":
+    command => "mkdir -p ${srcdir}",
+    creates => $srcdir,
     require => Class['::mysql'],
   }
 
-  exec { 'perconarepo cluster which wget':
+  exec { 'perconarepo which wget':
     command => 'which wget',
     unless  => 'which wget',
-    require => Exec["mysql perconarepo srcdir ${mysql::srcdir}"],
+    require => Exec["mysql perconarepo srcdir ${srcdir}"],
   }
 
   exec { 'wget perconarepo':
-    command => "wget ${mysql::params::perconarepo_repo} -O ${mysql::srcdir}/repo_perconarepo.${mysql::params::package_provider}",
-    creates => "${mysql::srcdir}/repo_perconarepo.${mysql::params::package_provider}",
-    require => Exec['perconarepo cluster which wget'],
+    command => "wget ${mysql::params::perconarepo_repo} -O ${srcdir}/repo_perconarepo.${mysql::params::package_provider}",
+    creates => "${srcdir}/repo_perconarepo.${mysql::params::package_provider}",
+    require => Exec['perconarepo which wget'],
   }
 
   package { $mysql::params::perconarepo_reponame:
     ensure   => $mysql::package_ensure,
     provider => $mysql::params::package_provider,
-    source   => "${mysql::srcdir}/repo_perconarepo.${mysql::params::package_provider}",
+    source   => "${srcdir}/repo_perconarepo.${mysql::params::package_provider}",
     require  => Exec['wget perconarepo'],
     notify   => Exec['perconarepo install update'],
   }
