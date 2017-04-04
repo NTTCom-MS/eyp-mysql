@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.11
+
+* added **mysql::tools::perconatoolkit**
+
 ## 0.4.10
 
 * added Ubuntu14 (sys-v) compatibility for mysqlcommunity and xtradbcluster
