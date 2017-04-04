@@ -91,9 +91,33 @@ mysql::xtradbcluster::instance { 'cluster2':
 
 *Note: Once cluster is bootstraped we need to change bootstrap to false in the primary node*
 
-### mysql
+### backup scripts
+
+install backup script using xtrabackup tool for **cluster1** instance:
+
+```puppet
+mysql::backup::xtrabackup { 'cluster1':
+  destination => '/backup',
+}
+```
+
+install backup script for **galera** instance using hiera:
+
+```yaml
+xtrabackup:
+  'galera':
+    hour: '3'
+    minute: '0'
+    destination: '/var/mysql/backup'
+    idhost: 'EXAMPLE001'
+    mailto: 'backups@backups.systemadmin.es'
+    retention: '5'
+```
+
+### misc
 
 run SQL query
+
 ```puppet
 mysql_sql { 'caca':
   command => 'select version()',
@@ -102,11 +126,18 @@ mysql_sql { 'caca':
 ```
 
 create database
+
 ```puppet
 mysql::database { 'provaprova': }
 ```
 
-### xtrabackup
+## Reference
+
+### classes
+
+### defines
+
+#### mysql::backup::xtrabackup
 
 * general options:
   * **destination**:
@@ -128,12 +159,22 @@ mysql::database { 'provaprova': }
   * **weekday**:             = undef,
   * **setcron**:             = true,
 
-## Reference
+#### mysql::backup::mysqldump
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+* **destination**: ,
+* **instance**:      = $name,
+* **retention**:     = undef,
+* **logdir**:        = undef,
+* **compress**:      = true,
+* **mailto**:        = undef,
+* **idhost**:        = undef,
+* **backupscript**:  = '/usr/local/bin/backupmysqldump',
+* **hour**:          = '2',
+* **minute**:        = '0',
+* **month**:         = undef,
+* **monthday**:      = undef,
+* **weekday**:       = undef,
+* **setcron**:       = true,
 
 ## Limitations
 
