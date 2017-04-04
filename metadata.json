@@ -9,6 +9,7 @@
   "issues_url": "https://github.com/NTTCom-MS/eyp-mysql/issues",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.2.3"},
     {"name":"eyp/eyplib","version_requirement":">= 0.1.0 < 0.2.0"},
     {"name":"eyp/systemd","version_requirement":">= 0.1.25 < 0.2.0"},
     {"name":"eyp/initscript","version_requirement":">= 0.1.2 < 0.2.0"}
