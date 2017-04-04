@@ -38,7 +38,7 @@ define mysql::community::instance (
     socket      => "${instancedir}/mysqld.sock",
   }
 
-  mysql::mycnf::client { "$instance_name global config":
+  mysql::mycnf::client { "${instance_name} global config":
     default       => false,
     client_name   => $instance_name,
     instance_name => 'global',
