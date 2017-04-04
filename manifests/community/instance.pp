@@ -59,7 +59,7 @@ define mysql::community::instance (
     relaylogdir       => $relaylogdir,
     logdir            => $logdir,
     require           => Class['::mysql'],
-}
+  }
 
   ~> mysql::community::service { $instance_name:
     tag => "eypmysql_${instance_name}",
