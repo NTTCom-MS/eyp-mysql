@@ -29,10 +29,9 @@ multi instance / multi flavor MySQL management:
 
 ### What mysql affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* installs percona repo (if needed)
+* installs MySQL packages
+* manages configuration files (**/etc/mysql**) - it's not possible to have a unmanaged MySQL instance
 
 ### Setup Requirements
 
