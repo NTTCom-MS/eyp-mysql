@@ -63,9 +63,7 @@ define mysql::xtradbcluster::instance (
     binlogdir   => $binlogdir,
   }
 
-  ->
-
-  mysql::xtradbcluster::config { $instance_name:
+  -> mysql::xtradbcluster::config { $instance_name:
     port                    => $port,
     add_default_mycnf       => $add_default_mycnf,
     datadir                 => $datadir,
@@ -83,15 +81,12 @@ define mysql::xtradbcluster::instance (
     require                 => Class['::mysql'],
   }
 
-  ~>
-
-  mysql::xtradbcluster::service { $instance_name:
+  ~> mysql::xtradbcluster::service { $instance_name:
     tag => "eypmysql_${instance_name}",
   }
 
   Concat <| tag == "eypmysql_${instance_name}" |>
-  ->
-  Mysql::Xtradbcluster::Service <| tag == "eypmysql_${instance_name}" |>
+  -> Mysql::Xtradbcluster::Service <| tag == "eypmysql_${instance_name}" |>
 
   # 5.7
   # echo "alter user root@localhost identified by 'password' password expire never;" | mysql -S /var/mysql/test/datadir/mysqld.sock  -p$(tail -n1 /var/mysql/test/.mypass) --connect-expired-password
