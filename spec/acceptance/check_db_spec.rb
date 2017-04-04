@@ -7,10 +7,14 @@ describe 'mariadb class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      class { 'mysql::mariadb':
-    		rootpw   => 'a',
-    		debianpw => 'b',
+      mysql::community::instance { 'test':
+    		port              => '3306',
+    		password          => 'password',
+    		add_default_mycnf => true,
+    		default_instance  => true,
     	}
+
+      ->
 
     	mysql_database { 'et2blog':
     		ensure => 'present',
