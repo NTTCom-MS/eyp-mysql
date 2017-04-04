@@ -83,7 +83,6 @@ class mysql::params {
           $systemd=false
           $manage_default_service=true
           $pid_location_default='datadir'
-          fail('untested')
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm',
@@ -94,7 +93,6 @@ class mysql::params {
           $systemd=true
           $manage_default_service=true
           $pid_location_default='datadir'
-          fail('untested')
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm',
