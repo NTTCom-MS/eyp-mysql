@@ -135,6 +135,10 @@ mysql::database { 'provaprova': }
 
 ### classes
 
+#### mysql::tools::innochecksum
+
+* **binpath**: place to install innochecksum tool (default: /usr/local/bin/innochecksum)
+
 ### defines
 
 #### mysql::backup::xtrabackup
