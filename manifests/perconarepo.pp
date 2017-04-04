@@ -9,7 +9,6 @@ class mysql::perconarepo(
   exec { "mysql perconarepo srcdir ${srcdir}":
     command => "mkdir -p ${srcdir}",
     creates => $srcdir,
-    require => Class['::mysql'],
   }
 
   exec { 'perconarepo which wget':
