@@ -55,7 +55,7 @@ mysql::community::instance { 'test2':
 
 ## Usage
 
-### single node demo XtraDB cluster
+### single node XtraDB demo cluster
 
 ```puppet
 mysql::xtradbcluster::instance { 'cluster1':
