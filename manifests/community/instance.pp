@@ -38,7 +38,7 @@ define mysql::community::instance (
     socket      => "${instancedir}/mysqld.sock",
   }
 
-  mysql::mycnf::client { "$instance_name global config":
+  mysql::mycnf::client { "${instance_name} global config":
     default       => false,
     client_name   => $instance_name,
     instance_name => 'global',
@@ -52,9 +52,7 @@ define mysql::community::instance (
     logdir      => $logdir,
   }
 
-  ->
-
-  mysql::community::config { $instance_name:
+  -> mysql::community::config { $instance_name:
     port              => $port,
     add_default_mycnf => $add_default_mycnf,
     datadir           => $datadir,
@@ -63,15 +61,12 @@ define mysql::community::instance (
     require           => Class['::mysql'],
   }
 
-  ~>
-
-  mysql::community::service { $instance_name:
+  ~> mysql::community::service { $instance_name:
     tag => "eypmysql_${instance_name}",
   }
 
   Concat <| tag == "eypmysql_${instance_name}" |>
-  ->
-  Mysql::Community::Service <| tag == "eypmysql_${instance_name}" |>
+  -> Mysql::Community::Service <| tag == "eypmysql_${instance_name}" |>
 
   # 5.7
   # echo "alter user root@localhost identified by 'password' password expire never;" | mysql -S /var/mysql/test/datadir/mysqld.sock  -p$(tail -n1 /var/mysql/test/.mypass) --connect-expired-password

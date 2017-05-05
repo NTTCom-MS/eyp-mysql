@@ -44,7 +44,7 @@ define mysql::community::config (
     }
 
     initscript::service { "mysqlcommunity@${instance_name}":
-      cmd => "/usr/sbin/mysqld --defaults-file=/etc/mysql/${instance_name}/my.cnf --user=mysql --pid-file=${pid_location_sysv_community} \$PUPPET_MYSQLD_OPTIONS \$MYSQLD_OPTIONS",
+      cmd            => "/usr/sbin/mysqld --defaults-file=/etc/mysql/${instance_name}/my.cnf --user=mysql --pid-file=${pid_location_sysv_community} \$PUPPET_MYSQLD_OPTIONS \$MYSQLD_OPTIONS",
       option_scripts => [ "/etc/mysql/${instance_name}/puppet_options", "/etc/mysql/${instance_name}/options" ],
     }
   }

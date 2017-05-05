@@ -28,9 +28,9 @@ class mysql (
               $mysql_username_gid       = $mysql::params::mysql_username_gid_default,
             ) inherits mysql::params{
 
-  class { '::mysql::service': } ->
-  class { '::mysql::install': } ->
-  class { '::mysql::config': } ->
-  Class['::mysql']
+  class { '::mysql::install': }
+  -> class { '::mysql::config': }
+  -> class { '::mysql::service': }
+  -> Class['::mysql']
 
 }

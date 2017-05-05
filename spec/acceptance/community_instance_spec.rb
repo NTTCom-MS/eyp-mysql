@@ -7,10 +7,14 @@ describe 'mariadb class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      class { 'mysql::mariadb':
-    		rootpw   => 'a',
-    		debianpw => 'b',
+      mysql::community::instance { 'test':
+    		port              => '3307',
+    		password          => 'password',
+    		add_default_mycnf => true,
+    		default_instance  => true,
     	}
+
+      ->
 
     	mysql_database { 'et2blog':
     		ensure => 'present',
@@ -33,11 +37,16 @@ describe 'mariadb class' do
     end
 
     #instance tomcat-8080 HTTP connector
-    describe port(3306) do
+    describe port(3307) do
       it { should be_listening }
     end
 
     describe file("/etc/mysql/my.cnf") do
+      it { should be_file }
+      its(:content) { should match '[mysqld]' }
+    end
+
+    describe file("/etc/mysql/test/my.cnf") do
       it { should be_file }
       its(:content) { should match '[mysqld]' }
     end

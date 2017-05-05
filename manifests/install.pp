@@ -8,8 +8,8 @@ class mysql::install inherits mysql {
   # id mysql
   # uid=113(mysql) gid=119(mysql) groups=119(mysql)
   group { $mysql::mysql_username:
-    ensure  => 'present',
-    gid     => $mysql::mysql_username_gid,
+    ensure => 'present',
+    gid    => $mysql::mysql_username_gid,
   }
 
   user { $mysql::mysql_username:

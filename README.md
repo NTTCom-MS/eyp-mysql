@@ -17,28 +17,25 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+multi instance / multi flavor MySQL management
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+multi instance / multi flavor MySQL management:
+* MySQL Community
+* XtraDB Cluster (percona's Galera)
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+backup strategies:
+* **mysqldump**: grants + 1 file per DB
+* **xtrabackup**: full mode only
 
 ## Setup
 
 ### What mysql affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* installs percona repo (if needed)
+* installs MySQL packages
+* manages configuration files (**/etc/mysql**) - it's not possible to have a unmanaged MySQL instance
 
 ### Setup Requirements
 
@@ -62,7 +59,7 @@ mysql::community::instance { 'test2':
 
 ## Usage
 
-### single node demo XtraDB cluster
+### single node XtraDB demo cluster
 
 ```puppet
 mysql::xtradbcluster::instance { 'cluster1':
@@ -98,9 +95,33 @@ mysql::xtradbcluster::instance { 'cluster2':
 
 *Note: Once cluster is bootstraped we need to change bootstrap to false in the primary node*
 
-### mysql
+### backup scripts
+
+install backup script using xtrabackup tool for **cluster1** instance:
+
+```puppet
+mysql::backup::xtrabackup { 'cluster1':
+  destination => '/backup',
+}
+```
+
+install backup script for **galera** instance using hiera:
+
+```yaml
+xtrabackup:
+  'galera':
+    hour: '3'
+    minute: '0'
+    destination: '/var/mysql/backup'
+    idhost: 'EXAMPLE001'
+    mailto: 'backups@backups.systemadmin.es'
+    retention: '5'
+```
+
+### misc
 
 run SQL query
+
 ```puppet
 mysql_sql { 'caca':
   command => 'select version()',
@@ -109,11 +130,41 @@ mysql_sql { 'caca':
 ```
 
 create database
+
 ```puppet
 mysql::database { 'provaprova': }
 ```
 
-### xtrabackup
+## Reference
+
+### classes
+
+#### mysql::perconarepo
+
+percona repo installation
+
+* **srcdir**:         = '/usr/local/src',
+* **package_ensure**: = 'installed',
+
+#### mysql::tools::perconatoolkit
+
+percona toolkit installation
+
+* **package_ensure**: = 'installed',
+
+#### mysql::tools::innochecksum
+
+ibdata inspector
+
+* **binpath**: place to install innochecksum tool (default: /usr/local/bin/innochecksum)
+
+### defines
+
+#### mysql::xtradbcluster::instance
+
+#### mysql::community::instance
+
+#### mysql::backup::xtrabackup
 
 * general options:
   * **destination**:
@@ -135,16 +186,110 @@ mysql::database { 'provaprova': }
   * **weekday**:             = undef,
   * **setcron**:             = true,
 
-## Reference
+#### mysql::backup::mysqldump
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+* **destination**: ,
+* **instance**:      = $name,
+* **retention**:     = undef,
+* **logdir**:        = undef,
+* **compress**:      = true,
+* **mailto**:        = undef,
+* **idhost**:        = undef,
+* **backupscript**:  = '/usr/local/bin/backupmysqldump',
+* **hour**:          = '2',
+* **minute**:        = '0',
+* **month**:         = undef,
+* **monthday**:      = undef,
+* **weekday**:       = undef,
+* **setcron**:       = true,
+
+#### mysql::mycnf::client
+
+* **instance_name**: = $name,
+* **client_name**:   = $name,
+* **default**:       = false,
+* **password**:      = undef,
+* **socket**:        = undef,
+
+#### mysql::mycnf::mysqld
+
+* **instance_name**:                   = $name,
+* **skip_external_locking**:           = $mysql::params::skip_external_locking_default,
+* **tmpdir**:                          = $mysql::params::tmpdir_default,
+* **port**:                            = '3306',
+* **pidfile**:                         = undef,
+* **datadir**:                         = "/var/mysql/${name}",
+* **relaylogdir**:                     = "/var/mysql/${name}/relaylogs",
+* **binlogdir**:                       = "/var/mysql/${name}/binlogs",
+* **default_storage_engine**:          = 'InnoDB',
+* **ignoreclientcharset**:             = true,
+* **charset**:                         = 'utf8',
+* **readonly**:                        = false,
+* **key_buffer_size**:                 = $mysql::params::key_buffer_size_default,
+* **sysdate_is_now**:                  = true,
+* **max_allowed_packet**:              = '16M',
+* **max_connect_errors**:              = '1000000',
+* **nameresolve**:                     = false,
+* **innodb**:                          = 'FORCE',
+* **expirelogsdays**:                  = '5',
+* **binlog_format**:                   = 'MIXED',
+* **sync_binlog**:                     = true,
+* **serverid**:                        = '1',
+* **max_binlog_size**:                 = '1073741824',
+* **log_bin_trust_function_creators**: = false,
+* **slave**:                           = false,
+* **max_relay_log_size**:              = '0',
+* **replicate_ignore_db**:             = [],
+* **max_heap_table_size**:             = '32M',
+* **tmp_table_size**:                  = '32M',
+* **query_cache_type**:                = '0',
+* **query_cache_size**:                = '0',
+* **query_cache_limit**:               = '1048576',
+* **max_connections**:                 = '500',
+* **max_user_connections**:            = '0',
+* **thread_cache_size**:               = '50',
+* **open_files_limit**:                = '65535',
+* **table_definition_cache**:          = '4096',
+* **table_open_cache**:                = '100',
+* **sort_buffer_size**:                = '262144',
+* **join_buffer_size**:                = '131072',
+* **innodb_flush_method**:             = 'O_DIRECT',
+* **innodb_log_files_in_group**:       = '2',
+* **innodb_log_file_size**:            = '50331648',
+* **innodb_flush_log_at_trx_commit**:  = '2',
+* **innodb_file_per_table**:           = true,
+* **innodb_buffer_pool_size**:         = ceiling(sprintf('%f', $::memorysize_mb)\*838860),
+* **innodb_autoinc_lock_mode**:        = undef,
+* **log_queries_not_using_indexes**:   = false,
+* **slow_query_log**:                  = true,
+* **log_error**:                       = "/var/log/mysql/${name}/mysql-error.log",
+* **slow_query_log_file**:             = "/var/log/mysql/${name}/mysql-slow.log",
+
+#### mysql::mycnf::galera
+
+* **wsrep_node_address**:              = $::ipaddress,
+* **wsrep_cluster_address**:           = [],
+* **instance_name**:                   = $name,
+* **wsrep_provider**:                  = '/usr/lib/libgalera_smm.so',
+* **wsrep_sst_method**:                = 'xtrabackup-v2',
+* **wsrep_cluster_name**:              = 'my_wsrep_cluster',
+* **wsrep_sst_auth_username**:         = 'dmlzY2EK',
+* **wsrep_sst_auth_password**:         = 'Y2F0YWx1bnlhCg',
+* **wsrep_dirty_reads**:               = false,
+* **wsrep_desync**:                    = false,
+* **wsrep_reject_queries**:            = 'NONE',
+* **wsrep_sst_donor**:                 = undef,
+* **srep_sst_donor_rejects_queries**: = false,
+* **gmcast_listen_addr**:              = 'tcp://0.0.0.0:4567',
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on:
+
+* Ubuntu 16.04
+* Ubuntu 14.04
+* CentOS 6
+* CentOS 7
 
 ## Development
 
@@ -153,7 +298,8 @@ have some test to check both presence and absence of any feature
 
 ### TODO
 
-TODO list
+* **xtrabackup**: incremental mode
+* On Ubuntu fails to install because packages are starting the service before being configured. Should be installed using RUNLEVEL=1 (puppet package provider does not support environment variables) or to use a similar approach
 
 ### Contributing
 

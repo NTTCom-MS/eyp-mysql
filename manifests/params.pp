@@ -74,7 +74,7 @@ class mysql::params {
                             '5.7' => 'mysql57-community-release',
                         }
 
-      $perconarepo_repo = "http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm"
+      $perconarepo_repo = 'http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm'
 
       case $::operatingsystemrelease
       {
@@ -83,7 +83,6 @@ class mysql::params {
           $systemd=false
           $manage_default_service=true
           $pid_location_default='datadir'
-          fail('untested')
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm',
@@ -94,7 +93,6 @@ class mysql::params {
           $systemd=true
           $manage_default_service=true
           $pid_location_default='datadir'
-          fail('untested')
 
           $mysql_repo = {
                           '5.7' => 'http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm',
