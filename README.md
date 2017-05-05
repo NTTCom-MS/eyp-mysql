@@ -25,6 +25,10 @@ multi instance / multi flavor MySQL management:
 * MySQL Community
 * XtraDB Cluster (percona's Galera)
 
+backup strategies:
+* **mysqldump**: grants + 1 file per DB
+* **xtrabackup**: full mode only
+
 ## Setup
 
 ### What mysql affects
@@ -135,11 +139,30 @@ mysql::database { 'provaprova': }
 
 ### classes
 
+#### mysql::perconarepo
+
+percona repo installation
+
+* **srcdir**:         = '/usr/local/src',
+* **package_ensure**: = 'installed',
+
+#### mysql::tools::perconatoolkit
+
+percona toolkit installation
+
+* **package_ensure**: = 'installed',
+
 #### mysql::tools::innochecksum
+
+ibdata inspector
 
 * **binpath**: place to install innochecksum tool (default: /usr/local/bin/innochecksum)
 
 ### defines
+
+#### mysql::xtradbcluster::instance
+
+#### mysql::community::instance
 
 #### mysql::backup::xtrabackup
 
@@ -180,9 +203,93 @@ mysql::database { 'provaprova': }
 * **weekday**:       = undef,
 * **setcron**:       = true,
 
+#### mysql::mycnf::client
+
+* **instance_name**: = $name,
+* **client_name**:   = $name,
+* **default**:       = false,
+* **password**:      = undef,
+* **socket**:        = undef,
+
+#### mysql::mycnf::mysqld
+
+* **instance_name**:                   = $name,
+* **skip_external_locking**:           = $mysql::params::skip_external_locking_default,
+* **tmpdir**:                          = $mysql::params::tmpdir_default,
+* **port**:                            = '3306',
+* **pidfile**:                         = undef,
+* **datadir**:                         = "/var/mysql/${name}",
+* **relaylogdir**:                     = "/var/mysql/${name}/relaylogs",
+* **binlogdir**:                       = "/var/mysql/${name}/binlogs",
+* **default_storage_engine**:          = 'InnoDB',
+* **ignoreclientcharset**:             = true,
+* **charset**:                         = 'utf8',
+* **readonly**:                        = false,
+* **key_buffer_size**:                 = $mysql::params::key_buffer_size_default,
+* **sysdate_is_now**:                  = true,
+* **max_allowed_packet**:              = '16M',
+* **max_connect_errors**:              = '1000000',
+* **nameresolve**:                     = false,
+* **innodb**:                          = 'FORCE',
+* **expirelogsdays**:                  = '5',
+* **binlog_format**:                   = 'MIXED',
+* **sync_binlog**:                     = true,
+* **serverid**:                        = '1',
+* **max_binlog_size**:                 = '1073741824',
+* **log_bin_trust_function_creators**: = false,
+* **slave**:                           = false,
+* **max_relay_log_size**:              = '0',
+* **replicate_ignore_db**:             = [],
+* **max_heap_table_size**:             = '32M',
+* **tmp_table_size**:                  = '32M',
+* **query_cache_type**:                = '0',
+* **query_cache_size**:                = '0',
+* **query_cache_limit**:               = '1048576',
+* **max_connections**:                 = '500',
+* **max_user_connections**:            = '0',
+* **thread_cache_size**:               = '50',
+* **open_files_limit**:                = '65535',
+* **table_definition_cache**:          = '4096',
+* **table_open_cache**:                = '100',
+* **sort_buffer_size**:                = '262144',
+* **join_buffer_size**:                = '131072',
+* **innodb_flush_method**:             = 'O_DIRECT',
+* **innodb_log_files_in_group**:       = '2',
+* **innodb_log_file_size**:            = '50331648',
+* **innodb_flush_log_at_trx_commit**:  = '2',
+* **innodb_file_per_table**:           = true,
+* **innodb_buffer_pool_size**:         = ceiling(sprintf('%f', $::memorysize_mb)\*838860),
+* **innodb_autoinc_lock_mode**:        = undef,
+* **log_queries_not_using_indexes**:   = false,
+* **slow_query_log**:                  = true,
+* **log_error**:                       = "/var/log/mysql/${name}/mysql-error.log",
+* **slow_query_log_file**:             = "/var/log/mysql/${name}/mysql-slow.log",
+
+#### mysql::mycnf::galera
+
+* **wsrep_node_address**:              = $::ipaddress,
+* **wsrep_cluster_address**:           = [],
+* **instance_name**:                   = $name,
+* **wsrep_provider**:                  = '/usr/lib/libgalera_smm.so',
+* **wsrep_sst_method**:                = 'xtrabackup-v2',
+* **wsrep_cluster_name**:              = 'my_wsrep_cluster',
+* **wsrep_sst_auth_username**:         = 'dmlzY2EK',
+* **wsrep_sst_auth_password**:         = 'Y2F0YWx1bnlhCg',
+* **wsrep_dirty_reads**:               = false,
+* **wsrep_desync**:                    = false,
+* **wsrep_reject_queries**:            = 'NONE',
+* **wsrep_sst_donor**:                 = undef,
+* **srep_sst_donor_rejects_queries**: = false,
+* **gmcast_listen_addr**:              = 'tcp://0.0.0.0:4567',
+
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on:
+
+* Ubuntu 16.04
+* Ubuntu 14.04
+* CentOS 6
+* CentOS 7
 
 ## Development
 
@@ -191,6 +298,7 @@ have some test to check both presence and absence of any feature
 
 ### TODO
 
+* **xtrabackup**: incremental mode
 * On Ubuntu fails to install because packages are starting the service before being configured. Should be installed using RUNLEVEL=1 (puppet package provider does not support environment variables) or to use a similar approach
 
 ### Contributing
