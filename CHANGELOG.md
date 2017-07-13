@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.12
+
+* bugfix **backup_xtrabackup** script (no cleanup was performed when MAILTO was undefined)
+
 ## 0.4.11
 
 * added **mysql::tools::perconatoolkit**
