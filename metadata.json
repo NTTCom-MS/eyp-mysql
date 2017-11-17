@@ -1,6 +1,6 @@
 {
   "name": "eyp-mysql",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "author": "eyp",
   "summary": "multi instance mysql community and Percona XtraDB cluster (galera)",
   "license": "Apache-2.0",
