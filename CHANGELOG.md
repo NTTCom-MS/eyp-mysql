@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.13
+
+* added **sql_mode** and **lower_case_table_names** to **mysqld section**
+
 ## 0.4.12
 
 * bugfix **backup_xtrabackup** script (no cleanup was performed when MAILTO was undefined)

@@ -52,6 +52,8 @@ define mysql::mycnf::mysqld (
                               $slow_query_log                  = true,
                               $log_error                       = "/var/log/mysql/${name}/mysql-error.log",
                               $slow_query_log_file             = "/var/log/mysql/${name}/mysql-slow.log",
+                              $sql_mode                        = undef,
+                              $lower_case_table_names          = '0',
                             ) {
   if($instance_name=='global')
   {
