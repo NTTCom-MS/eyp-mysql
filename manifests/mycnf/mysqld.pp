@@ -7,6 +7,7 @@ define mysql::mycnf::mysqld (
                               $port                            = '3306',
                               $pidfile                         = undef,
                               $datadir                         = "/var/mysql/${name}",
+                              $instancedir                     = "/var/mysql/${name}",
                               $relaylogdir                     = "/var/mysql/${name}/relaylogs",
                               $binlogdir                       = "/var/mysql/${name}/binlogs",
                               $default_storage_engine          = 'InnoDB',
