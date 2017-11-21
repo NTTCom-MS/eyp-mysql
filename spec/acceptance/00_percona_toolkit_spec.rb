@@ -26,7 +26,7 @@ describe 'percona toolkit class' do
       pp = <<-EOF
 
       class { 'mysql::tools::perconatoolkit':
-        ensure => 'absent',
+        package_ensure => 'absent',
       }
 
       EOF
