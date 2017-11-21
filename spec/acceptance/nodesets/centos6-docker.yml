@@ -10,7 +10,7 @@ HOSTS:
     docker_cmd: '["/sbin/init"]'
     docker_image_commands:
       - 'rm -rf /var/run/network/*'
-      - 'yum install -y gcc make crontabs tar wget curl'
+      - 'yum install -y gcc make crontabs tar wget curl which'
 CONFIG:
   type: foss
   log_level: debug
