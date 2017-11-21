@@ -3,6 +3,7 @@
 ## 0.4.13
 
 * added **sql_mode** and **lower_case_table_names** to **mysqld section**
+* fixed **unless** and **onlyif** for **mysql_sql**
 
 ## 0.4.12
 
