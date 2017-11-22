@@ -1,3 +1,4 @@
+# puppet2sitepp @mysqlcommunityinstances
 define mysql::community::instance (
                                     $password,
                                     $port              = '3306',
