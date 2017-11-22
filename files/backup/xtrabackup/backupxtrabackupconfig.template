@@ -1,25 +1,14 @@
-<% if defined?(@mailto) -%>
-MAILTO="<%= @mailto %>"
-<% end -%>
-DESTINATION="<%= @destination %>"
-<% if defined?(@retention) -%>
-RETENTION="<%= @retention %>"
-<% end -%>
-<% if defined?(@logdir) -%>
-LOGDIR="<%= @logdir %>"
-<% end -%>
-<% if defined?(@idhost) -%>
-IDHOST="<%= @idhost %>"
-<% end -%>
-<% if(@backupid) -%>
-BACKUP_NAME_ID="<%= @backupid %>"
-<% end -%>
-<% if defined?(@fullbackup_monthday) -%>
-FULL_ON_MONTHDAY="<%= @fullbackup_monthday %>"
-<% end -%>
-<% if defined?(@fullbackup_weekday) -%>
-FULL_ON_WEEKDAY="<%= @fullbackup_weekday %>"
-<% end -%>
-<% if(@instance) -%>
+# backup destiation - mandatory
+DESTINATION="/backup"
+# notification email - optional
+MAILTO="demo@example.com"
+# backup rotation in days - optional
+RETENTION="7"
+# log dir - stdout if unset
+LOGDIR="/backup/logs"
+# host id - hostname is used instead if it is unset
+IDHOST="ABC1234"
+# backup type
+BACKUP_NAME_ID="MySQL"
+# mysql instance name - optional
 INSTANCE_NAME="<%= @instance %>"
-<% end -%>
