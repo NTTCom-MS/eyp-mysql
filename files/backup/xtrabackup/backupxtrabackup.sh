@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#TODO: custom conf
+# puppet managed file
 
 function initbck
 {
@@ -68,8 +68,6 @@ function dobackup
 
 	#aqui logica fulls/diferencials:
 
-	#FULL_ON_MONTHDAY="<%= @fullbackup_monthday %>"
-	#FULL_ON_WEEKDAY="<%= @fullbackup_weekday %>"
 	if [ ! -z "$FULL_ON_MONTHDAY" ] && [ ! -z "$FULL_ON_WEEKDAY" ];
 	then
 		echo "FULL_ON_MONTHDAY and FULL_ON_WEEKDAY cannot be both defined"
@@ -109,7 +107,7 @@ function dobackup
 	if [ "$TODAY_IS_FULL" -eq 1 ];
 	then
 		# full
-		innobackupex --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf ${DUMPDEST}
+		innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
 	else
 		# incremental
 
@@ -118,7 +116,7 @@ function dobackup
 		# innobackupex --incremental /var/backups/xtrabackup/ --incremental-basedir=/var/backups/xtrabackup/2014-08-25_10-04-45/
 
 		# de moment full :D
-		innobackupex --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf ${DUMPDEST}
+		innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
 	fi
 
 	if [ "$?" -ne 0 ];
@@ -152,6 +150,11 @@ BASEDIRBCK=$(dirname $0)
 BASENAMEBCK=$(basename $0)
 IDHOST=${IDHOST-$(hostname -s)}
 BACKUP_NAME_ID=${BACKUP_NAME_ID-MySQL}
+
+if [ ! -z "${INSTANCE_NAME}" ];
+then
+	MYSQL_INSTANCE_OPTS="--defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf"
+fi
 
 if [ ! -z "$1" ] && [ -f "$1" ];
 then

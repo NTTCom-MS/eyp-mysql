@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#TODO: custom conf
+# puppet managed file
 
 function initbck
 {
@@ -65,7 +65,7 @@ function dump_grants
 
 	GRANTSDESTFILE="$GRANTSDEST/${IDHOST}.grants.sql"
 
-	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
+	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
 
 	if [[ ! -s "$GRANTSDESTFILE" ]];
 	then
@@ -81,7 +81,7 @@ function mysqldump
 
 	mkdir -p $DUMPDEST
 
-	DBS=${DBS-$(echo show databases | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N  | grep -vE '^(information|performance)_schema$|^mysql$')}
+	DBS=${DBS-$(echo show databases | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N  | grep -vE '^(information|performance)_schema$|^mysql$')}
 
 	MASTERDATA=${MASTERDATA-1}
 
@@ -146,6 +146,11 @@ BASEDIRBCK=$(dirname $0)
 BASENAMEBCK=$(basename $0)
 IDHOST=${IDHOST-$(hostname -s)}
 
+if [ ! -z "${INSTANCE_NAME}" ];
+then
+	MYSQL_INSTANCE_OPTS="--defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf"
+fi
+
 if [ ! -z "$1" ] && [ -f "$1" ];
 then
 	. $1 2>/dev/null
@@ -173,7 +178,7 @@ then
 	BCKFAILED=1
 fi
 
-VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N)
+VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N)
 
 if [ "$?" -ne 0 ];
 then

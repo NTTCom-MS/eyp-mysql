@@ -1,0 +1,19 @@
+# backup destiation - mandatory
+DESTINATION="/backup"
+# notification email - optional
+MAILTO="demo@example.com"
+# backup rotation - optional
+RETENTION="<%= @retention %>"
+<% end -%>
+<% if defined?(@logdir) -%>
+LOGDIR="<%= @logdir %>"
+<% end -%>
+<% if defined?(@idhost) -%>
+IDHOST="<%= @idhost %>"
+<% end -%>
+<% if(@compress) -%>
+COMPRESS="<%= @compress %>"
+<% end -%>
+<% if(@instance) -%>
+INSTANCE_NAME="<%= @instance %>"
+<% end -%>

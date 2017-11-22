@@ -50,7 +50,7 @@ define mysql::backup::xtrabackup (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => template("${module_name}/backup/xtrabackup/backupxtrabackup.erb")
+    content => file("${module_name}/backup/xtrabackup/backupxtrabackup.sh")
   }
 
   file { "${backupscript}.config":

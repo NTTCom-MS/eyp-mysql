@@ -40,7 +40,7 @@ define mysql::backup::mysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => template("${module_name}/backup/mysqldump/backupmysqldump.erb")
+    content => file("${module_name}/backup/mysqldump/backupmysqldump.sh")
   }
 
   file { "${backupscript}.config":
