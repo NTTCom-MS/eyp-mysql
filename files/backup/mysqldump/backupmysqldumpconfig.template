@@ -14,3 +14,5 @@ COMPRESS="1"
 INSTANCE_NAME="<%= @instance %>"
 # masterdata - if not set, is set to 1
 MASTERDATA="2"
+# dump one db at a time if set - optional
+FILE_PER_DB="1"
