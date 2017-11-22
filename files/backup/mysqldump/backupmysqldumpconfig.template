@@ -2,18 +2,13 @@
 DESTINATION="/backup"
 # notification email - optional
 MAILTO="demo@example.com"
-# backup rotation - optional
-RETENTION="<%= @retention %>"
-<% end -%>
-<% if defined?(@logdir) -%>
-LOGDIR="<%= @logdir %>"
-<% end -%>
-<% if defined?(@idhost) -%>
-IDHOST="<%= @idhost %>"
-<% end -%>
-<% if(@compress) -%>
-COMPRESS="<%= @compress %>"
-<% end -%>
-<% if(@instance) -%>
+# backup rotation in days - optional
+RETENTION="7"
+# log dir - $DESTINATION is used instead if it is unset
+LOGDIR="/backup/logs"
+# host id - hostname is used instead if it is unset
+IDHOST="ABC1234"
+# if set, enables compression
+COMPRESS="1"
+# mysql instance name - optional
 INSTANCE_NAME="<%= @instance %>"
-<% end -%>

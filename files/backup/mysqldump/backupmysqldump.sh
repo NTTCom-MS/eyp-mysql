@@ -13,6 +13,11 @@ function initbck
 		mkdir -p $DESTINATION
 		BACKUPTS=$(date +%Y%m%d%H%M)
 
+		if [ -z "${LOGDIR}" ];
+		then
+			LOGDIR=$DESTINATION
+		fi
+
 		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
 
 		BCKFAILED=0
