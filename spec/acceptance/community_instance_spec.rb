@@ -22,6 +22,7 @@ describe 'mariadb class' do
 
       mysql::backup::mysqldump { 'test':
         destination => '/backup',
+        compress => false,
       }
 
       EOF
