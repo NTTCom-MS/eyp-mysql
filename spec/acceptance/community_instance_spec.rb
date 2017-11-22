@@ -66,7 +66,11 @@ describe 'mariadb class' do
     end
 
     it "ls backups" do
-      expect(shell("ls /backup").exit_code).to be_zero
+      expect(shell("ls -l /backup/*").exit_code).to be_zero
+    end
+
+    it "check backups" do
+      expect(shell("cat  /backup/*/*sql | grep \"MySQL dump\"").exit_code).to be_zero
     end
 
   end
