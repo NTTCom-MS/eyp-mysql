@@ -6,7 +6,7 @@
 * fixed **unless** and **onlyif** for **mysql_sql**
 * moved backup scripts to files folder
 * minor bugfix mysqldump script
-* added **masterdata** and **file_per_db** option to **mysql::backup::mysqldump**
+* added **masterdata** and **file_per_db** options to **mysql::backup::mysqldump**
 
 ## 0.4.12
 
