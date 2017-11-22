@@ -4,22 +4,20 @@ describe 'percona toolkit class' do
 
   context 'basic setup ' do
 
-    context 'purgar mysql-community-server' do
-      # Using puppet_apply as a helper
-      it 'should work with no errors' do
-        pp = <<-EOF
+    it 'should work with no errors' do
+      pp = <<-EOF
 
-        package { 'mysql-community-server':
-          ensure => 'absent',
-        }
+      package { 'mysql-community-server':
+        ensure => 'absent',
+      }
 
-        EOF
+      EOF
 
-        # Run it twice and test for idempotency
-        expect(apply_manifest(pp).exit_code).to_not eq(1)
-        expect(apply_manifest(pp).exit_code).to eq(0)
+      # Run it twice and test for idempotency
+      expect(apply_manifest(pp).exit_code).to_not eq(1)
+      expect(apply_manifest(pp).exit_code).to eq(0)
 
-      end
+    end
 
     # Using puppet_apply as a helper
     it 'should work with no errors' do
@@ -51,11 +49,9 @@ describe 'percona toolkit class' do
       # Run it twice and test for idempotency
       expect(apply_manifest(pp).exit_code).to_not eq(1)
       expect(apply_manifest(pp).exit_code).to eq(0)
-
     end
-
+    end
   end
-
 end
 
 #echo | pt-query-digest
