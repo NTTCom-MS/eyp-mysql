@@ -13,6 +13,7 @@ define mysql::backup::mysqldump (
                                   $monthday     = undef,
                                   $weekday      = undef,
                                   $setcron      = true,
+                                  $masterdata   = '1',
                                 ) {
   #
   validate_absolute_path($destination)

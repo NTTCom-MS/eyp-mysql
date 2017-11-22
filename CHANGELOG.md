@@ -5,6 +5,8 @@
 * added **sql_mode** and **lower_case_table_names** to **mysqld section**
 * fixed **unless** and **onlyif** for **mysql_sql**
 * moved backup scripts to files folder
+* minor bugfix mysqldump script
+* added **MASTERDATA** option
 
 ## 0.4.12
 

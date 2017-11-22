@@ -12,3 +12,5 @@ IDHOST="ABC1234"
 COMPRESS="1"
 # mysql instance name - optional
 INSTANCE_NAME="<%= @instance %>"
+# masterdata - if not set, is set to 1
+MASTERDATA="2"
