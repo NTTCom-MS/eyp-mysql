@@ -1,9 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'percona toolkit class' do
-
   context 'basic setup ' do
-
     it 'should work with no errors' do
       pp = <<-EOF
 
@@ -49,7 +47,6 @@ describe 'percona toolkit class' do
       # Run it twice and test for idempotency
       expect(apply_manifest(pp).exit_code).to_not eq(1)
       expect(apply_manifest(pp).exit_code).to eq(0)
-    end
     end
   end
 end
