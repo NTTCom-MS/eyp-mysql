@@ -1,0 +1,14 @@
+# backup destiation - mandatory
+DESTINATION="/backup"
+# notification email - optional
+MAILTO="demo@example.com"
+# backup rotation in days - optional
+RETENTION="7"
+# log dir - stdout if unset
+LOGDIR="/backup/logs"
+# host id - hostname is used instead if it is unset
+IDHOST="ABC1234"
+# backup type
+BACKUP_NAME_ID="MySQL"
+# mysql instance name - optional
+INSTANCE_NAME="<%= @instance %>"

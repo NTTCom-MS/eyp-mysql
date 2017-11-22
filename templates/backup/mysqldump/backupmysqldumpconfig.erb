@@ -14,6 +14,8 @@ IDHOST="<%= @idhost %>"
 <% if(@compress) -%>
 COMPRESS="<%= @compress %>"
 <% end -%>
-<% if(@instance) -%>
 INSTANCE_NAME="<%= @instance %>"
+MASTERDATA="<%= @masterdata %>"
+<% if(@file_per_db) -%>
+FILE_PER_DB="<%= @file_per_db %>"
 <% end -%>

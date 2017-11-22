@@ -7,6 +7,7 @@ define mysql::mycnf::mysqld (
                               $port                            = '3306',
                               $pidfile                         = undef,
                               $datadir                         = "/var/mysql/${name}",
+                              $instancedir                     = "/var/mysql/${name}",
                               $relaylogdir                     = "/var/mysql/${name}/relaylogs",
                               $binlogdir                       = "/var/mysql/${name}/binlogs",
                               $default_storage_engine          = 'InnoDB',
@@ -52,6 +53,8 @@ define mysql::mycnf::mysqld (
                               $slow_query_log                  = true,
                               $log_error                       = "/var/log/mysql/${name}/mysql-error.log",
                               $slow_query_log_file             = "/var/log/mysql/${name}/mysql-slow.log",
+                              $sql_mode                        = undef,
+                              $lower_case_table_names          = '0',
                             ) {
   if($instance_name=='global')
   {

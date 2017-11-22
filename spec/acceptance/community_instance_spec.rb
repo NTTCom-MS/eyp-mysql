@@ -20,6 +20,11 @@ describe 'mariadb class' do
     		ensure => 'present',
     	}
 
+      mysql::backup::mysqldump { 'test':
+        destination => '/backup',
+        compress => false,
+      }
+
       EOF
 
       # Run it twice and test for idempotency
@@ -49,6 +54,24 @@ describe 'mariadb class' do
     describe file("/etc/mysql/test/my.cnf") do
       it { should be_file }
       its(:content) { should match '[mysqld]' }
+    end
+
+    # /usr/local/bin/backupmysqldump
+    describe file("/usr/local/bin/backupmysqldump") do
+      it { should be_file }
+      its(:content) { should match 'puppet managed file' }
+    end
+
+    it "backupmysqldump" do
+      expect(shell("/usr/local/bin/backupmysqldump").exit_code).to be_zero
+    end
+
+    it "ls backups" do
+      expect(shell("ls -l /backup/*").exit_code).to be_zero
+    end
+
+    it "check backups" do
+      expect(shell("cat  /backup/*/*sql | grep \"MySQL dump\"").exit_code).to be_zero
     end
 
   end

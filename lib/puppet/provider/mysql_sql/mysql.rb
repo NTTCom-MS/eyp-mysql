@@ -18,6 +18,7 @@ Puppet::Type.type(:mysql_sql).provide(:mysql) do
     command.push("--defaults-group-suffix=" + resource[:instance_name]) if resource[:instance_name]
     command.push("-S", resource[:socket]) if resource[:socket]
     command.push("-p" + resource[:password]) if resource[:password]
+    command.push("-BN")
     command.push("-e", '"' + sql.gsub('"', '\"') + '"')
     command.push(resource[:db]) if resource[:db]
 

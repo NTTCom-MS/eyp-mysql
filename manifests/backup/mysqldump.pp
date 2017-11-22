@@ -13,6 +13,8 @@ define mysql::backup::mysqldump (
                                   $monthday     = undef,
                                   $weekday      = undef,
                                   $setcron      = true,
+                                  $masterdata   = '1',
+                                  $file_per_db  = true,
                                 ) {
   #
   validate_absolute_path($destination)
@@ -40,7 +42,7 @@ define mysql::backup::mysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => template("${module_name}/backup/mysqldump/backupmysqldump.erb")
+    content => file("${module_name}/backup/mysqldump/backupmysqldump.sh")
   }
 
   file { "${backupscript}.config":

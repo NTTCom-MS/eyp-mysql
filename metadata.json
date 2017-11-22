@@ -1,15 +1,15 @@
 {
   "name": "eyp-mysql",
-  "version": "0.4.11",
+  "version": "0.4.13",
   "author": "eyp",
   "summary": "multi instance mysql community and Percona XtraDB cluster (galera)",
   "license": "Apache-2.0",
   "source": "https://github.com/NTTCom-MS/eyp-mysql",
-  "project_page": null,
+  "project_page": "https://github.com/NTTCom-MS/eyp-mysql",
   "issues_url": "https://github.com/NTTCom-MS/eyp-mysql/issues",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"},
-    {"name":"puppetlabs/concat","version_requirement":">= 1.2.3"},
+    {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0 < 9.9.9"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.2.3 < 9.9.9"},
     {"name":"eyp/eyplib","version_requirement":">= 0.1.0 < 0.2.0"},
     {"name":"eyp/systemd","version_requirement":">= 0.1.25 < 0.2.0"},
     {"name":"eyp/initscript","version_requirement":">= 0.1.2 < 0.2.0"}

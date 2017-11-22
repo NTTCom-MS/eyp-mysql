@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#TODO: custom conf
+# puppet managed file
 
 function initbck
 {
@@ -13,16 +13,17 @@ function initbck
 		mkdir -p $DESTINATION
 		BACKUPTS=$(date +%Y%m%d%H%M)
 
-		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
-
-		BCKFAILED=0
-
-		if [ -z "$LOGDIR" ];
+		if [ -z "${LOGDIR}" ];
 		then
 			exec 2>&1
+			LOGDIR=$DESTINATION
 		else
 			exec >> $CURRENTBACKUPLOG 2>&1
 		fi
+
+		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
+
+		BCKFAILED=0
 	fi
 }
 
@@ -65,7 +66,7 @@ function dump_grants
 
 	GRANTSDESTFILE="$GRANTSDEST/${IDHOST}.grants.sql"
 
-	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
+	echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
 
 	if [[ ! -s "$GRANTSDESTFILE" ]];
 	then
@@ -75,45 +76,69 @@ function dump_grants
 
 }
 
+function dodump
+{
+	MYSQLDUMP_BASEOPTS=${MYSQLDUMP_BASEOPTS-"--opt --routines -E --master-data=$MASTERDATA"}
+
+	CURRENTBACKUPLOGDUMPERR="${DUMPDESTFILE}.err"
+
+	"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
+
+	if [ "$?" -ne 0 ];
+	then
+		echo "mysqldump error, check logs"
+		BCKFAILED=1
+	fi
+
+	if [ ! -z "$(cat ${CURRENTBACKUPLOGDUMPERR})" ];
+	then
+		echo "mysqldump error, check log ${CURRENTBACKUPLOGDUMPERR}"
+		BCKFAILED=1
+	fi
+
+	if [[ ! -s "$DUMPDESTFILE" ]];
+	then
+		echo "dump empty or not found, check logs"
+		BCKFAILED=1
+	fi
+}
+
 function mysqldump
 {
+	MYSQL_VER=$(echo "select version()" | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -NB 2>/dev/null)
+
+	if [ $? -ne 0 ];
+	then
+		echo "ERROR - mysql not available"
+		BCKFAILED=1
+	else
+		echo "MySQL ${MYSQL_VER}"
+	fi
+
 	DUMPDEST="$DESTINATION/$BACKUPTS"
 
 	mkdir -p $DUMPDEST
 
-	DBS=${DBS-$(echo show databases | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N  | grep -vE '^(information|performance)_schema$|^mysql$')}
+	DBS=${DBS-$(echo show databases | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N  | grep -vE '^(information|performance)_schema$|^mysql$|^sys$')}
 
 	MASTERDATA=${MASTERDATA-1}
-
-	DUMPDESTFILE="$DUMPDEST/${IDHOST}.all.databases.sql"
 
 	if [ -z "$DBS" ];
 	then
 		echo "no dbs found"
 		BCKFAILED=1
 	else
-		MYSQLDUMP_BASEOPTS=${MYSQLDUMP_BASEOPTS-"--opt --routines -E --master-data=$MASTERDATA"}
-
-		CURRENTBACKUPLOGDUMPERR=${CURRENTBACKUPLOG-$DUMPDESTFILE.err}
-
-		"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
-
-		if [ "$?" -ne 0 ];
+		if [ -z "${FILE_PER_DB}" ];
 		then
-			echo "mysqldump error, check logs"
-			BCKFAILED=1
-		fi
-
-		if [ ! -z "$(cat ${CURRENTBACKUPLOG}.err)" ];
-		then
-			echo "mysqldump error, check log ${CURRENTBACKUPLOGDUMPERR}"
-			BCKFAILED=1
-		fi
-
-		if [[ ! -s "$DUMPDESTFILE" ]];
-		then
-			echo "dump empty or not found, check logs"
-			BCKFAILED=1
+			DUMPDESTFILE="$DUMPDEST/${IDHOST}.all.databases.sql"
+			dodump
+		else
+			for EACHDB in $DBS;
+			do
+				EACHDB_FILE=$(echo "${EACHDB}" | sed 's/[^a-z0-9]/_/ig')
+				DUMPDESTFILE="$DUMPDEST/${IDHOST}.${EACHDB_FILE}.sql"
+				dodump
+			done
 		fi
 	fi
 
@@ -146,6 +171,11 @@ BASEDIRBCK=$(dirname $0)
 BASENAMEBCK=$(basename $0)
 IDHOST=${IDHOST-$(hostname -s)}
 
+if [ ! -z "${INSTANCE_NAME}" ];
+then
+	MYSQL_INSTANCE_OPTS="--defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf"
+fi
+
 if [ ! -z "$1" ] && [ -f "$1" ];
 then
 	. $1 2>/dev/null
@@ -173,7 +203,7 @@ then
 	BCKFAILED=1
 fi
 
-VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN --defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf -N)
+VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N)
 
 if [ "$?" -ne 0 ];
 then

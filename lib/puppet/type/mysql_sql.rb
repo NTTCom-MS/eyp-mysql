@@ -66,7 +66,7 @@ Puppet::Type.newtype(:mysql_sql) do
     # Return true if a matching row is found
     def matches(value)
       output, status = provider.run_unless_sql_command(value)
-      self.fail("Error evaluating 'unless' clause, returned #{status}: '#{output}'") unless status == 0
+      output='0' unless status == 0
 
       result_count = output.strip.to_i
       self.debug("Found #{result_count} row(s) executing 'unless' clause")
@@ -80,16 +80,16 @@ Puppet::Type.newtype(:mysql_sql) do
         "for the existence of an object in the database to determine whether " +
         "or not the main SQL command needs to be executed at all."
 
-    # Return true if a matching row is found
+    # Return true if no matching row is found
     def matches(value)
       output, status = provider.run_unless_sql_command(value)
       status = output.exitcode if status.nil?
 
-      self.fail("Error evaluating 'onlyif' clause, returned #{status}: '#{output}'") unless status == 0
+      output='0' unless status == 0
 
       result_count = output.strip.to_i
       self.debug("Found #{result_count} row(s) executing 'onlyif' clause")
-      result_count > 0
+      result_count == 0
     end
   end
 
