@@ -4,6 +4,11 @@ describe 'percona toolkit class' do
 
   context 'basic setup ' do
 
+    #mysql-community-server
+    it "clean up" do
+      expect(shell("rpm -e --nodeps mysql-community-server").exit_code).to be_zero
+    end
+
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOF
