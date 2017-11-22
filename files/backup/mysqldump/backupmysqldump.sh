@@ -15,19 +15,15 @@ function initbck
 
 		if [ -z "${LOGDIR}" ];
 		then
+			exec 2>&1
 			LOGDIR=$DESTINATION
+		else
+			exec >> $CURRENTBACKUPLOG 2>&1
 		fi
 
 		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
 
 		BCKFAILED=0
-
-		if [ -z "$LOGDIR" ];
-		then
-			exec 2>&1
-		else
-			exec >> $CURRENTBACKUPLOG 2>&1
-		fi
 	fi
 }
 
@@ -82,6 +78,16 @@ function dump_grants
 
 function mysqldump
 {
+	MYSQL_VER=$(echo "select version()" | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -NB 2>/dev/null)
+
+	if [ $? -ne 0 ];
+	then
+		echo "ERROR - mysql not available"
+		BCKFAILED=1
+	else
+		echo "MySQL ${MYSQL_VER}"
+	fi
+
 	DUMPDEST="$DESTINATION/$BACKUPTS"
 
 	mkdir -p $DUMPDEST
@@ -99,7 +105,7 @@ function mysqldump
 	else
 		MYSQLDUMP_BASEOPTS=${MYSQLDUMP_BASEOPTS-"--opt --routines -E --master-data=$MASTERDATA"}
 
-		CURRENTBACKUPLOGDUMPERR=${CURRENTBACKUPLOG-$DUMPDESTFILE.err}
+		CURRENTBACKUPLOGDUMPERR="${DUMPDESTFILE}.err"
 
 		"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
 
@@ -109,7 +115,7 @@ function mysqldump
 			BCKFAILED=1
 		fi
 
-		if [ ! -z "$(cat ${CURRENTBACKUPLOG}.err)" ];
+		if [ ! -z "$(cat ${CURRENTBACKUPLOGDUMPERR})" ];
 		then
 			echo "mysqldump error, check log ${CURRENTBACKUPLOGDUMPERR}"
 			BCKFAILED=1
