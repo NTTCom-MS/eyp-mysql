@@ -62,12 +62,12 @@ define mysql::community::instance (
     require           => Class['::mysql'],
   }
 
-  ~> mysql::community::service { $instance_name:
+  mysql::community::service { $instance_name:
     tag => "eypmysql_${instance_name}",
   }
 
   Concat <| tag == "eypmysql_${instance_name}" |>
-  -> Mysql::Community::Service <| tag == "eypmysql_${instance_name}" |>
+  ~> Mysql::Community::Service <| tag == "eypmysql_${instance_name}" |>
 
   # 5.7
   # echo "alter user root@localhost identified by 'password' password expire never;" | mysql -S /var/mysql/test/datadir/mysqld.sock  -p$(tail -n1 /var/mysql/test/.mypass) --connect-expired-password
