@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.14
+
+* bugfix: possible dependency cycle
+
 ## 0.4.13
 
 * added **sql_mode** and **lower_case_table_names** to **mysqld section**
