@@ -12,3 +12,11 @@ IDHOST="ABC1234"
 BACKUP_NAME_ID="MySQL"
 # mysql instance name - optional
 INSTANCE_NAME="demo"
+#
+# to make incremental backups uncomment one of the following:
+# FULL_ON_MONTHDAY or FULL_ON_WEEKDAY
+#
+# make monthly fulls (uncomment FULL_ON_MONTHDAY to make monthly fulls on day 1)
+# FULL_ON_MONTHDAY = 1
+# make weekly fulls (uncomment FULL_ON_WEEKDAY to make it every sunday)
+# FULL_ON_WEEKDAY=7
