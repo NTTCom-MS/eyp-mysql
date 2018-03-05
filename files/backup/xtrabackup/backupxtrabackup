@@ -4,7 +4,6 @@
 
 function initbck
 {
-
 	LOGDIR=${LOGDIR-$DESTINATION}
 
 	if [ -z "${LOGDIR}" ];
