@@ -11,4 +11,4 @@ IDHOST="ABC1234"
 # backup type
 BACKUP_NAME_ID="MySQL"
 # mysql instance name - optional
-INSTANCE_NAME="<%= @instance %>"
+INSTANCE_NAME="demo"
