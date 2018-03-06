@@ -73,6 +73,20 @@ class mysql::community(
         unless  => "bash -c 'debconf-get-selections | grep \"mysql-community-server/remove-data-dir\" | grep -P \"boolean[ \\t]*${mysql::remove_data_dir}\"'",
         before  => Package[$mysql::params::mysql_community_pkgs],
       }
+
+      exec {  'logdir installation':
+        command => 'mkdir -p /var/log/mysql',
+        creates => '/var/log/mysql',
+      }
+
+      file { '/var/log/mysql/error.log':
+        ensure  => 'present',
+        owner   => 'mysql',
+        group   => 'mysql',
+        mode    => '0644',
+        before  => Package[$mysql::params::mysql_community_pkgs],
+        require => Exec['logdir installation'],
+      }
     }
     'RedHat':
     {
