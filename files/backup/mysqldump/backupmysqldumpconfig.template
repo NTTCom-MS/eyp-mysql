@@ -11,7 +11,7 @@ IDHOST="ABC1234"
 # if set, enables compression
 COMPRESS="1"
 # mysql instance name - optional
-INSTANCE_NAME="<%= @instance %>"
+INSTANCE_NAME="demo"
 # masterdata - if not set, is set to 1
 MASTERDATA="2"
 # dump one db at a time if set - optional

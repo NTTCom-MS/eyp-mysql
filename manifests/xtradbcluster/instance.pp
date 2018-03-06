@@ -1,3 +1,4 @@
+# puppet2sitepp @mysqlxtradbclusterinstances
 define mysql::xtradbcluster::instance (
                                     $password,
                                     $serverid,

@@ -4,7 +4,6 @@
 
 function initbck
 {
-
 	LOGDIR=${LOGDIR-$DESTINATION}
 
 	if [ -z "${LOGDIR}" ];
@@ -107,31 +106,47 @@ function dobackup
 	if [ "$TODAY_IS_FULL" -eq 1 ];
 	then
 		# full
+		echo "BACKUP FULL:"
 		innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
 	else
-		# incremental
-
-		# buscar últim backup OK
-
-		# innobackupex --incremental /var/backups/xtrabackup/ --incremental-basedir=/var/backups/xtrabackup/2014-08-25_10-04-45/
-
-		# de moment full :D
-		innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+		# incremental si trobo full
+		if [ -L "${DUMPDEST}/last_full" ];
+		then
+			LAST_FULL_DIR=$(readlink "${DUMPDEST}/last_full")
+			echo "BACKUP INCREMENTAL:"
+			innobackupex --incremental "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
+		else
+			echo "BACKUP FULL:"
+			innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+		fi
 	fi
 
 	if [ "$?" -ne 0 ];
 	then
 		echo "innobackupex error, check logs - error code: $?"
 		BCKFAILED=1
+	else
+		grep "completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
+
+		if [ "$?" -ne 0 ];
+		then
+			echo "innobackupex error - completed OK not found - unexpected log output, please check logs"
+			BCKFAILED=1
+		else
+			# asumim OK
+			for file in $(find ${DUMPDEST} -maxdepth 2 -iname xtrabackup_info | grep -v last_full | sort -r);
+			do
+				grep "incremental = N" $file >/dev/null 2>&1
+				if [ "$?" -eq 0 ];
+				then
+					ln -sf $(dirname $file) ${DUMPDEST}/last_full
+					break
+				fi
+			done
+		fi
 	fi
 
-	grep "completed OK!" ${CURRENTBACKUPLOG} > /dev/null 2>&1
 
-	if [ "$?" -ne 0 ];
-	then
-		echo "innobackupex error - completed OK not found - unexpected log output, please check logs"
-		BCKFAILED=1
-	fi
 }
 
 function cleanup

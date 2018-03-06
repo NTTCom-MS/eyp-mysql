@@ -16,8 +16,6 @@ define mysql::backup::mysqldump (
                                   $masterdata   = '1',
                                   $file_per_db  = true,
                                 ) {
-  #
-  validate_absolute_path($destination)
 
   if defined(Class['netbackupclient'])
   {
@@ -42,7 +40,7 @@ define mysql::backup::mysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => file("${module_name}/backup/mysqldump/backupmysqldump.sh")
+    content => file("${module_name}/backup/mysqldump/backupmysqldump")
   }
 
   file { "${backupscript}.config":

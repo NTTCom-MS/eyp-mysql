@@ -17,10 +17,8 @@ define mysql::backup::xtrabackup (
                                     $fullbackup_monthday = undef,
                                     $fullbackup_weekday  = undef,
                                   ) {
-  #
-  validate_absolute_path($destination)
 
-  if $fullbackup_monthday!=undef and $fullbackup_weekday!=undef
+  if ($fullbackup_monthday!=undef and $fullbackup_weekday!=undef)
   {
     fail('fullbackup_monthday and fullbackup_weekday cannot be defined at the same time')
   }
@@ -50,7 +48,7 @@ define mysql::backup::xtrabackup (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => file("${module_name}/backup/xtrabackup/backupxtrabackup.sh")
+    content => file("${module_name}/backup/xtrabackup/backupxtrabackup")
   }
 
   file { "${backupscript}.config":
