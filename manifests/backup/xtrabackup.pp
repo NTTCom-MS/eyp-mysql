@@ -18,7 +18,7 @@ define mysql::backup::xtrabackup (
                                     $fullbackup_weekday  = undef,
                                   ) {
 
-  if $fullbackup_monthday!=undef and $fullbackup_weekday!=undef
+  if ($fullbackup_monthday!=undef and $fullbackup_weekday!=undef)
   {
     fail('fullbackup_monthday and fullbackup_weekday cannot be defined at the same time')
   }
