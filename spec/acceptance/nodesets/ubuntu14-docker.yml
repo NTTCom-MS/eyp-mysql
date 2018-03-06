@@ -8,7 +8,7 @@ HOSTS:
     image: ubuntu:14.04
     docker_preserve_image: true
     docker_image_commands:
-      - 'apt-get install gcc make tar wget openjdk-7-jdk openjdk-7-jre -y'
+      - 'apt-get install cron gcc make tar wget openjdk-7-jdk openjdk-7-jre -y'
 CONFIG:
   type: foss
   log_level: debug
