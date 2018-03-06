@@ -16,8 +16,6 @@ define mysql::backup::mysqldump (
                                   $masterdata   = '1',
                                   $file_per_db  = true,
                                 ) {
-  #
-  validate_absolute_path($destination)
 
   if defined(Class['netbackupclient'])
   {

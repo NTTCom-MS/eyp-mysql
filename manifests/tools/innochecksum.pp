@@ -23,12 +23,10 @@
 # Interactive, Inc. <junior@danga.com>
 #
 # Published with a permission.
-# 
+#
 class mysql::tools::innochecksum  (
                                     $binpath = '/usr/local/bin/innochecksum'
                                   ) inherits mysql::params {
-
-  validate_absolute_path($binpath)
 
   file { $binpath:
     ensure => 'present',

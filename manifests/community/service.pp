@@ -5,11 +5,6 @@ define mysql::community::service(
                                   $service_ensure        = 'running',
                                   $service_enable        = true,
                                 ) {
-  validate_bool($manage_docker_service)
-  validate_bool($manage_service)
-  validate_bool($service_enable)
-
-  validate_re($service_ensure, [ '^running$', '^stopped$' ], "Not a valid daemon status: ${service_ensure}")
 
   $is_docker_container_var=getvar('::eyp_docker_iscontainer')
   $is_docker_container=str2bool($is_docker_container_var)
