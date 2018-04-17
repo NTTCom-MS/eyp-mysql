@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.15
+
+* **backupmysqldump** bugfix: no email being sent when LOGDIR is not set
+
 ## 0.4.14
 
 * bugfix: possible dependency cycle
