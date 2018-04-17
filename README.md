@@ -167,41 +167,45 @@ ibdata inspector
 #### mysql::backup::xtrabackup
 
 * general options:
-  * **destination**:
-  * **retention**:           = undef,
-  * **logdir**:              = undef,
-  * **mailto**:              = undef,
-  * **idhost**:              = undef,
-  * **backupscript**: backup script path (default: /usr/local/bin/backup_xtrabackup)
-  * **backupid**:            = 'MySQL',
-  * **xtrabackup_version**: xtrabackup version to install (default: 2.4.4)
+  - **destination**: Where to store backups - required
+  - **retention**: Instance to backup (default: undef)
+  - **logdir**: Where to store logs, if not specified any log message is shown via stdout (default: undef)
+  - **mailto**: If defined, sends backups notifications via email (default: undef)
+  - **idhost**: Optional host identification, if not defined uses hostname (default: undef)
+  - **backupscript**: backup script path (default: /usr/local/bin/backup_xtrabackup)
+  - **backupid**: How to identify the kind of backup (default: MySQL)
+  - **xtrabackup_version**: xtrabackup version to install (default: 2.4.4)
 * full backup related variables:
-  * **fullbackup_monthday**: day of month to perform full backups, space padded (default: undef) - **INCOMPATIBLE** with **fullbackup_weekday**
-  * **fullbackup_weekday**: day of week (1..7) to perform full backups; 1 is Monday (default: undef) - **INCOMPATIBLE** with **fullbackup_monthday**
+  - **fullbackup_monthday**: day of month to perform full backups, space padded (default: undef) - **INCOMPATIBLE** with **fullbackup_weekday**
+  - **fullbackup_weekday**: day of week (1..7) to perform full backups; 1 is Monday (default: undef) - **INCOMPATIBLE** with **fullbackup_monthday**
 * cronjob related variables:
-  * **hour**:                = '2',
-  * **minute**:              = '0',
-  * **month**:               = undef,
-  * **monthday**:            = undef,
-  * **weekday**:             = undef,
-  * **setcron**:             = true,
+  - **setcron**:   - **setcron**: If setcron is true, at which hour to run backup job (default: 2)
+  - **hour**: If setcron is true, at which hour to run backup job (default: 2)
+  - **minute**: If setcron is true, at which minute to run backup job (default: 0)
+  - **month**: If setcron is true, at which month to run backup job (default: undef)
+  - **monthday**: If setcron is true, at which monthday to run backup job (default: undef)
+  - **weekday**: If setcron is true, at which weekday to run backup job (default: undef)
 
 #### mysql::backup::mysqldump
 
-* **destination**: ,
-* **instance**:      = $name,
-* **retention**:     = undef,
-* **logdir**:        = undef,
-* **compress**:      = true,
-* **mailto**:        = undef,
-* **idhost**:        = undef,
-* **backupscript**:  = '/usr/local/bin/backupmysqldump',
-* **hour**:          = '2',
-* **minute**:        = '0',
-* **month**:         = undef,
-* **monthday**:      = undef,
-* **weekday**:       = undef,
-* **setcron**:       = true,
+* general options:
+  - **destination**: Where to store backups - required
+  - **instance**: Instance to backup (default: undef)
+  - **retention**: Backup retention (default: undef)
+  - **logdir**: Where to store logs, if not specified any log message is shown via stdout (default: undef)
+  - **compress**: Compress backups (default: true)
+  - **mailto**: If defined, sends backups notifications via email (default: undef)
+  - **idhost**: Optional host identification, if not defined uses hostname (default: undef)
+  - **backupscript**: Where to store backup script (default: /usr/local/bin/backupmysqldump)
+  - **masterdata**: Use this option to dump a master replication server to produce a dump file that can be used to set up another server as a slave of the master. If the option value is 2, the CHANGE MASTER TO statement is written as an SQL comment, and thus is informative only; it has no effect when the dump file is reloaded. If the option value is 1, the statement is not written as a comment and takes effect when the dump file is reloaded (default: 1)
+  - **file_per_db**: Create several dumps, one per DB. It is convenient to perform partial restores but be aware it is not useful for creating slaves (default: true)
+* cronjob related variables:
+  - **setcron**: If set to true, managed a cronjob to schedule backups (default: true)
+  - **hour**: If setcron is true, at which hour to run backup job (default: 2)
+  - **minute**: If setcron is true, at which minute to run backup job (default: 0)
+  - **month**: If setcron is true, at which month to run backup job (default: undef)
+  - **monthday**: If setcron is true, at which monthday to run backup job (default: undef)
+  - **weekday**: If setcron is true, at which weekday to run backup job (default: undef)
 
 #### mysql::mycnf::client
 

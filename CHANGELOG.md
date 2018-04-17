@@ -3,6 +3,7 @@
 ## 0.4.15
 
 * **backupmysqldump** bugfix: no email being sent when LOGDIR is not set
+* added configurable backup id via **backupid** variable to **mysqldump backup script**
 
 ## 0.4.14
 
