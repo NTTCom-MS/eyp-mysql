@@ -12,16 +12,17 @@ function initbck
 	else
 		mkdir -p $DESTINATION
 		BACKUPTS=$(date +%Y%m%d%H%M)
+		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
 
 		if [ -z "${LOGDIR}" ];
 		then
 			exec 2>&1
 			LOGDIR=$DESTINATION
+			LOG_FILE_PRESENT=0
 		else
+			LOG_FILE_PRESENT=1
 			exec >> $CURRENTBACKUPLOG 2>&1
 		fi
-
-		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
 
 		BCKFAILED=0
 	fi
@@ -39,7 +40,7 @@ function mailer
 			echo "mail skipped, no MAILTO defined"
 			exit $BCKFAILED
 		else
-			if [ -z "$LOGDIR" ];
+			if [ "${LOG_FILE_PRESENT}" -eq 0 ];
 			then
 				if [ "$BCKFAILED" -eq 0 ];
 				then
