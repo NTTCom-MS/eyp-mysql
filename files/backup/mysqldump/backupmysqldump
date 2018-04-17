@@ -15,10 +15,10 @@ function initbck
 
 		if [ -z "${LOGDIR}" ];
 		then
-			exec 2>&1
+			LOG_FILE_PRESENT=0
 			LOGDIR=$DESTINATION
 			CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
-			LOG_FILE_PRESENT=0
+			exec 2>&1
 		else
 			LOG_FILE_PRESENT=1
 			CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
