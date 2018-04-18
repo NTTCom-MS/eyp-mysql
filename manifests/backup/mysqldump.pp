@@ -12,6 +12,7 @@ define mysql::backup::mysqldump (
                                   $month        = undef,
                                   $monthday     = undef,
                                   $weekday      = undef,
+                                  $backupid     = 'MySQL',
                                   $setcron      = true,
                                   $masterdata   = '1',
                                   $file_per_db  = true,
