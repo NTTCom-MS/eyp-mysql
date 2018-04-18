@@ -27,19 +27,19 @@ multi instance / multi flavor MySQL management:
 
 backup strategies:
 * **mysqldump**: grants + 1 file per DB
-* **xtrabackup**: full mode only
+* **xtrabackup**: can be configured to make incrementals and a weekly or montly full backup
 
 ## Setup
 
 ### What mysql affects
 
 * installs percona repo (if needed)
-* installs MySQL packages
+* installs MySQL/XtraDB cluster packages
 * manages configuration files (**/etc/mysql**) - it's not possible to have a unmanaged MySQL instance
 
 ### Setup Requirements
 
-This module requires pluginsync enabled
+This module requires pluginsync enabled for puppet < 4
 
 ### Beginning with mysql
 
@@ -59,7 +59,7 @@ mysql::community::instance { 'test2':
 
 ## Usage
 
-### single node XtraDB demo cluster
+### Single node XtraDB demo cluster
 
 ```puppet
 mysql::xtradbcluster::instance { 'cluster1':
@@ -93,9 +93,9 @@ mysql::xtradbcluster::instance { 'cluster2':
 }
 ```
 
-*Note: Once cluster is bootstraped we need to change bootstrap to false in the primary node*
+*Note: As per xtradbcluster requirement, once a cluster is bootstraped we need to change bootstrap variable to false in the primary node*
 
-### backup scripts
+### Backup scripts
 
 install backup script using xtrabackup tool for **cluster1** instance:
 
@@ -118,7 +118,7 @@ xtrabackup:
     retention: '5'
 ```
 
-### misc
+### Other examples
 
 run SQL query
 
@@ -302,7 +302,6 @@ have some test to check both presence and absence of any feature
 
 ### TODO
 
-* **xtrabackup**: incremental mode
 * On Ubuntu fails to install because packages are starting the service before being configured. Should be installed using RUNLEVEL=1 (puppet package provider does not support environment variables) or to use a similar approach
 
 ### Contributing
