@@ -1,3 +1,4 @@
+# @puppet2sitepp mysqlmycnfclients
 define mysql::community::service(
                                   $instance_name         = $name,
                                   $manage_service        = true,

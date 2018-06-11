@@ -1,5 +1,7 @@
 # notes:
 # tmp_table_size=max_heap_table_size
+
+# @puppet2sitepp mysqlmycnfmysqlds
 define mysql::mycnf::mysqld (
                               $instance_name                   = $name,
                               $skip_external_locking           = $mysql::params::skip_external_locking_default,
