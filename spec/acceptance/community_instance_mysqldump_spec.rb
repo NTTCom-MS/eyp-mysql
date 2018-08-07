@@ -20,7 +20,7 @@ describe 'mariadb class' do
     		ensure => 'present',
     	}
 
-      mysql::backup::mysqldump { 'test':
+      mysql::backup::mysqldump { 'test_mysqldump':
         destination => '/backup',
         compress => false,
       }
