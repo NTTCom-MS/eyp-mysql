@@ -114,10 +114,20 @@ function dobackup
 		then
 			LAST_FULL_DIR=$(readlink "${DUMPDEST}/last_full")
 			echo "BACKUP INCREMENTAL:"
-			innobackupex --incremental "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
+			if [ -z "${XTRABACKUPBIN_24}" ];
+			then
+				innobackupex --incremental ${MYSQL_INSTANCE_OPTS} "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
+			else
+				${XTRABACKUPBIN} --incremental ${MYSQL_INSTANCE_OPTS} "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
+			fi
 		else
 			echo "BACKUP FULL:"
-			innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+			if [ -z "${XTRABACKUPBIN_24}" ];
+			then
+				innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+			else
+				${XTRABACKUPBIN} --backup ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+			fi
 		fi
 	fi
 
@@ -186,11 +196,22 @@ fi
 
 INSTANCE_NAME=${INSTANCE_NAME-$1}
 
-XTRABACKUPBIN=${XTRABACKUPBIN-$(which innobackupex 2>/dev/null)}
+XTRABACKUPBIN=${XTRABACKUPBIN-$(which xtrabackup 2>/dev/null)}
 if [ -z "$XTRABACKUPBIN" ];
 then
-	echo "xtrabackup (innobackupex) not found"
-	BCKFAILED=1
+	XTRABACKUPBIN=${XTRABACKUPBIN-$(which innobackupex 2>/dev/null)}
+	if [ -z "$XTRABACKUPBIN" ];
+	then
+		echo "ERROR: Neither xtrabackup nor innobackupex have been found, exiting"
+		BCKFAILED=1
+	fi
+fi
+
+MIN_VER=$(echo "2.4\n$($XTRABACKUPBIN --version)" | sort -V | head -n1)
+
+if [[ ${MIN_VER} == 2.4* ]];
+then
+	XTRABACKUPBIN_24="1"
 fi
 
 #
