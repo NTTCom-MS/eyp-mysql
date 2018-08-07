@@ -118,7 +118,7 @@ function dobackup
 		if [ -L "${DUMPDEST}/last_full" ];
 		then
 			LAST_FULL_DIR=$(readlink "${DUMPDEST}/last_full")
-			echo "BACKUP INCREMENTAL:"
+			echo "INCREMENTAL MODE / BACKUP INCREMENTAL:"
 			if [ -z "${XTRABACKUPBIN_24}" ];
 			then
 				innobackupex --incremental ${MYSQL_INSTANCE_OPTS} "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
@@ -126,7 +126,7 @@ function dobackup
 				${XTRABACKUPBIN} --incremental ${MYSQL_INSTANCE_OPTS} "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
 			fi
 		else
-			echo "BACKUP FULL:"
+			echo "INCREMENTAL MODE / BACKUP FULL:"
 			if [ -z "${XTRABACKUPBIN_24}" ];
 			then
 				innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
