@@ -7,8 +7,8 @@ describe 'mariadb class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      mysql::community::instance { 'test':
-    		port              => '3307',
+      mysql::community::instance { 'test_xtrabackup':
+    		port              => '3308',
     		password          => 'password',
     		add_default_mycnf => true,
     		default_instance  => true,
@@ -16,13 +16,8 @@ describe 'mariadb class' do
 
       ->
 
-    	mysql_database { 'et2blog':
-    		ensure => 'present',
-    	}
-
-      mysql::backup::mysqldump { 'test':
+      mysql::backup::xtrabackup { 'test_xtrabackup':
         destination => '/backup',
-        compress => false,
       }
 
       EOF

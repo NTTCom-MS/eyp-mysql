@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.16
+
+* added support for xtrabackup >= 2.4
+
 ## 0.4.15
 
 * **backupmysqldump** bugfix: no email being sent when LOGDIR is not set
