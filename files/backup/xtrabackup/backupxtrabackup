@@ -107,7 +107,12 @@ function dobackup
 	then
 		# full
 		echo "BACKUP FULL:"
-		innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+		if [ -z "${XTRABACKUPBIN_24}" ];
+		then
+			innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+		else
+			${XTRABACKUPBIN} --backup ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
+		fi
 	else
 		# incremental si trobo full
 		if [ -L "${DUMPDEST}/last_full" ];
