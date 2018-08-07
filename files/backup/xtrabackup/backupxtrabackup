@@ -207,7 +207,7 @@ then
 	fi
 fi
 
-MIN_VER=$(echo "2.4\n$($XTRABACKUPBIN --version)" | sort -V | head -n1)
+MIN_VER=$(echo "2.4\n$($XTRABACKUPBIN --version 2>&1 | awk '{ print $3 }')" | sort -V | head -n1)
 
 if [[ ${MIN_VER} == 2.4* ]];
 then
