@@ -181,11 +181,6 @@ BASENAMEBCK=$(basename $0)
 IDHOST=${IDHOST-$(hostname -s)}
 BACKUP_NAME_ID=${BACKUP_NAME_ID-MySQL}
 
-if [ ! -z "${INSTANCE_NAME}" ];
-then
-	MYSQL_INSTANCE_OPTS="--defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf"
-fi
-
 if [ ! -z "$1" ] && [ -f "$1" ];
 then
 	. $1 2>/dev/null
@@ -212,7 +207,7 @@ then
 	fi
 fi
 
-MIN_VER=$(echo "2.4\n$($XTRABACKUPBIN --version 2>&1 | awk '{ print $3 }')" | sort -V | head -n1)
+MIN_VER=$(echo "2.4\n$($XTRABACKUPBIN --version 2>&1 | tail -n1 | awk '{ print $3 }')" | sort -V | head -n1)
 
 if [[ ${MIN_VER} == 2.4* ]];
 then
@@ -222,6 +217,11 @@ fi
 #
 #
 #
+
+if [ ! -z "${INSTANCE_NAME}" ];
+then
+	MYSQL_INSTANCE_OPTS="--defaults-file=/etc/mysql/${INSTANCE_NAME}/my.cnf"
+fi
 
 initbck
 
