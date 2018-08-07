@@ -1,4 +1,4 @@
-mysql::community::instance { 'test_xtrabackup':
+mysql::community::instance { 'test':
   port              => '3308',
   password          => 'password',
   add_default_mycnf => true,
@@ -7,6 +7,6 @@ mysql::community::instance { 'test_xtrabackup':
 
 ->
 
-mysql::backup::xtrabackup { 'test_xtrabackup':
+mysql::backup::xtrabackup { 'test':
   destination => '/backup',
 }
