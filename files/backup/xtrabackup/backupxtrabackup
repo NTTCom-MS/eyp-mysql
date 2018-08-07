@@ -111,7 +111,7 @@ function dobackup
 		then
 			innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
 		else
-			${XTRABACKUPBIN} ${MYSQL_INSTANCE_OPTS} --backup ${DUMPDEST}
+			${XTRABACKUPBIN} ${MYSQL_INSTANCE_OPTS} --backup --target-dir=${DUMPDEST}
 		fi
 	else
 		# incremental si trobo full
@@ -123,7 +123,7 @@ function dobackup
 			then
 				innobackupex ${MYSQL_INSTANCE_OPTS} --incremental "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
 			else
-				${XTRABACKUPBIN} ${MYSQL_INSTANCE_OPTS} --incremental "${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
+				${XTRABACKUPBIN} ${MYSQL_INSTANCE_OPTS} --incremental --target-dir="${DUMPDEST}" --incremental-basedir="${LAST_FULL_DIR}"
 			fi
 		else
 			echo "INCREMENTAL MODE / BACKUP FULL:"
@@ -131,7 +131,7 @@ function dobackup
 			then
 				innobackupex ${MYSQL_INSTANCE_OPTS} ${DUMPDEST}
 			else
-				${XTRABACKUPBIN} ${MYSQL_INSTANCE_OPTS} --backup ${DUMPDEST}
+				${XTRABACKUPBIN} ${MYSQL_INSTANCE_OPTS} --backup --target-dir=${DUMPDEST}
 			fi
 		fi
 	fi
