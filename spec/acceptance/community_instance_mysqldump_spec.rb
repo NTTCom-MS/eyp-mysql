@@ -7,7 +7,7 @@ describe 'mariadb class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      mysql::community::instance { 'test':
+      mysql::community::instance { 'test_mysqldump':
     		port              => '3307',
     		password          => 'password',
     		add_default_mycnf => true,

@@ -11,6 +11,7 @@ mysql_database { 'et2blog':
   ensure => 'present',
 }
 
-mysql::backup::xtrabackup { 'test_xtrabackup':
+mysql::backup::xtrabackup { 'test':
+
   destination => '/backup',
 }
