@@ -33,10 +33,6 @@ class mysql::backup::xtrabackup::install(
   if($mysql::params::include_epel)
   {
     include ::epel
-
-    Class['::epel'] {
-      before => Package[$mysql::params::percona_xtrabackup_package_name[$version_release]],
-    }
   }
 
   package { $mysql::params::percona_xtrabackup_package_name[$version_release]:
