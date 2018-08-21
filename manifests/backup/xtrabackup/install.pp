@@ -29,6 +29,16 @@ class mysql::backup::xtrabackup::install(
   #   command => "yum install -y ${srcdir}/xtrabackup.${mysql::params::package_provider}",
   #   unless  => "rpm -qi ${mysql::params::percona_xtrabackup_package_name[$version]}"
   # }
+
+  if($mysql::params::include_epel)
+  {
+    include ::epel
+
+    Class['::epel'] {
+      before => Package[$mysql::params::percona_xtrabackup_package_name[$version_release]],
+    }
+  }
+
   package { $mysql::params::percona_xtrabackup_package_name[$version_release]:
     ensure  => $mysql::package_ensure,
     require => Class['::mysql::perconarepo']
