@@ -16,6 +16,7 @@ define mysql::backup::mysqldump (
                                   $setcron      = true,
                                   $masterdata   = '1',
                                   $file_per_db  = true,
+                                  $extraopts    = undef,
                                 ) {
 
   if defined(Class['netbackupclient'])

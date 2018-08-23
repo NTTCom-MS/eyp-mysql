@@ -206,6 +206,7 @@ ibdata inspector
   - **month**: If setcron is true, at which month to run backup job (default: undef)
   - **monthday**: If setcron is true, at which monthday to run backup job (default: undef)
   - **weekday**: If setcron is true, at which weekday to run backup job (default: undef)
+  - **extraopts**: Additionl options for mysqldump (default: undef)
 
 #### mysql::mycnf::client
 

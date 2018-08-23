@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.17
+
+* Added option to handle extra options for mysqldump
+
 ## 0.4.16
 
 * added support for xtrabackup >= 2.4
