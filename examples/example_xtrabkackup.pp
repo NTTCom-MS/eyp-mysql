@@ -5,8 +5,6 @@ mysql::community::instance { 'test':
   default_instance  => true,
 }
 
-->
-
 mysql::backup::xtrabackup { 'test':
   destination => '/backup',
 }
