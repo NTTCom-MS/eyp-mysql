@@ -16,3 +16,5 @@ INSTANCE_NAME="demo"
 MASTERDATA="2"
 # dump one db at a time if set - optional
 FILE_PER_DB="1"
+# extra options for mysqldump
+MYSQLDUMP_EXTRAOPTS=""

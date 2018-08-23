@@ -22,3 +22,7 @@ FILE_PER_DB="<%= @file_per_db %>"
 <% if(@backupid) -%>
 BACKUP_NAME_ID="<%= @backupid %>"
 <% end -%>
+<% if defined?(@extraopts) -%>
+# extra options for mysqldump
+MYSQLDUMP_EXTRAOPTS="<%= @extraopts %>"
+<% end -%>

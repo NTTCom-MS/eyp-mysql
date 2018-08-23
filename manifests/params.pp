@@ -59,6 +59,7 @@ class mysql::params {
   {
     'redhat':
     {
+      $include_epel=true
       $mysql_username_uid_default = '27'
       $mysql_username_gid_default = '27'
 
@@ -103,6 +104,7 @@ class mysql::params {
     }
     'Debian':
     {
+      $include_epel=false
       $mysql_username_uid_default = '113'
       $mysql_username_gid_default = '119'
 

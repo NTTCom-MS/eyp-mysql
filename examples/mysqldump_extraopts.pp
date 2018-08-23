@@ -5,6 +5,7 @@ mysql::community::instance { 'test':
   default_instance  => true,
 }
 
-mysql::backup::xtrabackup { 'test':
+mysql::backup::mysqldump { 'test':
   destination => '/backup',
+  extraopts => '--quick',
 }
