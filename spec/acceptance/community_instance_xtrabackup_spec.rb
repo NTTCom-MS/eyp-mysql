@@ -53,7 +53,7 @@ describe 'mariadb class' do
     end
 
     it "check db and mysql access" do
-      expect(shell("echo show databases | mysql | grep et2blog").exit_code).to be_zero
+      expect(shell("echo show databases | mysql --defaults-group-suffix=test_xtrabackup | grep et2blog").exit_code).to be_zero
     end
 
     #instance tomcat-8080 HTTP connector
