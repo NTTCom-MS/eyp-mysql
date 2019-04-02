@@ -37,6 +37,11 @@ describe 'mariadb class' do
         destination => '/backup',
       }
 
+      mysql_database { 'et2blog':
+        ensure        => 'present',
+        instance_name => 'test_xtrabackup',
+      }
+
       EOF
 
       # Run it twice and test for idempotency
