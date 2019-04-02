@@ -63,7 +63,7 @@ describe 'mariadb class' do
       its(:content) { should match '[mysqld]' }
     end
 
-    describe file("/etc/mysql/test/my.cnf") do
+    describe file("/etc/mysql/test_xtrabackup/my.cnf") do
       it { should be_file }
       its(:content) { should match '[mysqld]' }
     end
