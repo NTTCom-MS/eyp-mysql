@@ -3,6 +3,7 @@
 ## 0.4.18
 
 * xtrabackup install needs to happen after mysql deployment
+* added GPG for Percona: RPM-GPG-KEY-Percona
 
 ## 0.4.17
 
