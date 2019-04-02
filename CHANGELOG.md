@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.18
+
+* xtrabackup install needs to happen after mysql deployment
+
 ## 0.4.17
 
 * Added option to handle extra options for mysqldump
