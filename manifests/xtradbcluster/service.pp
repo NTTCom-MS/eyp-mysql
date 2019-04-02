@@ -17,6 +17,7 @@ define mysql::xtradbcluster::service(
       service { "xtradbcluster@${instance_name}":
         ensure => $service_ensure,
         enable => $service_enable,
+        tag    => 'mysqlservice',
       }
     }
   }

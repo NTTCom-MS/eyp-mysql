@@ -79,6 +79,7 @@ define mysql::backup::xtrabackup (
   #
   if(!defined(Class['mysql::backup::xtrabackup::install']))
   {
+    Service <| tag == 'mysqlservice' |> ->
     class { 'mysql::backup::xtrabackup::install':
       version => $xtrabackup_version,
     }

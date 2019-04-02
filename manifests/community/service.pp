@@ -18,6 +18,7 @@ define mysql::community::service(
       service { "mysqlcommunity@${instance_name}":
         ensure => $service_ensure,
         enable => $service_enable,
+        tag    => 'mysqlservice',
       }
     }
   }
