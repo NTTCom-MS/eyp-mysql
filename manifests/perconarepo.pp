@@ -14,7 +14,7 @@ class mysql::perconarepo(
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => file('percona/GPG-key-percona'),
+    content => file("${module_name}/percona/GPG-key-percona"),
   }
 
   exec { 'import-percona-gpg':
