@@ -7,5 +7,5 @@ mysql::community::instance { 'test':
 
 mysql::backup::mysqldump { 'test':
   destination => '/backup',
-  extraopts => '--quick',
+  extraopts   => '--quick',
 }
