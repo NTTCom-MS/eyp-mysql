@@ -31,8 +31,6 @@ describe 'mariadb class' do
     		default_instance  => true,
     	}
 
-      ->
-
       mysql::backup::xtrabackup { 'test_xtrabackup':
         destination => '/backup',
       }
