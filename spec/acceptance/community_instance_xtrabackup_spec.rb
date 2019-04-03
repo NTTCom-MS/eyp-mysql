@@ -25,7 +25,7 @@ describe 'mariadb class' do
       pp = <<-EOF
 
       mysql::community::instance { 'test_xtrabackup':
-    		port              => '3308',
+    		port              => '3408',
     		password          => 'password',
     		add_default_mycnf => true,
     		default_instance  => true,
