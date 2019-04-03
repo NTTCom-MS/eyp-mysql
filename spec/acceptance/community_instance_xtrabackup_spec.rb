@@ -25,16 +25,19 @@ describe 'mariadb class' do
       pp = <<-EOF
 
       mysql::community::instance { 'test_xtrabackup':
-    		port              => '3308',
+    		port              => '3408',
     		password          => 'password',
     		add_default_mycnf => true,
     		default_instance  => true,
     	}
 
-      ->
-
       mysql::backup::xtrabackup { 'test_xtrabackup':
         destination => '/backup',
+      }
+
+      mysql_database { 'et2blog':
+        ensure        => 'present',
+        instance_name => 'test_xtrabackup',
       }
 
       EOF
@@ -50,7 +53,7 @@ describe 'mariadb class' do
     end
 
     it "check db and mysql access" do
-      expect(shell("echo show databases | mysql | grep et2blog").exit_code).to be_zero
+      expect(shell("echo show databases | mysql --defaults-group-suffix=test_xtrabackup | grep et2blog").exit_code).to be_zero
     end
 
     #instance tomcat-8080 HTTP connector
@@ -63,7 +66,7 @@ describe 'mariadb class' do
       its(:content) { should match '[mysqld]' }
     end
 
-    describe file("/etc/mysql/test/my.cnf") do
+    describe file("/etc/mysql/test_xtrabackup/my.cnf") do
       it { should be_file }
       its(:content) { should match '[mysqld]' }
     end
