@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.19
+
+* Updated metadata for **eyp-systemd 0.2.0**
+
 ## 0.4.18
 
 * xtrabackup install needs to happen after mysql deployment
