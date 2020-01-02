@@ -10,6 +10,8 @@ LOGDIR="/backup/logs"
 IDHOST="ABC1234"
 # if set, enables compression
 COMPRESS="1"
+# if set, enables inline compression
+INLINECOMPRESS="1"
 # mysql instance name - optional
 INSTANCE_NAME="demo"
 # masterdata - if not set, is set to 1

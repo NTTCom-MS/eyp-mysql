@@ -84,7 +84,15 @@ function dodump
 
 	CURRENTBACKUPLOGDUMPERR="${DUMPDESTFILE}.err"
 
-	"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
+	if [ -z "$INLINECOMPRESS" ];
+	then
+		echo "inline compress skipped, standard dump"
+		"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
+	else
+		
+		"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS |  gzip -9 > "$DUMPDESTFILE.gz" 2> ${CURRENTBACKUPLOGDUMPERR}
+	fi
+
 
 	if [ "$?" -ne 0 ];
 	then
@@ -231,5 +239,11 @@ then
 fi
 
 mailer
-compress
+if [ -z "$INLINECOMPRESS" ];
+	then
+		echo "inline compress enabled; compress skipped"
+	else
+		compress
+	fi
+}
 cleanup
