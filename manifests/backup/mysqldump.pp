@@ -4,6 +4,7 @@ define mysql::backup::mysqldump (
                                   $retention    = undef,
                                   $logdir       = undef,
                                   $compress     = true,
+                                  $inlinecompress = false,
                                   $mailto       = undef,
                                   $idhost       = undef,
                                   $backupscript = '/usr/local/bin/backupmysqldump',
