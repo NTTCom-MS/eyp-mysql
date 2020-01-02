@@ -245,5 +245,4 @@ if [ -z "$INLINECOMPRESS" ];
 	else
 		compress
 	fi
-}
 cleanup
