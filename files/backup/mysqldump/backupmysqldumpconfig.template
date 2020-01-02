@@ -8,11 +8,8 @@ RETENTION="7"
 LOGDIR="/backup/logs"
 # host id - hostname is used instead if it is unset
 IDHOST="ABC1234"
-# if set, enables compression
+# if set, enables compressionCOMPRESS="1"
 COMPRESS="1"
-# if set, enables inline compression
-INLINECOMPRESS="1"
-# mysql instance name - optional
 INSTANCE_NAME="demo"
 # masterdata - if not set, is set to 1
 MASTERDATA="2"
