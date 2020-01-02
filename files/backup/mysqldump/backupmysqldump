@@ -239,10 +239,12 @@ then
 fi
 
 mailer
+
 if [ -z "$INLINECOMPRESS" ];
-	then
-		echo "inline compress enabled; compress skipped"
-	else
-		compress
-	fi
+then
+	echo "inline compress enabled; compress skipped"
+else
+	compress
+fi
+
 cleanup
