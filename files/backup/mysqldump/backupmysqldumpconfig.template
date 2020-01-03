@@ -1,19 +1,28 @@
+INSTANCE_NAME="demo"
+
 # backup destiation - mandatory
 DESTINATION="/backup"
+
 # notification email - optional
 MAILTO="demo@example.com"
+
 # backup rotation in days - optional
 RETENTION="7"
+
 # log dir - stdout if unset
 LOGDIR="/backup/logs"
+
 # host id - hostname is used instead if it is unset
 IDHOST="ABC1234"
-# if set, enables compressionCOMPRESS="1"
+
+# if set, enables compression
 COMPRESS="1"
-INSTANCE_NAME="demo"
+
 # masterdata - if not set, is set to 1
 MASTERDATA="2"
+
 # dump one db at a time if set - optional
 FILE_PER_DB="1"
+
 # extra options for mysqldump
 MYSQLDUMP_EXTRAOPTS=""
