@@ -84,7 +84,15 @@ function dodump
 
 	CURRENTBACKUPLOGDUMPERR="${DUMPDESTFILE}.err"
 
-	"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
+	if [ -n "${COMPRESS}" ] && [ "${COMPRESS}" -eq 1 ];
+	then
+		DUMPDESTFILE="${DUMPDESTFILE}.gz"
+		"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS 2> ${CURRENTBACKUPLOGDUMPERR} | gzip -9 > "$DUMPDESTFILE"
+	else
+		echo "compress skipped, standard dump"
+		"$MYSQLDUMPBIN" $MYSQLDUMP_BASEOPTS $MYSQLDUMP_EXTRAOPTS --databases $DBS > $DUMPDESTFILE 2> ${CURRENTBACKUPLOGDUMPERR}
+	fi
+
 
 	if [ "$?" -ne 0 ];
 	then
@@ -157,16 +165,6 @@ function cleanup
 	fi
 }
 
-function compress
-{
-	if [ -z "$COMPRESS" ];
-	then
-		echo "compress skipped"
-	else
-		find $DESTINATION/$BACKUPTS -type f -exec gzip -9 {} \;
-	fi
-}
-
 PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
 
 BASEDIRBCK=$(dirname $0)
@@ -231,5 +229,4 @@ then
 fi
 
 mailer
-compress
 cleanup
