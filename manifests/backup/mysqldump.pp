@@ -1,9 +1,9 @@
 define mysql::backup::mysqldump (
                                   $destination,
-                                  $instance	      = $name,
-                                  $retention	    = undef,
+                                  $instance       = $name,
+                                  $retention      = undef,
                                   $logdir         = undef,
-                                  $compress	      = true,
+                                  $compress       = true,
                                   $inlinecompress = false,
                                   $mailto         = undef,
                                   $idhost         = undef,
