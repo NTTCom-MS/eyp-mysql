@@ -26,3 +26,6 @@ FILE_PER_DB="1"
 
 # extra options for mysqldump
 MYSQLDUMP_EXTRAOPTS=""
+
+# exclude databases (EXCLUDE must be an ARRAY -> Example: EXCLUDE=(foo bar) )
+EXCLUDE=()
