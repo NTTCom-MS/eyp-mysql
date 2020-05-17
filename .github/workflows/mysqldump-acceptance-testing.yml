@@ -20,6 +20,9 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    - name: ls
+      run: ls -l
+
     - name: apt update
       run: sudo apt-get update
       
@@ -39,7 +42,4 @@ jobs:
       run: ps -fea | grep mysql
       
     - name: create demoschema
-      run: echo "create database demo" | mysql -u root -psha256
-
-    - name: ls
-      run: ls -l
+      run: echo "create database demo" | sudo mysql -u root -psha256
