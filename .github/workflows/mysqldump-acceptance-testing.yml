@@ -32,6 +32,9 @@ jobs:
     - name: install mysql
       run: sudo apt-get install mysql-server -y
       
+    - name: start mysql
+      run: sudo /etc/init.d/mysql start
+      
     - name: create demoschema
       run: echo "create database demo" | mysql -psha256
 
