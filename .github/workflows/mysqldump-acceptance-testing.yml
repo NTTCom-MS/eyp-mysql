@@ -39,7 +39,7 @@ jobs:
       run: ps -fea | grep mysql
       
     - name: create demoschema
-      run: echo "create database demo" | mysql -psha256
+      run: echo "create database demo" | mysql -u root -psha256
 
     - name: ls
       run: ls -l
