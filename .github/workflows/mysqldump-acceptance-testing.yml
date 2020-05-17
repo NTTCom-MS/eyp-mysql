@@ -35,6 +35,9 @@ jobs:
     - name: start mysql
       run: sudo /etc/init.d/mysql start
       
+    - name: ps mysql
+      run: ps -fea | grep mysql
+      
     - name: create demoschema
       run: echo "create database demo" | mysql -psha256
 
