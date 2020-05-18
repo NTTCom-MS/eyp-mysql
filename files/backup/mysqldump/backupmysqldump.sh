@@ -7,7 +7,7 @@ function initbck
     echo "no destination defined"
     BCKFAILED=1
   else
-    mkdir -p $DESTINATION
+    mkdir -p "$DESTINATION"
     BACKUPTS=$(date +%Y%m%d%H%M)
 
     if [ -z "${LOGDIR}" ];
@@ -19,7 +19,7 @@ function initbck
     else
       LOG_FILE_PRESENT=1
       CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
-      exec >> $CURRENTBACKUPLOG 2>&1
+      exec >> "$CURRENTBACKUPLOG" 2>&1
     fi
 
     BCKFAILED=0
@@ -28,7 +28,7 @@ function initbck
 
 function mailer
 {
-  MAILCMD=$(which mail 2>/dev/null)
+  MAILCMD=$(command -v mail 2>/dev/null)
   if [ -z "$MAILCMD" ];
   then
     echo "mail not found, skipping"
@@ -42,16 +42,16 @@ function mailer
       then
         if [ "$BCKFAILED" -eq 0 ];
         then
-          echo "OK" | $MAILCMD -s "$IDHOST-${BACKUP_NAME_ID}-OK" $MAILTO
+          echo "OK" | "$MAILCMD" -s "$IDHOST-${BACKUP_NAME_ID}-OK" "$MAILTO"
         else
-          echo "ERROR - no log file configured" | $MAILCMD -s "$IDHOST-MySQL-ERROR" $MAILTO
+          echo "ERROR - no log file configured" | "$MAILCMD" -s "$IDHOST-MySQL-ERROR" "$MAILTO"
         fi
       else
         if [ "$BCKFAILED" -eq 0 ];
         then
-          $MAILCMD -s "$IDHOST-${BACKUP_NAME_ID}-OK" $MAILTO < $CURRENTBACKUPLOG
+          "$MAILCMD" -s "$IDHOST-${BACKUP_NAME_ID}-OK" "$MAILTO" < $CURRENTBACKUPLOG
         else
-          $MAILCMD -s "$IDHOST-${BACKUP_NAME_ID}-ERROR" $MAILTO < $CURRENTBACKUPLOG
+          "$MAILCMD" -s "$IDHOST-${BACKUP_NAME_ID}-ERROR" "$MAILTO" < $CURRENTBACKUPLOG
         fi
       fi
     fi
@@ -65,7 +65,7 @@ function dump_grants
 
   GRANTSDESTFILE="$GRANTSDEST/${IDHOST}.grants.sql"
 
-  echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N 2>/dev/null | sed 's/$/;/' > $GRANTSDESTFILE
+  echo "SELECT DISTINCT CONCAT('SHOW GRANTS FOR ''', user, '''@''', host, ''';') FROM mysql.user" | "$MYSQLBIN" ${MYSQL_INSTANCE_OPTS} -N | "$MYSQLBIN" ${MYSQL_INSTANCE_OPTS} -N 2>/dev/null | sed 's/$/;/' > "$GRANTSDESTFILE"
 
   if [[ ! -s "$GRANTSDESTFILE" ]];
   then
@@ -184,14 +184,14 @@ else
   fi
 fi
 
-MYSQLBIN=${MYSQLBIN-$(which mysql 2>/dev/null)}
+MYSQLBIN=${MYSQLBIN-$(command -v mysql 2>/dev/null)}
 if [ -z "$MYSQLBIN" ];
 then
   echo "mysql not found"
   BCKFAILED=1
 fi
 
-MYSQLDUMPBIN=${MYSQLDUMPBIN-$(which mysqldump 2>/dev/null)}
+MYSQLDUMPBIN=${MYSQLDUMPBIN-$(command -v mysqldump 2>/dev/null)}
 if [ -z "$MYSQLDUMPBIN" ];
 then
   echo "mysqldump not found"
