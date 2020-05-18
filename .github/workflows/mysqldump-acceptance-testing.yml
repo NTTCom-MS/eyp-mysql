@@ -23,7 +23,8 @@ jobs:
     - name: ls
       run: ls -l
 
-    - uses: jordiprats/mysql-action@v0.1.0
+    - name: MySQL selector
+      uses: jordiprats/mysql-action@0.1.0
       with:
         mysql version: '8.0' # Optional, default value is "latest"
 
