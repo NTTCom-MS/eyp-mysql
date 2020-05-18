@@ -25,21 +25,21 @@ jobs:
 
     - name: apt update
       run: sudo apt-get update
-      
+
     - name: set root password
       run: sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password sha256'
-      
+
     - name: set root password again
       run: sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password sha256'
 
     - name: install mysql
       run: sudo apt-get install mysql-server -y
-      
+
     - name: start mysql
       run: sudo /etc/init.d/mysql start
-      
+
     - name: ps mysql
       run: ps -fea | grep mysql
-      
+
     - name: create demoschema
       run: echo "create database demo" | sudo mysql -u root -psha256
