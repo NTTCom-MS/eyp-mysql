@@ -1,7 +1,15 @@
+#
+# demo only, please take a look at the puppet module to actually check the variables
+#
+
+# optional
 INSTANCE_NAME="demo"
 
 # backup destiation - mandatory
 DESTINATION="/backup"
+
+# backup ID - backup type identifier, if unset defaults to "MySQL"
+BACKUP_NAME_ID=MySQL
 
 # notification email - optional
 MAILTO="demo@example.com"
@@ -18,7 +26,7 @@ IDHOST="ABC1234"
 # if set, enables compression
 COMPRESS="1"
 
-# masterdata - if not set, is set to 1
+# masterdata - if not set, default is 1
 MASTERDATA="2"
 
 # dump one db at a time if set - optional
@@ -28,4 +36,4 @@ FILE_PER_DB="1"
 MYSQLDUMP_EXTRAOPTS=""
 
 # exclude databases (EXCLUDE must be an ARRAY -> Example: EXCLUDE=(foo bar) )
-EXCLUDE=()
+EXCLUDE=(foo bar)

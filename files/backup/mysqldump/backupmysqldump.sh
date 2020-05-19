@@ -44,7 +44,7 @@ function mailer
         then
           echo "OK" | "$MAILCMD" -s "$IDHOST-${BACKUP_NAME_ID}-OK" "$MAILTO"
         else
-          echo "ERROR - no log file configured" | "$MAILCMD" -s "$IDHOST-MySQL-ERROR" "$MAILTO"
+          echo "ERROR - no log file configured" | "$MAILCMD" -s "$IDHOST-${BACKUP_NAME_ID}-ERROR" "$MAILTO"
         fi
       else
         if [ "$BCKFAILED" -eq 0 ];
@@ -165,6 +165,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
 BASEDIRBCK=$(dirname $0)
 BASENAMEBCK=$(basename $0)
 IDHOST=${IDHOST-$(hostname -s)}
+BACKUP_NAME_ID=${BACKUP_NAME_ID-MySQL}
 
 if [ ! -z "${INSTANCE_NAME}" ];
 then

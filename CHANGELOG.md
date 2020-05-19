@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.21
+
+* added option to mysql backup script to exclude a set of DBs
+
 ## 0.4.20
 
 * modified mysqldump backup script to use inline compression yo save disk space while backing up
