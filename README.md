@@ -199,6 +199,7 @@ ibdata inspector
   - **backupscript**: Where to store backup script (default: /usr/local/bin/backupmysqldump)
   - **masterdata**: Use this option to dump a master replication server to produce a dump file that can be used to set up another server as a slave of the master. If the option value is 2, the CHANGE MASTER TO statement is written as an SQL comment, and thus is informative only; it has no effect when the dump file is reloaded. If the option value is 1, the statement is not written as a comment and takes effect when the dump file is reloaded (default: 1)
   - **file_per_db**: Create several dumps, one per DB. It is convenient to perform partial restores but be aware it is not useful for creating slaves (default: true)
+  - **exclude_dbs**: List of DBs to exclude from the backup. The information_schema, performance_schema, mysql and sys are implicitly skipped (default: empty array)
 * cronjob related variables:
   - **setcron**: If set to true, managed a cronjob to schedule backups (default: true)
   - **hour**: If setcron is true, at which hour to run backup job (default: 2)
