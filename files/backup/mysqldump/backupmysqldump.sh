@@ -18,6 +18,7 @@ function initbck
       exec 2>&1
     else
       LOG_FILE_PRESENT=1
+      mkdir -p "$LOGDIR"
       CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
       exec >> "$CURRENTBACKUPLOG" 2>&1
     fi
