@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd $(dirname $0)
+
 echo "mysqldump VALIDATOR"
 
 echo "create database demo" | mysql
