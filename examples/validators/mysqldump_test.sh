@@ -8,7 +8,7 @@ echo "create database junk" | mysql
 
 echo "show databases" | mysql
 
-bash ./mysqldump_test/backupmysqldump.sh ./mysqldump_test/all_dbs_file_per_db.config
+bash ./mysqldump_test/backupmysqldump ./mysqldump_test/all_dbs_file_per_db.config
 
 find /backup -type f
 
