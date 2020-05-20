@@ -10,7 +10,7 @@ echo "create database junk" | mysql
 
 echo "show databases" | mysql
 
-bash ./mysqldump_test/backupmysqldump ./mysqldump_test/all_dbs_file_per_db_no_compression.config
+bash -x ./mysqldump_test/backupmysqldump ./mysqldump_test/all_dbs_file_per_db_no_compression.config
 
 find /mysql-backup -type f
 
