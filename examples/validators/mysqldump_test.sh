@@ -8,7 +8,9 @@ echo "create database demo" | mysql
 
 echo "create database junk" | mysql
 
+echo "== DBS =="
 echo "show databases" | mysql
+echo ">><<"
 
 bash -x ./mysqldump_test/backupmysqldump ./mysqldump_test/all_dbs_file_per_db_no_compression.config
 
