@@ -24,7 +24,7 @@ jobs:
       run: find . -type f
 
     - name: Test mysqldump
-      uses: jordiprats/mysql-action@0.1.16
+      uses: jordiprats/mysql-action@0.1.17
       with:
         mysql version: '8.0' # Optional, default value is "latest"
         test dir: ./examples/validators
