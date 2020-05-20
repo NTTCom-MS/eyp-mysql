@@ -186,6 +186,12 @@ fi
 
 IDHOST=${IDHOST-$(hostname -s)}
 BACKUP_NAME_ID=${BACKUP_NAME_ID-MySQL}
+DEBUG=${BACKUP_NAME_ID-0}
+
+if [ "$DEBUG" != "0" ];
+then
+  set -x
+fi
 
 MYSQLBIN=${MYSQLBIN-$(command -v mysql 2>/dev/null)}
 if [ -z "$MYSQLBIN" ];

@@ -29,3 +29,6 @@ MYSQLDUMP_EXTRAOPTS="<%= @extraopts %>"
 <% if @exclude_dbs.any? -%>
 EXCLUDE=(<%= @exclude_dbs.join(' ') %>)
 <% end -%>
+<% if @debug -%>
+DEBUG=1
+<% end -%>
