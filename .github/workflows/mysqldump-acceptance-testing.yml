@@ -24,7 +24,7 @@ jobs:
       run: find . -type f
 
     - name: Test mysqldump
-      uses: jordiprats/mysql-action@1.0
+      uses: jordiprats/mysql-action@1.1
       with:
         test dir: ./examples/validators
         debug: 1
