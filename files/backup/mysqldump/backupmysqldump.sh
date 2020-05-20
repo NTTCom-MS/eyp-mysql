@@ -164,8 +164,6 @@ PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
 
 BASEDIRBCK=$(dirname $0)
 BASENAMEBCK=$(basename $0)
-IDHOST=${IDHOST-$(hostname -s)}
-BACKUP_NAME_ID=${BACKUP_NAME_ID-MySQL}
 
 if [ ! -z "${INSTANCE_NAME}" ];
 then
@@ -184,6 +182,9 @@ else
     BCKFAILED=1
   fi
 fi
+
+IDHOST=${IDHOST-$(hostname -s)}
+BACKUP_NAME_ID=${BACKUP_NAME_ID-MySQL}
 
 MYSQLBIN=${MYSQLBIN-$(command -v mysql 2>/dev/null)}
 if [ -z "$MYSQLBIN" ];
