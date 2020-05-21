@@ -29,7 +29,7 @@ function initbck
 
 function mailer
 {
-  MAILCMD=$(which mail 2>/dev/null)
+  MAILCMD=$(command -v mail 2>/dev/null)
   if [ -z "$MAILCMD" ];
   then
     echo "mail not found, skipping"
@@ -200,10 +200,10 @@ fi
 
 INSTANCE_NAME=${INSTANCE_NAME-$1}
 
-XTRABACKUPBIN=${XTRABACKUPBIN-$(which xtrabackup 2>/dev/null)}
+XTRABACKUPBIN=${XTRABACKUPBIN-$(command -v xtrabackup 2>/dev/null)}
 if [ -z "$XTRABACKUPBIN" ];
 then
-  XTRABACKUPBIN=${XTRABACKUPBIN-$(which innobackupex 2>/dev/null)}
+  XTRABACKUPBIN=${XTRABACKUPBIN-$(command -v innobackupex 2>/dev/null)}
   if [ -z "$XTRABACKUPBIN" ];
   then
     echo "ERROR: Neither xtrabackup nor innobackupex have been found, exiting"

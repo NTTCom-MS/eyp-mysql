@@ -1,9 +1,9 @@
 define mysql::backup::mysqldump (
                                   $destination,
-                                  $instance	  = $name,
-                                  $retention	  = undef,
+                                  $instance       = $name,
+                                  $retention      = undef,
                                   $logdir         = undef,
-                                  $compress	  = true,
+                                  $compress       = true,
                                   $inlinecompress = false,
                                   $mailto         = undef,
                                   $idhost         = undef,
@@ -18,6 +18,8 @@ define mysql::backup::mysqldump (
                                   $masterdata     = '1',
                                   $file_per_db    = true,
                                   $extraopts      = undef,
+                                  $exclude_dbs    = [],
+                                  $debug          = false,
                                 ) {
 
   if defined(Class['netbackupclient'])
@@ -43,7 +45,7 @@ define mysql::backup::mysqldump (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
-    content => file("${module_name}/backup/mysqldump/backupmysqldump")
+    content => file("${module_name}/backup/mysqldump/backupmysqldump.sh")
   }
 
   file { "${backupscript}.config":

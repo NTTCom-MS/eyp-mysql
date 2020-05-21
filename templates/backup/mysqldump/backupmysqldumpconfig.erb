@@ -26,3 +26,9 @@ BACKUP_NAME_ID="<%= @backupid %>"
 # extra options for mysqldump
 MYSQLDUMP_EXTRAOPTS="<%= @extraopts %>"
 <% end -%>
+<% if @exclude_dbs.any? -%>
+EXCLUDE=(<%= @exclude_dbs.join(' ') %>)
+<% end -%>
+<% if @debug -%>
+DEBUG=1
+<% end -%>
