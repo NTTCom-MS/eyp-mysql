@@ -5,7 +5,6 @@
 * mysql backup script:
   - added option to exclude a set of DBs
   - added debug option
-  - added acceptance testing using github actions
 
 ## 0.4.20
 
