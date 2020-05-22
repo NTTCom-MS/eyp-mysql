@@ -12,7 +12,7 @@
     {"name":"puppetlabs/concat","version_requirement":">= 1.2.3 < 9.9.9"},
     {"name":"eyp/eyplib","version_requirement":">= 0.1.0 < 0.2.0"},
     {"name":"eyp/epel","version_requirement":">= 3.1.21 < 9.9.9"},
-    {"name":"eyp/systemd","version_requirement":">= 0.1.25 < 0.3.0"},
+    {"name":"eyp/systemd","version_requirement":">= 0.1.25 < 0.4.0"},
     {"name":"eyp/initscript","version_requirement":">= 0.1.2 < 0.2.0"}
   ],
   "operatingsystem_support": [
