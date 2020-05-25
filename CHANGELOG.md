@@ -2,6 +2,8 @@
 
 ## 0.4.21
 
+* Added github actions
+* Updated systemd dependency
 * mysql backup script:
   - added option to exclude a set of DBs
   - added debug option
