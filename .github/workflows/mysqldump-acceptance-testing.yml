@@ -27,4 +27,4 @@ jobs:
       uses: jordiprats/mysql-action@1.1
       with:
         test dir: ./examples/validators
-        debug: 1
+        debug: 0
