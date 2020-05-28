@@ -20,9 +20,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: tree
-      run: find . -type f
-
     - name: Test mysqldump
       uses: jordiprats/mysql-action@1.1
       with:
