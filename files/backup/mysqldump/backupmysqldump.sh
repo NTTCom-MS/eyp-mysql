@@ -193,18 +193,24 @@ then
   set -x
 fi
 
-MYSQLBIN=${MYSQLBIN-$(command -v mysql 2>/dev/null)}
-if [ -z "$MYSQLBIN" ];
+if [ -z "${MYSQLBIN}" ];
 then
-  echo "mysql not found"
-  BCKFAILED=1
+  MYSQLBIN="$(which mysql 2>/dev/null)"
+  if [ -z "$MYSQLBIN" ];
+  then
+    echo "mysql not found"
+    BCKFAILED=1
+  fi
 fi
 
-MYSQLDUMPBIN=${MYSQLDUMPBIN-$(command -v mysqldump 2>/dev/null)}
-if [ -z "$MYSQLDUMPBIN" ];
+if [ -z "${MYSQLDUMPBIN}" ];
 then
-  echo "mysqldump not found"
-  BCKFAILED=1
+  MYSQLDUMPBIN="$(which mysqldump 2>/dev/null)"
+  if [ -z "$MYSQLDUMPBIN" ];
+  then
+    echo "mysqldump not found"
+    BCKFAILED=1
+  fi
 fi
 
 VERSIOMYSQL=$(echo 'select version();' | $MYSQLBIN ${MYSQL_INSTANCE_OPTS} -N)
